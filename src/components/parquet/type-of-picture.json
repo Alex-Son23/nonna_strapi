@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_parquet_type_of_pictures",
+  "info": {
+    "displayName": "type of picture"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

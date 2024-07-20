@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coatings",
+  "info": {
+    "singularName": "coating",
+    "pluralName": "coatings",
+    "displayName": "coating"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

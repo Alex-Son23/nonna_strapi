@@ -1,0 +1,90 @@
+{
+  "kind": "collectionType",
+  "collectionName": "parquets",
+  "info": {
+    "singularName": "parquet",
+    "pluralName": "parquets",
+    "displayName": "parquet",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
+    },
+    "description": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "size": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
+    },
+    "type_of_picture": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::type-of-picture.type-of-picture"
+    },
+    "coating": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::coating.coating"
+    },
+    "country": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::country.country"
+    },
+    "wood": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::wood.wood"
+    },
+    "color": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::color.color"
+    },
+    "decor": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::decor.decor"
+    }
+  }
+}

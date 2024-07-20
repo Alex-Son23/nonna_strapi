@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_parquet_woods",
+  "info": {
+    "displayName": "wood"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

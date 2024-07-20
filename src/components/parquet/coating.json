@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_parquet_coatings",
+  "info": {
+    "displayName": "coating",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "new": {
+      "displayName": "new",
+      "type": "component",
+      "repeatable": false,
+      "component": "parquet.new"
+    }
+  }
+}

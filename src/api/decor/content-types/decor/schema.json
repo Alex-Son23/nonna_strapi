@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "decors",
+  "info": {
+    "singularName": "decor",
+    "pluralName": "decors",
+    "displayName": "decor"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_parquet_countries",
+  "info": {
+    "displayName": "country"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

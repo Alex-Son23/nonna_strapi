@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "type_of_pictures",
+  "info": {
+    "singularName": "type-of-picture",
+    "pluralName": "type-of-pictures",
+    "displayName": "type of picture",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_parquet_colors",
+  "info": {
+    "displayName": "color"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

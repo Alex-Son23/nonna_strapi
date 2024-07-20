@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "woods",
+  "info": {
+    "singularName": "wood",
+    "pluralName": "woods",
+    "displayName": "wood"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}
