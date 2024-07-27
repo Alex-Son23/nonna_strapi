@@ -794,12 +794,23 @@ export interface ApiCoatingCoating extends Schema.CollectionType {
     singularName: 'coating';
     pluralName: 'coatings';
     displayName: 'coating';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -815,6 +826,12 @@ export interface ApiCoatingCoating extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::coating.coating',
+      'oneToMany',
+      'api::coating.coating'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -824,12 +841,23 @@ export interface ApiColorColor extends Schema.CollectionType {
     singularName: 'color';
     pluralName: 'colors';
     displayName: 'color';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -845,6 +873,12 @@ export interface ApiColorColor extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::color.color',
+      'oneToMany',
+      'api::color.color'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -854,12 +888,23 @@ export interface ApiCountryCountry extends Schema.CollectionType {
     singularName: 'country';
     pluralName: 'countries';
     displayName: 'country';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -875,6 +920,12 @@ export interface ApiCountryCountry extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::country.country',
+      'oneToMany',
+      'api::country.country'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -884,12 +935,23 @@ export interface ApiDecorDecor extends Schema.CollectionType {
     singularName: 'decor';
     pluralName: 'decors';
     displayName: 'decor';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -905,6 +967,12 @@ export interface ApiDecorDecor extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::decor.decor',
+      'oneToMany',
+      'api::decor.decor'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1195,12 +1263,23 @@ export interface ApiTypeOfPropertyTypeOfProperty extends Schema.CollectionType {
     singularName: 'type-of-property';
     pluralName: 'type-of-properties';
     displayName: 'type of property';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1216,6 +1295,12 @@ export interface ApiTypeOfPropertyTypeOfProperty extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::type-of-property.type-of-property',
+      'oneToMany',
+      'api::type-of-property.type-of-property'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -1225,12 +1310,23 @@ export interface ApiWoodWood extends Schema.CollectionType {
     singularName: 'wood';
     pluralName: 'woods';
     displayName: 'wood';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    name: Attribute.String;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1238,6 +1334,12 @@ export interface ApiWoodWood extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::wood.wood', 'oneToOne', 'admin::user'> &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::wood.wood',
+      'oneToMany',
+      'api::wood.wood'
+    >;
+    locale: Attribute.String;
   };
 }
 
