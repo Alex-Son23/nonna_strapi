@@ -1141,6 +1141,12 @@ export interface ApiProjectProject extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    media: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true> &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
