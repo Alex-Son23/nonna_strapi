@@ -4,7 +4,7 @@ services:
   cms:
     build:
       context: ../cms
-      dockerfile: ../dev-config/Dockerfile.cms
+      dockerfile: ../prod-config/Dockerfile.cms
     ports:
       - "1337:1337"
     restart: always
@@ -15,14 +15,16 @@ services:
   frontend:
     build:
       context: ../nonna.ru
-      dockerfile: ../dev-config/Dockerfile.frontend
+      dockerfile: ../prod-config/Dockerfile.frontend
     ports:
       - "3000:3000"
     # volumes:
     #   - .:/frontend
   nginx:
     container_name: nonna-nginx
-    build: ../nginx/Dockerfile
+    build: 
+      context: ../nginx
+      dockerfile: ../nginx/Dockerfile
     ports:
       - 80:80
     depends_on:
