@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  cms:
+    build:
+      context: ../cms
+      dockerfile: ../dev-config/Dockerfile.cms
+    ports:
+      - "1337:1337"
+    restart: always
+    volumes:
+      - .:/cms
+    env_file:
+      - .env
+  frontend:
+    build:
+      context: ../nonna.ru
+      dockerfile: ../dev-config/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/nonna
