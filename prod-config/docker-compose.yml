@@ -10,7 +10,7 @@ services:
     restart: always
     volumes:
       - .:/cms
-      - db-data:/opt/app/.tmp
+      - strapi_data:/data
     env_file:
       - .env
   nginx:
@@ -34,5 +34,5 @@ services:
       - "3000:3000"
   
 volumes:
-  db-data:
-    name: nonna-data
+  strapi_data:
+    driver: local
