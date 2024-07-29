@@ -29,8 +29,6 @@ services:
       - 80:80
     depends_on:
       - cms
-    # volumes:
-    #   - static:/www/data/static
-    #   - media:/www/data/media
-    #   - ./dockerfiles/nginx/www.evacode.org.crt:/etc/ssl/private/www.evacode.org.crt
-    #   - ./dockerfiles/nginx/www.evacode.org.key:/etc/ssl/private/www.evacode.org.key
+    volumes:
+      - ../nginx/nonna.design.crt:/etc/ssl/private/nonna.design.crt
+      - ../nginx/nonna.design.key:/etc/ssl/private/nonna.design.key
