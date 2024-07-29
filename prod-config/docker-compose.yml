@@ -10,10 +10,9 @@ services:
     restart: always
     volumes:
       - .:/cms
+      - db-data:/opt/app/.tmp
     env_file:
       - .env
-    # volumes:
-    #   - .:/frontend
   nginx:
     container_name: nonna-nginx
     build: 
@@ -33,3 +32,6 @@ services:
       dockerfile: ../prod-config/Dockerfile.frontend
     ports:
       - "3000:3000"
+  
+volumes:
+  db-data
