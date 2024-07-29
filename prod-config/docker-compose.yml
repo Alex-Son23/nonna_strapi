@@ -12,12 +12,6 @@ services:
       - .:/cms
     env_file:
       - .env
-  frontend:
-    build:
-      context: ../nonna.ru
-      dockerfile: ../prod-config/Dockerfile.frontend
-    ports:
-      - "3000:3000"
     # volumes:
     #   - .:/frontend
   nginx:
@@ -32,3 +26,9 @@ services:
     volumes:
       - ../nginx/nonna.design.crt:/etc/ssl/private/nonna.design.crt
       - ../nginx/nonna.design.key:/etc/ssl/private/nonna.design.key
+  frontend:
+    build:
+      context: ../nonna.ru
+      dockerfile: ../prod-config/Dockerfile.frontend
+    ports:
+      - "3000:3000"
