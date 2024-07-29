@@ -1,3 +1,4 @@
 .env
 nonna.design.crt
 nonna.design.key
+.DS_Store

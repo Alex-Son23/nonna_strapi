@@ -34,4 +34,5 @@ services:
       - "3000:3000"
   
 volumes:
-  db-data
+  db-data:
+    name: nonna-data
