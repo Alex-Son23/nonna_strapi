@@ -1,0 +1,3 @@
+[submodule "nonna.ru"]
+	path = nonna.ru
+	url = https://github.com/pomaho/nonna.ru.git
