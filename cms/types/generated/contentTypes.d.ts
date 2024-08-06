@@ -925,6 +925,12 @@ export interface ApiContactContact extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    map_link: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
