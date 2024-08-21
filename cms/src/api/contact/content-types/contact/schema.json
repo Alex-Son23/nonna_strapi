@@ -78,6 +78,14 @@
         }
       },
       "type": "string"
+    },
+    "s": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
     }
   }
 }
