@@ -906,7 +906,12 @@ export interface ApiContactContact extends Schema.CollectionType {
           output: 'HTML';
           preset: 'standard';
         }
-      >;
+      > &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     address: Attribute.RichText &
       Attribute.CustomField<
         'plugin::ckeditor.CKEditor',
