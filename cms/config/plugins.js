@@ -10,5 +10,13 @@ module.exports = ({ env }) => ({
         }
      }
   },
+  upload: {
+    config: {
+      provider: 'local',
+      providerOptions: {
+        sizeLimit: 15 * 1024 * 1024,
+      },
+    },
+  },
   // ..
 });
