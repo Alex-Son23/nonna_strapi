@@ -2,3 +2,8 @@
 nonna.design.crt
 nonna.design.key
 .DS_Store
+/.idea/
+/.strapi/
+/build
+/public
+.strapi-updater.json
