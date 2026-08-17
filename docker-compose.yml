@@ -1,0 +1,83 @@
+name: nonna
+
+services:
+  cms:
+    build:
+      context: ./cms
+      dockerfile: ../prod-config/Dockerfile.cms
+    restart: unless-stopped
+    env_file:
+      - ./cms/.env
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 1337
+      DATABASE_CLIENT: sqlite
+      DATABASE_FILENAME: .tmp/data.db
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${CMS_PORT:-1337}:1337"
+    volumes:
+      - strapi_database:/opt/app/.tmp
+      - strapi_uploads:/opt/app/public/uploads
+      - type: bind
+        source: ${CMS_SEED_DATABASE:-./cms/.tmp/data.db}
+        target: /opt/app/seed/data.db
+        read_only: true
+      - type: bind
+        source: ./cms/public/uploads
+        target: /opt/app/seed/uploads
+        read_only: true
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1:1337/_health"]
+      interval: 10s
+      timeout: 5s
+      retries: 18
+      start_period: 30s
+
+  frontend:
+    build:
+      context: ./nonna.ru
+      dockerfile: ../prod-config/Dockerfile.frontend
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      NODE_ENV: production
+      NUXT_PUBLIC_API_BASE: /api
+      NUXT_PUBLIC_API_BASE_FILES: ""
+      NUXT_PUBLIC_URL: http://localhost:${HTTP_PORT:-8080}
+      NUXT_API_PROXY_TARGET: http://cms:1337
+      NUXT_API_BEARER_TOKEN: ${API_BEARER_TOKEN:-}
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      cms:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1:3000/"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${HTTP_PORT:-8080}:80"
+    depends_on:
+      cms:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --spider http://127.0.0.1/ && wget --quiet --spider http://127.0.0.1/_health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+volumes:
+  strapi_database:
+  strapi_uploads:

@@ -1,2 +1,10 @@
 node_modules
 build
+.cache
+.git
+.env
+.env.*
+.tmp
+public/uploads
+npm-debug.log*
+yarn-error.log*

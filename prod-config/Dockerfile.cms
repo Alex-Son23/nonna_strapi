@@ -1,30 +1,31 @@
-# Creating multi-stage build for production
-FROM node:18-alpine as build
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+FROM node:18.20.2-alpine AS build
 
-WORKDIR /opt/
-COPY package.json package-lock.json ./
-RUN npm install -g node-gyp
-RUN npm config set fetch-retry-maxtimeout 600000 -g && npm install --only=production
-ENV PATH /opt/node_modules/.bin:$PATH
+RUN apk add --no-cache build-base python3 vips-dev git
+
+ENV NODE_ENV=production
 WORKDIR /opt/app
+
+COPY package.json package-lock.json ./
+RUN npm config set fetch-retry-maxtimeout 600000 -g \
+    && npm ci --omit=dev
+
 COPY . .
 RUN npm run build
 
-# Creating final production image
-FROM node:18-alpine
-RUN apk add --no-cache vips-dev
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-WORKDIR /opt/
-COPY --from=build /opt/node_modules ./node_modules
-WORKDIR /opt/app
-COPY --from=build /opt/app ./
-ENV PATH /opt/node_modules/.bin:$PATH
+FROM node:18.20.2-alpine AS runtime
 
-RUN chown -R node:node /opt/app
-USER node
+RUN apk add --no-cache su-exec vips vips-cpp
+
+ENV NODE_ENV=production
+WORKDIR /opt/app
+
+COPY --from=build --chown=node:node /opt/app ./
+COPY --chown=root:root --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+
+RUN mkdir -p /opt/app/.tmp /opt/app/public/uploads /opt/app/seed \
+    && chown node:node /opt/app/.tmp /opt/app/public/uploads
+
 EXPOSE 1337
+
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["npm", "run", "start"]

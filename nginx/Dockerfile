@@ -1,6 +1,4 @@
-FROM nginx
+FROM nginx:1.27-alpine
 
 RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d
-# COPY frontend /www/data
-WORKDIR /www/data
+COPY nginx.conf /etc/nginx/conf.d/nonna.conf

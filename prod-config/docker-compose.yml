@@ -1,38 +1,6 @@
-version: "3.8"
+# Compatibility entry point. TLS and public-domain settings belong in a
+# deployment-specific override; the shared stack remains runnable as-is.
+name: nonna
 
-services:
-  # cms:
-  #   build:
-  #     context: ../cms
-  #     dockerfile: ../prod-config/Dockerfile.cms
-  #   ports:
-  #     - "1337:1337"
-  #   restart: always
-  #   volumes:
-  #     - .:/cms
-  #     - strapi_data:/data
-  #   env_file:
-  #     - .env
-  nginx:
-    container_name: nonna-nginx
-    build: 
-      context: ../nginx
-      dockerfile: ../nginx/Dockerfile
-    ports:
-      - 80:80
-      - 443:443
-    # depends_on:
-    #   - cms
-    volumes:
-      - ../nginx/nonna.design.crt:/etc/ssl/private/nonna.design.crt
-      - ../nginx/nonna.design.key:/etc/ssl/private/nonna.design.key
-  frontend:
-    build:
-      context: ../nonna.ru
-      dockerfile: ../prod-config/Dockerfile.frontend
-    ports:
-      - "3000:3000"
-  
-# volumes:
-#   strapi_data:
-#     driver: local
+include:
+  - ../docker-compose.yml
