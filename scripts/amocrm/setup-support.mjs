@@ -137,6 +137,42 @@ function collection(response, key) {
   return response?._embedded?.[key] ?? []
 }
 
+function pipelineStatusKey({ pipeline_id: pipelineId, status_id: statusId }) {
+  return `${pipelineId}:${statusId}`
+}
+
+function samePipelineStatuses(left, right) {
+  const leftStatuses = Array.isArray(left) ? left : []
+  const rightStatuses = Array.isArray(right) ? right : []
+  if (leftStatuses.length !== rightStatuses.length) return false
+
+  const leftKeys = new Set(leftStatuses.map(pipelineStatusKey))
+  return rightStatuses.every((status) =>
+    leftKeys.has(pipelineStatusKey(status)),
+  )
+}
+
+export function hiddenStatusesOutsidePipeline(pipelines, visiblePipelineId) {
+  if (!visiblePipelineId) return []
+
+  const hiddenStatuses = new Map()
+  for (const pipeline of pipelines) {
+    if (!pipeline?.id || pipeline.id === visiblePipelineId) continue
+
+    for (const status of collection(pipeline, 'statuses')) {
+      if (!status?.id) continue
+
+      const hiddenStatus = {
+        pipeline_id: pipeline.id,
+        status_id: status.id,
+      }
+      hiddenStatuses.set(pipelineStatusKey(hiddenStatus), hiddenStatus)
+    }
+  }
+
+  return [...hiddenStatuses.values()]
+}
+
 export function normalizeBaseUrl(value) {
   let url
 
@@ -354,6 +390,7 @@ export async function ensurePipeline(
         name: definition.name,
         _embedded: { statuses: definition.statuses },
         planned: true,
+        plannedStatuses: definition.statuses.map(({ name }) => name),
       }
     }
 
@@ -399,7 +436,12 @@ export async function ensurePipeline(
       .join(', ')}.`,
   )
 
-  if (!apply) return pipeline
+  if (!apply) {
+    return {
+      ...pipeline,
+      plannedStatuses: missingStatuses.map(({ name }) => name),
+    }
+  }
 
   const createResponse = await api.request(
     'POST',
@@ -460,7 +502,14 @@ export async function ensureCustomFields(
   api,
   entity,
   definitions,
-  { apply, groupId, requiredStatuses, log },
+  {
+    apply,
+    groupId,
+    requiredStatuses,
+    hiddenStatuses,
+    visibilityPending = false,
+    log,
+  },
 ) {
   const path = `/api/v4/${entity}/custom_fields`
   const existingFields = await listAll(api, path, 'custom_fields')
@@ -476,17 +525,37 @@ export async function ensureCustomFields(
     }
   }
   const missing = []
+  const updates = []
 
   for (const definition of definitions) {
-    const existing =
-      fieldsByCode.get(definition.code) ??
-      fieldsByName.get(normalizeName(definition.name))
+    const existing = fieldsByCode.get(definition.code)
+    const nameMatch = fieldsByName.get(normalizeName(definition.name))
+
+    if (!existing && nameMatch) {
+      const actualCode = nameMatch.code
+        ? `имеет код "${nameMatch.code}"`
+        : 'не имеет кода'
+      throw new Error(
+        `Поле с именем «${definition.name}» уже существует и ${actualCode}. Ожидался код "${definition.code}"; поле не принадлежит этой настройке.`,
+      )
+    }
 
     if (existing) {
       if (existing.type !== definition.type) {
         throw new Error(
           `Поле «${definition.name}» уже существует с типом "${existing.type}" вместо "${definition.type}".`,
         )
+      }
+
+      if (
+        hiddenStatuses !== undefined &&
+        !samePipelineStatuses(existing.hidden_statuses, hiddenStatuses)
+      ) {
+        updates.push({
+          id: existing.id,
+          name: existing.name,
+          hidden_statuses: hiddenStatuses,
+        })
       }
       continue
     }
@@ -501,25 +570,44 @@ export async function ensureCustomFields(
       ...(definition.required && requiredStatuses.length > 0
         ? { required_statuses: requiredStatuses }
         : {}),
+      ...(hiddenStatuses === undefined
+        ? {}
+        : { hidden_statuses: hiddenStatuses }),
     })
   }
 
-  if (missing.length === 0) {
-    log(`Поля ${entity} уже настроены.`)
-    return { created: 0, existing: definitions.length }
+  if (missing.length === 0 && updates.length === 0) {
+    if (!visibilityPending) log(`Поля ${entity} уже настроены.`)
+    return {
+      created: 0,
+      updated: 0,
+      existing: definitions.length,
+      ...(visibilityPending ? { visibilityPending: true } : {}),
+    }
   }
 
-  log(
-    `${apply ? 'Создаю' : 'Будут созданы'} поля ${entity}: ${missing
-      .map(({ name }) => name)
-      .join(', ')}.`,
-  )
+  if (missing.length > 0) {
+    log(
+      `${apply ? 'Создаю' : 'Будут созданы'} поля ${entity}: ${missing
+        .map(({ name }) => name)
+        .join(', ')}.`,
+    )
+  }
 
-  if (apply) await api.request('POST', path, missing)
+  if (updates.length > 0) {
+    log(
+      `${apply ? 'Обновляю' : 'Будет обновлена'} видимость ${updates.length} полей ${entity}.`,
+    )
+  }
+
+  if (apply && missing.length > 0) await api.request('POST', path, missing)
+  if (apply && updates.length > 0) await api.request('PATCH', path, updates)
 
   return {
     created: missing.length,
+    updated: updates.length,
     existing: definitions.length - missing.length,
+    ...(visibilityPending ? { visibilityPending: true } : {}),
   }
 }
 
@@ -530,6 +618,16 @@ function requiredSupportStatuses(pipeline, definition) {
   return collection(pipeline, 'statuses')
     .filter(({ name }) => requiredNames.has(normalizeName(name)))
     .map(({ id }) => ({ pipeline_id: pipeline.id, status_id: id }))
+}
+
+function mergePipelines(...pipelineCollections) {
+  const pipelinesById = new Map()
+  for (const pipelines of pipelineCollections) {
+    for (const pipeline of pipelines) {
+      if (pipeline?.id) pipelinesById.set(pipeline.id, pipeline)
+    }
+  }
+  return [...pipelinesById.values()]
 }
 
 export async function configureSupportDepartment(
@@ -559,11 +657,28 @@ export async function configureSupportDepartment(
   )
 
   const supportPipeline = configuredPipelines[0]
+  const allPipelines = mergePipelines(existingPipelines, configuredPipelines)
+  const hiddenLeadStatuses = supportPipeline?.id
+    ? hiddenStatusesOutsidePipeline(allPipelines, supportPipeline.id)
+    : undefined
+  const leadVisibilityPending =
+    !apply &&
+    configuredPipelines.some(
+      (pipeline) =>
+        pipeline?.planned || (pipeline?.plannedStatuses?.length ?? 0) > 0,
+    )
+  if (leadVisibilityPending) {
+    log(
+      'Видимость полей сделок будет синхронизирована после создания запланированных воронок и этапов.',
+    )
+  }
   const fieldResults = {
     leads: await ensureCustomFields(api, 'leads', LEAD_FIELDS, {
       apply,
       groupId: leadGroup?.id,
       requiredStatuses: requiredSupportStatuses(supportPipeline, PIPELINES[0]),
+      hiddenStatuses: hiddenLeadStatuses,
+      visibilityPending: leadVisibilityPending,
       log,
     }),
     companies: await ensureCustomFields(api, 'companies', COMPANY_FIELDS, {
@@ -579,11 +694,14 @@ export async function configureSupportDepartment(
 
   return {
     apply,
-    pipelines: configuredPipelines.map(({ id, name, planned = false }) => ({
-      id,
-      name,
-      planned,
-    })),
+    pipelines: configuredPipelines.map(
+      ({ id, name, planned = false, plannedStatuses = [] }) => ({
+        id,
+        name,
+        planned,
+        plannedStatuses,
+      }),
+    ),
     fields: fieldResults,
     manualChecklist: MANUAL_CHECKLIST,
   }

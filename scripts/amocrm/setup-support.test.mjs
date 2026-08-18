@@ -9,6 +9,7 @@ import {
   configureSupportDepartment,
   ensureCustomFields,
   ensurePipeline,
+  hiddenStatusesOutsidePipeline,
   normalizeBaseUrl,
 } from './setup-support.mjs'
 
@@ -39,6 +40,33 @@ function createApi(handler) {
       return handler({ method, path, body, calls })
     },
   }
+}
+
+function existingPipeline(definition, id, firstStatusId) {
+  return {
+    id,
+    name: definition.name,
+    _embedded: {
+      statuses: [
+        ...definition.statuses.map((status, index) => ({
+          ...status,
+          id: firstStatusId + index,
+        })),
+        { id: 142, name: definition.successName },
+        { id: 143, name: definition.failureName },
+      ],
+    },
+  }
+}
+
+function existingFields(definitions, options = {}) {
+  return definitions.map((definition, index) => ({
+    id: index + 1,
+    code: definition.code,
+    name: definition.name,
+    type: definition.type,
+    ...options,
+  }))
 }
 
 test('configuration uses unique field codes and pipeline names', () => {
@@ -348,6 +376,143 @@ test('ensureCustomFields is idempotent and rejects a type conflict', async () =>
   )
 })
 
+test('ensureCustomFields rejects same-name fields it does not own', async () => {
+  for (const code of ['SALES_PRIORITY', undefined]) {
+    const api = createApi(({ method, path }) => {
+      if (method === 'GET' && path.startsWith('/api/v4/leads/custom_fields')) {
+        return {
+          _embedded: {
+            custom_fields: [
+              {
+                id: 99,
+                code,
+                name: LEAD_FIELDS[0].name,
+                type: LEAD_FIELDS[0].type,
+              },
+            ],
+          },
+        }
+      }
+
+      throw new Error(`Unexpected request: ${method} ${path}`)
+    })
+
+    await assert.rejects(
+      ensureCustomFields(api, 'leads', [LEAD_FIELDS[0]], {
+        apply: true,
+        groupId: 'leads_support',
+        requiredStatuses: [],
+        hiddenStatuses: [{ pipeline_id: 200, status_id: 201 }],
+        log: () => {},
+      }),
+      /не принадлежит этой настройке/,
+    )
+    assert.equal(api.calls.some(({ method }) => method !== 'GET'), false)
+  }
+})
+
+test('hiddenStatusesOutsidePipeline hides every status outside the target pipeline', () => {
+  const pipelines = [
+    {
+      id: 100,
+      _embedded: {
+        statuses: [
+          { id: 101, name: 'В очереди' },
+          { id: 102, name: 'В работе' },
+        ],
+      },
+    },
+    {
+      id: 200,
+      _embedded: {
+        statuses: [
+          { id: 201, name: 'Новая заявка' },
+          { id: 202, name: 'Закрыто' },
+        ],
+      },
+    },
+  ]
+
+  assert.deepEqual(hiddenStatusesOutsidePipeline(pipelines, 100), [
+    { pipeline_id: 200, status_id: 201 },
+    { pipeline_id: 200, status_id: 202 },
+  ])
+})
+
+test('ensureCustomFields creates and updates pipeline visibility', async () => {
+  const hiddenStatuses = [
+    { pipeline_id: 200, status_id: 201 },
+    { pipeline_id: 200, status_id: 202 },
+  ]
+  let existingFields = []
+  const api = createApi(({ method, path, body }) => {
+    if (method === 'GET' && path.startsWith('/api/v4/leads/custom_fields')) {
+      return { _embedded: { custom_fields: existingFields } }
+    }
+
+    if (method === 'POST' && path === '/api/v4/leads/custom_fields') {
+      assert.deepEqual(body[0].hidden_statuses, hiddenStatuses)
+      existingFields = [
+        {
+          id: 501,
+          code: LEAD_FIELDS[0].code,
+          name: LEAD_FIELDS[0].name,
+          type: LEAD_FIELDS[0].type,
+          hidden_statuses: body[0].hidden_statuses,
+        },
+      ]
+      return { _embedded: { custom_fields: existingFields } }
+    }
+
+    if (method === 'PATCH' && path === '/api/v4/leads/custom_fields') {
+      assert.equal(
+        body.every(({ name }) => typeof name === 'string' && name.length > 0),
+        true,
+      )
+      assert.deepEqual(body, [
+        {
+          id: 501,
+          name: LEAD_FIELDS[0].name,
+          hidden_statuses: hiddenStatuses,
+        },
+      ])
+      existingFields[0].hidden_statuses = body[0].hidden_statuses
+      return { _embedded: { custom_fields: existingFields } }
+    }
+
+    throw new Error(`Unexpected request: ${method} ${path}`)
+  })
+
+  const created = await ensureCustomFields(api, 'leads', [LEAD_FIELDS[0]], {
+    apply: true,
+    groupId: 'leads_support',
+    requiredStatuses: [],
+    hiddenStatuses,
+    log: () => {},
+  })
+  assert.deepEqual(created, { created: 1, updated: 0, existing: 0 })
+
+  existingFields[0].hidden_statuses = null
+  const updated = await ensureCustomFields(api, 'leads', [LEAD_FIELDS[0]], {
+    apply: true,
+    groupId: 'leads_support',
+    requiredStatuses: [],
+    hiddenStatuses,
+    log: () => {},
+  })
+  assert.deepEqual(updated, { created: 0, updated: 1, existing: 1 })
+
+  const unchanged = await ensureCustomFields(api, 'leads', [LEAD_FIELDS[0]], {
+    apply: true,
+    groupId: 'leads_support',
+    requiredStatuses: [],
+    hiddenStatuses,
+    log: () => {},
+  })
+  assert.deepEqual(unchanged, { created: 0, updated: 0, existing: 1 })
+  assert.equal(api.calls.filter(({ method }) => method === 'PATCH').length, 1)
+})
+
 test('configureSupportDepartment dry-run performs reads without writes', async () => {
   const api = createApi(({ method, path }) => {
     assert.equal(method, 'GET')
@@ -373,4 +538,137 @@ test('configureSupportDepartment dry-run performs reads without writes', async (
   assert.equal(result.apply, false)
   assert.equal(result.pipelines.every(({ planned }) => planned), true)
   assert.equal(api.calls.some(({ method }) => method !== 'GET'), false)
+})
+
+test('configureSupportDepartment reports pending visibility for a planned status', async () => {
+  const supportPipeline = existingPipeline(PIPELINES[0], 100, 1000)
+  const managedPipeline = existingPipeline(PIPELINES[1], 200, 2000)
+  const missingStatus = managedPipeline._embedded.statuses.splice(
+    PIPELINES[1].statuses.length - 1,
+    1,
+  )[0]
+  const hiddenStatuses = managedPipeline._embedded.statuses.map(({ id }) => ({
+    pipeline_id: managedPipeline.id,
+    status_id: id,
+  }))
+  const logs = []
+  const api = createApi(({ method, path }) => {
+    assert.equal(method, 'GET')
+
+    if (path === '/api/v4/leads/pipelines') {
+      return {
+        _embedded: { pipelines: [supportPipeline, managedPipeline] },
+      }
+    }
+    if (path === '/api/v4/leads/custom_fields/groups') {
+      return {
+        _embedded: {
+          custom_field_groups: [{ id: 'leads_support', name: 'Поддержка сайтов' }],
+        },
+      }
+    }
+    if (path === '/api/v4/companies/custom_fields/groups') {
+      return {
+        _embedded: {
+          custom_field_groups: [
+            { id: 'companies_support', name: 'Сопровождение сайтов' },
+          ],
+        },
+      }
+    }
+    if (path.startsWith('/api/v4/leads/custom_fields?')) {
+      return {
+        _embedded: {
+          custom_fields: existingFields(LEAD_FIELDS, {
+            hidden_statuses: hiddenStatuses,
+          }),
+        },
+      }
+    }
+    if (path.startsWith('/api/v4/companies/custom_fields?')) {
+      return {
+        _embedded: { custom_fields: existingFields(COMPANY_FIELDS) },
+      }
+    }
+
+    throw new Error(`Unexpected request: ${method} ${path}`)
+  })
+
+  const result = await configureSupportDepartment(api, {
+    apply: false,
+    log: (message) => logs.push(message),
+  })
+
+  assert.deepEqual(result.pipelines[1].plannedStatuses, [missingStatus.name])
+  assert.equal(result.fields.leads.visibilityPending, true)
+  assert.equal(
+    logs.some((message) => message.includes('будет синхронизирована')),
+    true,
+  )
+  assert.equal(logs.includes('Поля leads уже настроены.'), false)
+  assert.equal(api.calls.some(({ method }) => method !== 'GET'), false)
+})
+
+test('configureSupportDepartment applies lead-only pipeline visibility', async () => {
+  const supportPipeline = existingPipeline(PIPELINES[0], 100, 1000)
+  const managedPipeline = existingPipeline(PIPELINES[1], 200, 2000)
+  const pipelines = [supportPipeline, managedPipeline]
+  const api = createApi(({ method, path, body }) => {
+    if (method === 'GET' && path === '/api/v4/leads/pipelines') {
+      return { _embedded: { pipelines } }
+    }
+    if (method === 'GET' && path === '/api/v4/leads/custom_fields/groups') {
+      return {
+        _embedded: {
+          custom_field_groups: [{ id: 'leads_support', name: 'Поддержка сайтов' }],
+        },
+      }
+    }
+    if (
+      method === 'GET' &&
+      path === '/api/v4/companies/custom_fields/groups'
+    ) {
+      return {
+        _embedded: {
+          custom_field_groups: [
+            { id: 'companies_support', name: 'Сопровождение сайтов' },
+          ],
+        },
+      }
+    }
+    if (method === 'GET' && path.includes('/custom_fields?')) {
+      return { _embedded: { custom_fields: [] } }
+    }
+    if (method === 'POST' && path.endsWith('/custom_fields')) {
+      return { _embedded: { custom_fields: body } }
+    }
+
+    throw new Error(`Unexpected request: ${method} ${path}`)
+  })
+
+  await configureSupportDepartment(api, { apply: true, log: () => {} })
+
+  const expectedHiddenStatuses = managedPipeline._embedded.statuses.map(
+    ({ id }) => ({ pipeline_id: managedPipeline.id, status_id: id }),
+  )
+  const leadCreate = api.calls.find(
+    ({ method, path }) =>
+      method === 'POST' && path === '/api/v4/leads/custom_fields',
+  )
+  const companyCreate = api.calls.find(
+    ({ method, path }) =>
+      method === 'POST' && path === '/api/v4/companies/custom_fields',
+  )
+
+  assert.equal(leadCreate.body.length, LEAD_FIELDS.length)
+  for (const { hidden_statuses: statuses } of leadCreate.body) {
+    assert.deepEqual(statuses, expectedHiddenStatuses)
+  }
+  assert.equal(companyCreate.body.length, COMPANY_FIELDS.length)
+  assert.equal(
+    companyCreate.body.every(
+      (field) => !Object.hasOwn(field, 'hidden_statuses'),
+    ),
+    true,
+  )
 })
