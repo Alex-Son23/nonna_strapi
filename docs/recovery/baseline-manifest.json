@@ -1,0 +1,4286 @@
+{
+  "collections": [
+    {
+      "entry_count": 2,
+      "locale_counts": [
+        {
+          "count": 1,
+          "locale": "en"
+        },
+        {
+          "count": 1,
+          "locale": "ru"
+        }
+      ],
+      "name": "coatings",
+      "published_count": 2
+    },
+    {
+      "entry_count": 2,
+      "locale_counts": [
+        {
+          "count": 1,
+          "locale": "en"
+        },
+        {
+          "count": 1,
+          "locale": "ru"
+        }
+      ],
+      "name": "colors",
+      "published_count": 2
+    },
+    {
+      "entry_count": 3,
+      "locale_counts": [
+        {
+          "count": 3,
+          "locale": "ru"
+        }
+      ],
+      "name": "contacts",
+      "published_count": 3
+    },
+    {
+      "entry_count": 2,
+      "locale_counts": [
+        {
+          "count": 1,
+          "locale": "en"
+        },
+        {
+          "count": 1,
+          "locale": "ru"
+        }
+      ],
+      "name": "countries",
+      "published_count": 2
+    },
+    {
+      "entry_count": 2,
+      "locale_counts": [
+        {
+          "count": 1,
+          "locale": "en"
+        },
+        {
+          "count": 1,
+          "locale": "ru"
+        }
+      ],
+      "name": "decors",
+      "published_count": 2
+    },
+    {
+      "entry_count": 6,
+      "locale_counts": [
+        {
+          "count": 3,
+          "locale": "en"
+        },
+        {
+          "count": 3,
+          "locale": "ru"
+        }
+      ],
+      "name": "parquets",
+      "published_count": 6
+    },
+    {
+      "entry_count": 2,
+      "locale_counts": [
+        {
+          "count": 2,
+          "locale": "ru"
+        }
+      ],
+      "name": "projects",
+      "published_count": 2
+    },
+    {
+      "entry_count": 2,
+      "locale_counts": [
+        {
+          "count": 2,
+          "locale": "ru"
+        }
+      ],
+      "name": "site_news_many",
+      "published_count": 2
+    },
+    {
+      "entry_count": 2,
+      "locale_counts": [
+        {
+          "count": 1,
+          "locale": "en"
+        },
+        {
+          "count": 1,
+          "locale": "ru"
+        }
+      ],
+      "name": "type_of_pictures",
+      "published_count": 2
+    },
+    {
+      "entry_count": 3,
+      "locale_counts": [
+        {
+          "count": 3,
+          "locale": "ru"
+        }
+      ],
+      "name": "type_of_properties",
+      "published_count": 3
+    },
+    {
+      "entry_count": 5,
+      "locale_counts": [
+        {
+          "count": 1,
+          "locale": "en"
+        },
+        {
+          "count": 4,
+          "locale": "ru"
+        }
+      ],
+      "name": "woods",
+      "published_count": 5
+    }
+  ],
+  "database": {
+    "foreign_key_violations": [],
+    "integrity_check": "ok",
+    "logical_updated_at_utc": "2025-06-10T17:54:22.133Z",
+    "sha256": "4046888810c246806b6157f52e264900c994c6113643e6ceb15ca74f8ccd111e",
+    "size_bytes": 1429504
+  },
+  "entries": [
+    {
+      "collection": "coatings",
+      "id": 1,
+      "locale": "en",
+      "publication": {
+        "published_at": "2024-07-23T16:25:58.711Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "coatings_localizations_links",
+          "values": {
+            "coating_id": 1,
+            "coating_order": 1.0,
+            "inv_coating_id": 2
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "coatings_localizations_links",
+          "values": {
+            "coating_id": 1,
+            "coating_order": 1.0,
+            "inv_coating_id": 2
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "coatings_localizations_links",
+          "values": {
+            "coating_id": 2,
+            "coating_order": 1.0,
+            "inv_coating_id": 1
+          },
+          "via": "inv_coating_id"
+        },
+        {
+          "table": "coatings_localizations_links",
+          "values": {
+            "coating_id": 2,
+            "coating_order": 1.0,
+            "inv_coating_id": 1
+          },
+          "via": "inv_coating_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 4
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 4
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 5
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 5
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 7
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 7
+          },
+          "via": "coating_id"
+        }
+      ],
+      "relations_sha256": "ed1e2a17c8154947feaa9dad54f21edb27c6c8238e9e4c0dbaa173920245ce45",
+      "significant_fields_sha256": "15492c585f45bfca4a835f59c96a9ef8167dae41869d9ad1d5ab26c75bcbae46",
+      "stable_key": {
+        "field": "name",
+        "value": "Test123"
+      }
+    },
+    {
+      "collection": "coatings",
+      "id": 2,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T16:50:49.416Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "coatings_localizations_links",
+          "values": {
+            "coating_id": 1,
+            "coating_order": 1.0,
+            "inv_coating_id": 2
+          },
+          "via": "inv_coating_id"
+        },
+        {
+          "table": "coatings_localizations_links",
+          "values": {
+            "coating_id": 1,
+            "coating_order": 1.0,
+            "inv_coating_id": 2
+          },
+          "via": "inv_coating_id"
+        },
+        {
+          "table": "coatings_localizations_links",
+          "values": {
+            "coating_id": 2,
+            "coating_order": 1.0,
+            "inv_coating_id": 1
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "coatings_localizations_links",
+          "values": {
+            "coating_id": 2,
+            "coating_order": 1.0,
+            "inv_coating_id": 1
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 2,
+            "parquet_id": 1
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 2,
+            "parquet_id": 1
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 2,
+            "parquet_id": 6
+          },
+          "via": "coating_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 2,
+            "parquet_id": 6
+          },
+          "via": "coating_id"
+        }
+      ],
+      "relations_sha256": "fa4e672cfd1e280e3704451c81f96ea738dde01a2aa84ed62cf553079798164c",
+      "significant_fields_sha256": "2b9add2f2082ea43be623177c7e1ce24a82c0d894a6096e4c5fe4d4b2c66e10b",
+      "stable_key": {
+        "field": "name",
+        "value": "Тест123"
+      }
+    },
+    {
+      "collection": "colors",
+      "id": 1,
+      "locale": "en",
+      "publication": {
+        "published_at": "2024-07-23T16:24:36.724Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "colors_localizations_links",
+          "values": {
+            "color_id": 1,
+            "color_order": 1.0,
+            "inv_color_id": 2
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "colors_localizations_links",
+          "values": {
+            "color_id": 1,
+            "color_order": 1.0,
+            "inv_color_id": 2
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "colors_localizations_links",
+          "values": {
+            "color_id": 2,
+            "color_order": 1.0,
+            "inv_color_id": 1
+          },
+          "via": "inv_color_id"
+        },
+        {
+          "table": "colors_localizations_links",
+          "values": {
+            "color_id": 2,
+            "color_order": 1.0,
+            "inv_color_id": 1
+          },
+          "via": "inv_color_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 1
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 1
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 4
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 4
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 5
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 5
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 7
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 7
+          },
+          "via": "color_id"
+        }
+      ],
+      "relations_sha256": "5349e8118ab7b7ba1e4e53f7ccf75e013f3f24aeeab404f02f0234fb41f781c8",
+      "significant_fields_sha256": "4baf6e64321ca97b117070a3e3eef53539935e8ea70de3cef45ec6c3458bbca2",
+      "stable_key": {
+        "field": "name",
+        "value": "Color 1"
+      }
+    },
+    {
+      "collection": "colors",
+      "id": 2,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T16:57:37.936Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "colors_localizations_links",
+          "values": {
+            "color_id": 1,
+            "color_order": 1.0,
+            "inv_color_id": 2
+          },
+          "via": "inv_color_id"
+        },
+        {
+          "table": "colors_localizations_links",
+          "values": {
+            "color_id": 1,
+            "color_order": 1.0,
+            "inv_color_id": 2
+          },
+          "via": "inv_color_id"
+        },
+        {
+          "table": "colors_localizations_links",
+          "values": {
+            "color_id": 2,
+            "color_order": 1.0,
+            "inv_color_id": 1
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "colors_localizations_links",
+          "values": {
+            "color_id": 2,
+            "color_order": 1.0,
+            "inv_color_id": 1
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 2,
+            "parquet_id": 6
+          },
+          "via": "color_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 2,
+            "parquet_id": 6
+          },
+          "via": "color_id"
+        }
+      ],
+      "relations_sha256": "72fde74d1012f3f8a87675a0c5751f9472cfd3646045e2c92b190e5d16dfbea4",
+      "significant_fields_sha256": "7343a889119e3f097e192a763dcf787834564cbf045a93fdf8db9b7f698bd328",
+      "stable_key": {
+        "field": "name",
+        "value": "Цвет 1"
+      }
+    },
+    {
+      "collection": "contacts",
+      "id": 1,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-30T16:48:09.579Z",
+        "state": "published"
+      },
+      "relations": [],
+      "relations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "significant_fields_sha256": "817e19ba59cf900ea596eda91ae0adf2fa1e60e1c6a90e9c61ff4e7a5bd03ea1",
+      "stable_key": {
+        "field": "address",
+        "value": "<p><strong>Cанкт-Петербург</strong>,&nbsp;<br>ул. Куйбышева, д 13</p>"
+      }
+    },
+    {
+      "collection": "contacts",
+      "id": 2,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-30T16:52:00.654Z",
+        "state": "published"
+      },
+      "relations": [],
+      "relations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "significant_fields_sha256": "f1bf04e566ea945c1845c6a38ac30d568eef788b5d671463925a350eee3d54fd",
+      "stable_key": {
+        "field": "address",
+        "value": "<p><strong>Москва,</strong>&nbsp;<br>Шелепихинская набережная, д. 34/2</p>"
+      }
+    },
+    {
+      "collection": "contacts",
+      "id": 3,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-30T16:52:29.466Z",
+        "state": "published"
+      },
+      "relations": [],
+      "relations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "significant_fields_sha256": "7b470416512d08ab10c1a6a17fae9f9c19c0817cec1d5130c4058bba9c05bb6e",
+      "stable_key": {
+        "field": "title",
+        "value": "Москва,  2-я Бауманская улица, 9/23"
+      }
+    },
+    {
+      "collection": "countries",
+      "id": 1,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-23T16:24:26.604Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "countries_localizations_links",
+          "values": {
+            "country_id": 1,
+            "country_order": 1.0,
+            "inv_country_id": 2
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "countries_localizations_links",
+          "values": {
+            "country_id": 1,
+            "country_order": 1.0,
+            "inv_country_id": 2
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "countries_localizations_links",
+          "values": {
+            "country_id": 2,
+            "country_order": 1.0,
+            "inv_country_id": 1
+          },
+          "via": "inv_country_id"
+        },
+        {
+          "table": "countries_localizations_links",
+          "values": {
+            "country_id": 2,
+            "country_order": 1.0,
+            "inv_country_id": 1
+          },
+          "via": "inv_country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 1
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 1
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 2
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 2
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 6
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 6
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "projects_country_links",
+          "values": {
+            "country_id": 1,
+            "project_id": 1
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "projects_country_links",
+          "values": {
+            "country_id": 1,
+            "project_id": 1
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "projects_country_links",
+          "values": {
+            "country_id": 1,
+            "project_id": 2
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "projects_country_links",
+          "values": {
+            "country_id": 1,
+            "project_id": 2
+          },
+          "via": "country_id"
+        }
+      ],
+      "relations_sha256": "c1a5e1cbc27f58eb1f5a75c3d6027a0a604f5688c1add7f6f4a7361f16b702dd",
+      "significant_fields_sha256": "6c73c1e132ba7f4108c36426c83f0ee58cff896502c43b13f70be1911c058d47",
+      "stable_key": {
+        "field": "name",
+        "value": "Россия"
+      }
+    },
+    {
+      "collection": "countries",
+      "id": 2,
+      "locale": "en",
+      "publication": {
+        "published_at": "2024-07-27T16:57:20.132Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "countries_localizations_links",
+          "values": {
+            "country_id": 1,
+            "country_order": 1.0,
+            "inv_country_id": 2
+          },
+          "via": "inv_country_id"
+        },
+        {
+          "table": "countries_localizations_links",
+          "values": {
+            "country_id": 1,
+            "country_order": 1.0,
+            "inv_country_id": 2
+          },
+          "via": "inv_country_id"
+        },
+        {
+          "table": "countries_localizations_links",
+          "values": {
+            "country_id": 2,
+            "country_order": 1.0,
+            "inv_country_id": 1
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "countries_localizations_links",
+          "values": {
+            "country_id": 2,
+            "country_order": 1.0,
+            "inv_country_id": 1
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 4
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 4
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 5
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 5
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 7
+          },
+          "via": "country_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 7
+          },
+          "via": "country_id"
+        }
+      ],
+      "relations_sha256": "b70cfcee3304ddc8b58429a403bc326388fbaaf65a15b96b9a22239a44d5da7e",
+      "significant_fields_sha256": "682bfc453d34879b89333684f33b95f39e91240199a0b60ea1b45640f56b28ca",
+      "stable_key": {
+        "field": "name",
+        "value": "Russia"
+      }
+    },
+    {
+      "collection": "decors",
+      "id": 1,
+      "locale": "en",
+      "publication": {
+        "published_at": "2024-07-23T16:26:12.167Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "decors_localizations_links",
+          "values": {
+            "decor_id": 1,
+            "decor_order": 1.0,
+            "inv_decor_id": 2
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "decors_localizations_links",
+          "values": {
+            "decor_id": 1,
+            "decor_order": 1.0,
+            "inv_decor_id": 2
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "decors_localizations_links",
+          "values": {
+            "decor_id": 2,
+            "decor_order": 1.0,
+            "inv_decor_id": 1
+          },
+          "via": "inv_decor_id"
+        },
+        {
+          "table": "decors_localizations_links",
+          "values": {
+            "decor_id": 2,
+            "decor_order": 1.0,
+            "inv_decor_id": 1
+          },
+          "via": "inv_decor_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 4
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 4
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 5
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 5
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 7
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 7
+          },
+          "via": "decor_id"
+        }
+      ],
+      "relations_sha256": "9844657ad6d6bbc715d818fe31a3029c3b76eace1f34ff2bbaf52f84f991558a",
+      "significant_fields_sha256": "32ea20ca99856c4c7d8624f221f3a1c52405086e1a03db549a08007781912147",
+      "stable_key": {
+        "field": "name",
+        "value": "Test Decor"
+      }
+    },
+    {
+      "collection": "decors",
+      "id": 2,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T16:51:26.876Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "decors_localizations_links",
+          "values": {
+            "decor_id": 1,
+            "decor_order": 1.0,
+            "inv_decor_id": 2
+          },
+          "via": "inv_decor_id"
+        },
+        {
+          "table": "decors_localizations_links",
+          "values": {
+            "decor_id": 1,
+            "decor_order": 1.0,
+            "inv_decor_id": 2
+          },
+          "via": "inv_decor_id"
+        },
+        {
+          "table": "decors_localizations_links",
+          "values": {
+            "decor_id": 2,
+            "decor_order": 1.0,
+            "inv_decor_id": 1
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "decors_localizations_links",
+          "values": {
+            "decor_id": 2,
+            "decor_order": 1.0,
+            "inv_decor_id": 1
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 2,
+            "parquet_id": 1
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 2,
+            "parquet_id": 1
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 2,
+            "parquet_id": 6
+          },
+          "via": "decor_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 2,
+            "parquet_id": 6
+          },
+          "via": "decor_id"
+        }
+      ],
+      "relations_sha256": "462768c04fefc45569bc5ccfd413cbc52619421873eb20bd23bf2405d55847b7",
+      "significant_fields_sha256": "9f486d2d3ad07c969c0fa332e91b1ddcc3cab242c8c5abaec6138b995a7ae556",
+      "stable_key": {
+        "field": "name",
+        "value": "Тест декор"
+      }
+    },
+    {
+      "collection": "parquets",
+      "id": 1,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-23T16:27:14.693Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "image",
+            "file_id": 8,
+            "order": 1.0,
+            "related_id": 1,
+            "related_type": "api::parquet.parquet"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 2,
+            "parquet_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 2,
+            "parquet_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 2,
+            "parquet_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 2,
+            "parquet_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 1,
+            "parquet_id": 4,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 1,
+            "parquet_id": 4,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 4,
+            "parquet_id": 1,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 4,
+            "parquet_id": 1,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 1,
+            "type_of_picture_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 1,
+            "type_of_picture_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 1,
+            "wood_id": 2
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 1,
+            "wood_id": 2
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "projects_parquet_links",
+          "values": {
+            "parquet_id": 1,
+            "project_id": 2
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "projects_parquet_links",
+          "values": {
+            "parquet_id": 1,
+            "project_id": 2
+          },
+          "via": "parquet_id"
+        }
+      ],
+      "relations_sha256": "b13383a1fcce2dda7e1a1eb0cfa6f2ec247ca7f95cb63635b81d2d3b02f01a7b",
+      "significant_fields_sha256": "d0f79eca4ebc89ad07bfbb53dbc72086ca615fb299fa95adb60679c91d49c12a",
+      "stable_key": {
+        "field": "name",
+        "value": "Тест паркет"
+      }
+    },
+    {
+      "collection": "parquets",
+      "id": 2,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T11:16:48.559Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "image",
+            "file_id": 9,
+            "order": 1.0,
+            "related_id": 2,
+            "related_type": "api::parquet.parquet"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "images",
+            "file_id": 10,
+            "order": 3.0,
+            "related_id": 2,
+            "related_type": "api::parquet.parquet"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "images",
+            "file_id": 11,
+            "order": 2.0,
+            "related_id": 2,
+            "related_type": "api::parquet.parquet"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "images",
+            "file_id": 12,
+            "order": 1.0,
+            "related_id": 2,
+            "related_type": "api::parquet.parquet"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 2
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 2
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 2,
+            "parquet_id": 5,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 2,
+            "parquet_id": 5,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 5,
+            "parquet_id": 2,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 5,
+            "parquet_id": 2,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 2,
+            "type_of_picture_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 2,
+            "type_of_picture_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 2,
+            "wood_id": 3
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 2,
+            "wood_id": 3
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "projects_parquet_links",
+          "values": {
+            "parquet_id": 2,
+            "project_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "projects_parquet_links",
+          "values": {
+            "parquet_id": 2,
+            "project_id": 1
+          },
+          "via": "parquet_id"
+        }
+      ],
+      "relations_sha256": "38d3b64c376d34117c87c5b950d3bdd68769a056f57d564bf51c79b4f0eaa90b",
+      "significant_fields_sha256": "c75e2af95dc7a0f3d3f7fa896eb8ddf22a530471ea5b048ced59d63c56cfa210",
+      "stable_key": {
+        "field": "name",
+        "value": "Test2"
+      }
+    },
+    {
+      "collection": "parquets",
+      "id": 4,
+      "locale": "en",
+      "publication": {
+        "published_at": "2024-07-27T16:50:05.444Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "image",
+            "file_id": 8,
+            "order": 1.0,
+            "related_id": 4,
+            "related_type": "api::parquet.parquet"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 4
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 4
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 4
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 4
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 4
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 4
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 4
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 4
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 1,
+            "parquet_id": 4,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 1,
+            "parquet_id": 4,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 4,
+            "parquet_id": 1,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 4,
+            "parquet_id": 1,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 4,
+            "type_of_picture_id": 2
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 4,
+            "type_of_picture_id": 2
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 4,
+            "wood_id": 6
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 4,
+            "wood_id": 6
+          },
+          "via": "parquet_id"
+        }
+      ],
+      "relations_sha256": "2810d948c668780f95b2f2da1754ab38cf3f9c71f27299320d9f6e4a6f5d95fa",
+      "significant_fields_sha256": "08b159716007c484f1f7db16ad9a0da040a750859ef17efb9215b602b48a25b0",
+      "stable_key": {
+        "field": "name",
+        "value": "Test ENG"
+      }
+    },
+    {
+      "collection": "parquets",
+      "id": 5,
+      "locale": "en",
+      "publication": {
+        "published_at": "2024-07-30T17:11:20.293Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "image",
+            "file_id": 9,
+            "order": 1.0,
+            "related_id": 5,
+            "related_type": "api::parquet.parquet"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 5
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 5
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 5
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 5
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 5
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 5
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 5
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 5
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 2,
+            "parquet_id": 5,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 2,
+            "parquet_id": 5,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 5,
+            "parquet_id": 2,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 5,
+            "parquet_id": 2,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 5,
+            "type_of_picture_id": 2
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 5,
+            "type_of_picture_id": 2
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 5,
+            "wood_id": 6
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 5,
+            "wood_id": 6
+          },
+          "via": "parquet_id"
+        }
+      ],
+      "relations_sha256": "5732586eb82274828844f8c9b40d0459ea2fdb4046c45945d3895bbb3009d00c",
+      "significant_fields_sha256": "d58b5a96645fbf5dc5632974a809ca6226d64a8005afc00c84a6c73f0ca28b0b",
+      "stable_key": {
+        "field": "name",
+        "value": "Main Test 3"
+      }
+    },
+    {
+      "collection": "parquets",
+      "id": 6,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-31T18:40:11.818Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "image",
+            "file_id": 2,
+            "order": 1.0,
+            "related_id": 6,
+            "related_type": "api::parquet.parquet"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 2,
+            "parquet_id": 6
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 2,
+            "parquet_id": 6
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 2,
+            "parquet_id": 6
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 2,
+            "parquet_id": 6
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 6
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 1,
+            "parquet_id": 6
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 2,
+            "parquet_id": 6
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 2,
+            "parquet_id": 6
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 6,
+            "parquet_id": 7,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 6,
+            "parquet_id": 7,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 7,
+            "parquet_id": 6,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 7,
+            "parquet_id": 6,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 6,
+            "type_of_picture_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 6,
+            "type_of_picture_id": 1
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 6,
+            "wood_id": 5
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 6,
+            "wood_id": 5
+          },
+          "via": "parquet_id"
+        }
+      ],
+      "relations_sha256": "a621edf72432c0c519fb4d576ef8e9d75a723a32b65f819161cdd7542c462f0a",
+      "significant_fields_sha256": "eef65fb5c303f97fd410fdbf701d7274966c878d972e1738304e8d39c07537df",
+      "stable_key": {
+        "field": "name",
+        "value": "Тестовый паркет 3"
+      }
+    },
+    {
+      "collection": "parquets",
+      "id": 7,
+      "locale": "en",
+      "publication": {
+        "published_at": "2024-07-31T18:40:44.212Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "image",
+            "file_id": 2,
+            "order": 1.0,
+            "related_id": 7,
+            "related_type": "api::parquet.parquet"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 7
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_coating_links",
+          "values": {
+            "coating_id": 1,
+            "parquet_id": 7
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 7
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_color_links",
+          "values": {
+            "color_id": 1,
+            "parquet_id": 7
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 7
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_country_links",
+          "values": {
+            "country_id": 2,
+            "parquet_id": 7
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 7
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_decor_links",
+          "values": {
+            "decor_id": 1,
+            "parquet_id": 7
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 6,
+            "parquet_id": 7,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 6,
+            "parquet_id": 7,
+            "parquet_order": 1.0
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 7,
+            "parquet_id": 6,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_localizations_links",
+          "values": {
+            "inv_parquet_id": 7,
+            "parquet_id": 6,
+            "parquet_order": 1.0
+          },
+          "via": "inv_parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 7,
+            "type_of_picture_id": 2
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 7,
+            "type_of_picture_id": 2
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 7,
+            "wood_id": 6
+          },
+          "via": "parquet_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 7,
+            "wood_id": 6
+          },
+          "via": "parquet_id"
+        }
+      ],
+      "relations_sha256": "dc3408993098186be18647738f9ab89726d75cb6a62896db993e941352b821e7",
+      "significant_fields_sha256": "4685e1e533e981c5ad4fc3ab942f3697da973042cb3cbdbbe3eabbc06ca07bef",
+      "stable_key": {
+        "field": "name",
+        "value": "Test parquet 3"
+      }
+    },
+    {
+      "collection": "projects",
+      "id": 1,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T13:47:30.127Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "image",
+            "file_id": 17,
+            "order": 1.0,
+            "related_id": 1,
+            "related_type": "api::project.project"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "media",
+            "file_id": 11,
+            "order": 4.0,
+            "related_id": 1,
+            "related_type": "api::project.project"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "media",
+            "file_id": 12,
+            "order": 5.0,
+            "related_id": 1,
+            "related_type": "api::project.project"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "media",
+            "file_id": 13,
+            "order": 6.0,
+            "related_id": 1,
+            "related_type": "api::project.project"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "media",
+            "file_id": 14,
+            "order": 7.0,
+            "related_id": 1,
+            "related_type": "api::project.project"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "media",
+            "file_id": 15,
+            "order": 3.0,
+            "related_id": 1,
+            "related_type": "api::project.project"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "media",
+            "file_id": 16,
+            "order": 2.0,
+            "related_id": 1,
+            "related_type": "api::project.project"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "media",
+            "file_id": 18,
+            "order": 1.0,
+            "related_id": 1,
+            "related_type": "api::project.project"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "projects_country_links",
+          "values": {
+            "country_id": 1,
+            "project_id": 1
+          },
+          "via": "project_id"
+        },
+        {
+          "table": "projects_country_links",
+          "values": {
+            "country_id": 1,
+            "project_id": 1
+          },
+          "via": "project_id"
+        },
+        {
+          "table": "projects_parquet_links",
+          "values": {
+            "parquet_id": 2,
+            "project_id": 1
+          },
+          "via": "project_id"
+        },
+        {
+          "table": "projects_parquet_links",
+          "values": {
+            "parquet_id": 2,
+            "project_id": 1
+          },
+          "via": "project_id"
+        },
+        {
+          "table": "projects_type_of_property_links",
+          "values": {
+            "project_id": 1,
+            "type_of_property_id": 3
+          },
+          "via": "project_id"
+        },
+        {
+          "table": "projects_type_of_property_links",
+          "values": {
+            "project_id": 1,
+            "type_of_property_id": 3
+          },
+          "via": "project_id"
+        }
+      ],
+      "relations_sha256": "084d4d91df600ec9f723d02e786c1f13c0a299c05ff9c059b848ae1fcf9a490d",
+      "significant_fields_sha256": "e980901e5e87f35c5deb7284bc0eef9284350eceb7b93309348a62e62154436f",
+      "stable_key": {
+        "field": "name",
+        "value": "<p>Частная квартира в&nbsp;<br>ЖК \"Сердце Столицы\"<br>Москва</p>"
+      }
+    },
+    {
+      "collection": "projects",
+      "id": 2,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T13:49:47.158Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "image",
+            "file_id": 5,
+            "order": 1.0,
+            "related_id": 2,
+            "related_type": "api::project.project"
+          },
+          "via": "related_id"
+        },
+        {
+          "table": "projects_country_links",
+          "values": {
+            "country_id": 1,
+            "project_id": 2
+          },
+          "via": "project_id"
+        },
+        {
+          "table": "projects_country_links",
+          "values": {
+            "country_id": 1,
+            "project_id": 2
+          },
+          "via": "project_id"
+        },
+        {
+          "table": "projects_parquet_links",
+          "values": {
+            "parquet_id": 1,
+            "project_id": 2
+          },
+          "via": "project_id"
+        },
+        {
+          "table": "projects_parquet_links",
+          "values": {
+            "parquet_id": 1,
+            "project_id": 2
+          },
+          "via": "project_id"
+        },
+        {
+          "table": "projects_type_of_property_links",
+          "values": {
+            "project_id": 2,
+            "type_of_property_id": 3
+          },
+          "via": "project_id"
+        },
+        {
+          "table": "projects_type_of_property_links",
+          "values": {
+            "project_id": 2,
+            "type_of_property_id": 3
+          },
+          "via": "project_id"
+        }
+      ],
+      "relations_sha256": "d834e2d9942413b63806e2d9fe01f3b2aae93ece9fbcb63afc73b85a5ad14ad0",
+      "significant_fields_sha256": "6abb7142a9fe0493a0cfe564efeddcf05a630c66dfe71175f321d1a4eb8573e2",
+      "stable_key": {
+        "field": "name",
+        "value": "Квартира в ЖК Богемия"
+      }
+    },
+    {
+      "collection": "site_news_many",
+      "id": 1,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T12:20:53.117Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "image",
+            "file_id": 3,
+            "order": 1.0,
+            "related_id": 1,
+            "related_type": "api::site-news.site-news"
+          },
+          "via": "related_id"
+        }
+      ],
+      "relations_sha256": "8577d1185b78353d7d0113004652e32727103adff6abc5f8801ace230f5079c3",
+      "significant_fields_sha256": "96b5aaad284130581a2812248e470f135839f5fe03768d53908bba6862afdab5",
+      "stable_key": {
+        "field": "name",
+        "value": "График работы"
+      }
+    },
+    {
+      "collection": "site_news_many",
+      "id": 2,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T12:21:14.835Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "files_related_morphs",
+          "values": {
+            "field": "image",
+            "file_id": 3,
+            "order": 1.0,
+            "related_id": 2,
+            "related_type": "api::site-news.site-news"
+          },
+          "via": "related_id"
+        }
+      ],
+      "relations_sha256": "3c8b5a4b0ea81188256abeeb7e9e73ee925bf43ab70ba3c2dfc9e4ba84fdddd2",
+      "significant_fields_sha256": "3fe87f6918b46ee7849cdfc660c2fc2e0fbf8fc0c4b66148c23de83e77e68f43",
+      "stable_key": {
+        "field": "name",
+        "value": "График работы 1"
+      }
+    },
+    {
+      "collection": "type_of_pictures",
+      "id": 1,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-23T16:25:37.012Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 1,
+            "type_of_picture_id": 1
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 1,
+            "type_of_picture_id": 1
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 2,
+            "type_of_picture_id": 1
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 2,
+            "type_of_picture_id": 1
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 6,
+            "type_of_picture_id": 1
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 6,
+            "type_of_picture_id": 1
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "type_of_pictures_localizations_links",
+          "values": {
+            "inv_type_of_picture_id": 1,
+            "type_of_picture_id": 2,
+            "type_of_picture_order": 1.0
+          },
+          "via": "inv_type_of_picture_id"
+        },
+        {
+          "table": "type_of_pictures_localizations_links",
+          "values": {
+            "inv_type_of_picture_id": 1,
+            "type_of_picture_id": 2,
+            "type_of_picture_order": 1.0
+          },
+          "via": "inv_type_of_picture_id"
+        },
+        {
+          "table": "type_of_pictures_localizations_links",
+          "values": {
+            "inv_type_of_picture_id": 2,
+            "type_of_picture_id": 1,
+            "type_of_picture_order": 1.0
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "type_of_pictures_localizations_links",
+          "values": {
+            "inv_type_of_picture_id": 2,
+            "type_of_picture_id": 1,
+            "type_of_picture_order": 1.0
+          },
+          "via": "type_of_picture_id"
+        }
+      ],
+      "relations_sha256": "d4242f467577f3c267ceabc60ee7150f9a0a1ce020bb0af43511df216d7ab44e",
+      "significant_fields_sha256": "3d6bf62279e5955ff092a12e2fdee22db6371e7349ef9227c706cf43b235fa7c",
+      "stable_key": {
+        "field": "name",
+        "value": "Елочка"
+      }
+    },
+    {
+      "collection": "type_of_pictures",
+      "id": 2,
+      "locale": "en",
+      "publication": {
+        "published_at": "2024-07-27T16:58:06.850Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 4,
+            "type_of_picture_id": 2
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 4,
+            "type_of_picture_id": 2
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 5,
+            "type_of_picture_id": 2
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 5,
+            "type_of_picture_id": 2
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 7,
+            "type_of_picture_id": 2
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "parquets_type_of_picture_links",
+          "values": {
+            "parquet_id": 7,
+            "type_of_picture_id": 2
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "type_of_pictures_localizations_links",
+          "values": {
+            "inv_type_of_picture_id": 1,
+            "type_of_picture_id": 2,
+            "type_of_picture_order": 1.0
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "type_of_pictures_localizations_links",
+          "values": {
+            "inv_type_of_picture_id": 1,
+            "type_of_picture_id": 2,
+            "type_of_picture_order": 1.0
+          },
+          "via": "type_of_picture_id"
+        },
+        {
+          "table": "type_of_pictures_localizations_links",
+          "values": {
+            "inv_type_of_picture_id": 2,
+            "type_of_picture_id": 1,
+            "type_of_picture_order": 1.0
+          },
+          "via": "inv_type_of_picture_id"
+        },
+        {
+          "table": "type_of_pictures_localizations_links",
+          "values": {
+            "inv_type_of_picture_id": 2,
+            "type_of_picture_id": 1,
+            "type_of_picture_order": 1.0
+          },
+          "via": "inv_type_of_picture_id"
+        }
+      ],
+      "relations_sha256": "f12cf6afa6a77f1df75257aa47b7cd58d75cbc043b1a24a5a6cc1685d7ea7016",
+      "significant_fields_sha256": "866f2d4995b7c219277fdafccaea5e14b62a12b1873fd9ef541c0551b9c40064",
+      "stable_key": {
+        "field": "name",
+        "value": "Yelochka"
+      }
+    },
+    {
+      "collection": "type_of_properties",
+      "id": 1,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T13:47:55.978Z",
+        "state": "published"
+      },
+      "relations": [],
+      "relations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "significant_fields_sha256": "3d4af3d71c337489f40214b10be16ddc538cdf5d22f5de4ff9c1190338d8845d",
+      "stable_key": {
+        "field": "name",
+        "value": "Коммерческие"
+      }
+    },
+    {
+      "collection": "type_of_properties",
+      "id": 2,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T13:48:14.571Z",
+        "state": "published"
+      },
+      "relations": [],
+      "relations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "significant_fields_sha256": "44b09894f3f59ee249f8ee08665b746dab6171433d80af14ff2094cddd9df43d",
+      "stable_key": {
+        "field": "name",
+        "value": "Детали"
+      }
+    },
+    {
+      "collection": "type_of_properties",
+      "id": 3,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T13:48:26.411Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "projects_type_of_property_links",
+          "values": {
+            "project_id": 1,
+            "type_of_property_id": 3
+          },
+          "via": "type_of_property_id"
+        },
+        {
+          "table": "projects_type_of_property_links",
+          "values": {
+            "project_id": 1,
+            "type_of_property_id": 3
+          },
+          "via": "type_of_property_id"
+        },
+        {
+          "table": "projects_type_of_property_links",
+          "values": {
+            "project_id": 2,
+            "type_of_property_id": 3
+          },
+          "via": "type_of_property_id"
+        },
+        {
+          "table": "projects_type_of_property_links",
+          "values": {
+            "project_id": 2,
+            "type_of_property_id": 3
+          },
+          "via": "type_of_property_id"
+        }
+      ],
+      "relations_sha256": "1df011a13dd6a0b5f9dcffa7b7cdc892e1a03dd14114681b9b5e4b77a7b03804",
+      "significant_fields_sha256": "8c9570f2f5088fe9b3d025e6c428468ec41b0807faf722a8721502907eaa9372",
+      "stable_key": {
+        "field": "name",
+        "value": "Резиденции"
+      }
+    },
+    {
+      "collection": "woods",
+      "id": 2,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T11:01:22.530Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 1,
+            "wood_id": 2
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 1,
+            "wood_id": 2
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "woods_localizations_links",
+          "values": {
+            "inv_wood_id": 2,
+            "wood_id": 6,
+            "wood_order": 1.0
+          },
+          "via": "inv_wood_id"
+        },
+        {
+          "table": "woods_localizations_links",
+          "values": {
+            "inv_wood_id": 2,
+            "wood_id": 6,
+            "wood_order": 1.0
+          },
+          "via": "inv_wood_id"
+        },
+        {
+          "table": "woods_localizations_links",
+          "values": {
+            "inv_wood_id": 6,
+            "wood_id": 2,
+            "wood_order": 1.0
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "woods_localizations_links",
+          "values": {
+            "inv_wood_id": 6,
+            "wood_id": 2,
+            "wood_order": 1.0
+          },
+          "via": "wood_id"
+        }
+      ],
+      "relations_sha256": "0b30fa41ea47bea424dbb76842dd0ae55af4441922fc117a102ac303056bd57a",
+      "significant_fields_sha256": "cbd1fc4b7bb8a52e9722e4f7e87e2a0be2ceae921a5d5de0a8a84d91aee4476d",
+      "stable_key": {
+        "field": "name",
+        "value": "Дуб"
+      }
+    },
+    {
+      "collection": "woods",
+      "id": 3,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T11:01:31.760Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 2,
+            "wood_id": 3
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 2,
+            "wood_id": 3
+          },
+          "via": "wood_id"
+        }
+      ],
+      "relations_sha256": "f297f33fd8e90e66746381c4a069689a7345a53349749f4e07fe9fa16995e7ff",
+      "significant_fields_sha256": "373e6c0469794777a552a1b64a1858ab26c4f4ce0541c0d4dad4706f031583ff",
+      "stable_key": {
+        "field": "name",
+        "value": "Ясень"
+      }
+    },
+    {
+      "collection": "woods",
+      "id": 4,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T11:01:38.762Z",
+        "state": "published"
+      },
+      "relations": [],
+      "relations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "significant_fields_sha256": "3a339e150a1ae2bb6b85e010fd9e98b7758da5109ae053a9d62fc1784fa98463",
+      "stable_key": {
+        "field": "name",
+        "value": "Ель"
+      }
+    },
+    {
+      "collection": "woods",
+      "id": 5,
+      "locale": "ru",
+      "publication": {
+        "published_at": "2024-07-27T11:01:51.448Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 6,
+            "wood_id": 5
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 6,
+            "wood_id": 5
+          },
+          "via": "wood_id"
+        }
+      ],
+      "relations_sha256": "5174d39e2dff17a5ffc2296d62dcbc3a51801b03eec21fc2f4046e2eeab2d743",
+      "significant_fields_sha256": "c578403360e7d96f46adc625d644c66460c7acb01bc6b84f367fda5fde0f65e7",
+      "stable_key": {
+        "field": "name",
+        "value": "Ясень термо"
+      }
+    },
+    {
+      "collection": "woods",
+      "id": 6,
+      "locale": "en",
+      "publication": {
+        "published_at": "2024-07-27T16:58:19.990Z",
+        "state": "published"
+      },
+      "relations": [
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 4,
+            "wood_id": 6
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 4,
+            "wood_id": 6
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 5,
+            "wood_id": 6
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 5,
+            "wood_id": 6
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 7,
+            "wood_id": 6
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "parquets_wood_links",
+          "values": {
+            "parquet_id": 7,
+            "wood_id": 6
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "woods_localizations_links",
+          "values": {
+            "inv_wood_id": 2,
+            "wood_id": 6,
+            "wood_order": 1.0
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "woods_localizations_links",
+          "values": {
+            "inv_wood_id": 2,
+            "wood_id": 6,
+            "wood_order": 1.0
+          },
+          "via": "wood_id"
+        },
+        {
+          "table": "woods_localizations_links",
+          "values": {
+            "inv_wood_id": 6,
+            "wood_id": 2,
+            "wood_order": 1.0
+          },
+          "via": "inv_wood_id"
+        },
+        {
+          "table": "woods_localizations_links",
+          "values": {
+            "inv_wood_id": 6,
+            "wood_id": 2,
+            "wood_order": 1.0
+          },
+          "via": "inv_wood_id"
+        }
+      ],
+      "relations_sha256": "ba73ef683d8514b334f24bf9b3d8cbcecb9c0c0484cbc219d428d83bc773dd5b",
+      "significant_fields_sha256": "5dccaf440a5c7ed14c5ae055defe5f1cfbf268815505cf070e85103cb51d5512",
+      "stable_key": {
+        "field": "name",
+        "value": "Oak"
+      }
+    }
+  ],
+  "media": [
+    {
+      "assets": [
+        {
+          "path": "d4e5f503_d5e7_4766_a06b_438c4f5ee374_386430a27d.JPG",
+          "sha256": "d2383a7cacf126607e76aa0c58c609f99276847dfe8449989796a0cacccc10b8",
+          "size_bytes": 90419
+        },
+        {
+          "path": "large_d4e5f503_d5e7_4766_a06b_438c4f5ee374_386430a27d.JPG",
+          "sha256": "154592531f2925a549d2131c8d298401be607f080d4922fbe8b3fdbcc608356b",
+          "size_bytes": 92109
+        },
+        {
+          "path": "medium_d4e5f503_d5e7_4766_a06b_438c4f5ee374_386430a27d.JPG",
+          "sha256": "04c2567b9de4d927e1fbba6ce59fc94449178290c6304e6060deca517d05d321",
+          "size_bytes": 60146
+        },
+        {
+          "path": "small_d4e5f503_d5e7_4766_a06b_438c4f5ee374_386430a27d.JPG",
+          "sha256": "0146d8e1b359b2c4eabf71b9c283220c949bc4d32017b059652734d6edee2894",
+          "size_bytes": 31348
+        },
+        {
+          "path": "thumbnail_d4e5f503_d5e7_4766_a06b_438c4f5ee374_386430a27d.JPG",
+          "sha256": "dbe83a21c0d68d6d2d433dd49caf94a2b340439f8124e3c6deaba32cacf6dee5",
+          "size_bytes": 4731
+        }
+      ],
+      "id": 1,
+      "metadata_sha256": "7514d8d779ecf5909985f1e7004e4cc18c778127be1431555ee3fa7c37ce9487",
+      "name": "d4e5f503-d5e7-4766-a06b-438c4f5ee374.JPG",
+      "url": "/uploads/d4e5f503_d5e7_4766_a06b_438c4f5ee374_386430a27d.JPG"
+    },
+    {
+      "assets": [
+        {
+          "path": "frame_06_1fd0c2f3ce.png",
+          "sha256": "af9d0981355b2d65e1e931e039b9df1743bb1f14e1f3d282b05fa5122bd42709",
+          "size_bytes": 13221
+        },
+        {
+          "path": "small_frame_06_1fd0c2f3ce.png",
+          "sha256": "9b375ccbaef2d6e1b3c4c34aeb69958e54ed68433300863c5d8b9e645577183f",
+          "size_bytes": 60906
+        },
+        {
+          "path": "thumbnail_frame_06_1fd0c2f3ce.png",
+          "sha256": "efe9c842fd74ba7746a52b494da33ba6ad6d206294969bfdf4e5ed74233c1e72",
+          "size_bytes": 15779
+        }
+      ],
+      "id": 2,
+      "metadata_sha256": "a173c1d9f666d4b55501770f1bf4aaf061aac78ede940465c87b407441b266f4",
+      "name": "frame_06.png",
+      "url": "/uploads/frame_06_1fd0c2f3ce.png"
+    },
+    {
+      "assets": [
+        {
+          "path": "nonna_news_d0fd37850f.jpg",
+          "sha256": "ba0ca51ef608a61e96afba762466a1e2e27a8bef7d54243f7d2d94e3b098cc52",
+          "size_bytes": 67138
+        },
+        {
+          "path": "small_nonna_news_d0fd37850f.jpg",
+          "sha256": "64d602e8f8f252756861f7e58828aeaaa2181043f1c0537e05edf24f31e6bd4d",
+          "size_bytes": 39318
+        },
+        {
+          "path": "thumbnail_nonna_news_d0fd37850f.jpg",
+          "sha256": "f91c1882c6348c6aace92466dbf98f25172f2d735c8c815a8f7c700b2627fc0b",
+          "size_bytes": 5920
+        }
+      ],
+      "id": 3,
+      "metadata_sha256": "69a3e409fa13801ead172ac86e62303f02396bcb863ca4dedc77905e47438572",
+      "name": "nonna_news.jpg",
+      "url": "/uploads/nonna_news_d0fd37850f.jpg"
+    },
+    {
+      "assets": [
+        {
+          "path": "project1_3579b1ddee.jpg",
+          "sha256": "060a9237d353f5fdb07557917446f6ccb81ad497d64f22a08f40b0a27e5583bc",
+          "size_bytes": 32907
+        },
+        {
+          "path": "thumbnail_project1_3579b1ddee.jpg",
+          "sha256": "67cf24f59a45272a7f6a4a08af8bd05c0488037ff616b5f67f28c2768962a9b7",
+          "size_bytes": 5821
+        }
+      ],
+      "id": 4,
+      "metadata_sha256": "f9446ac28e58b89397b9547ec6005b6a685639a15ce8da34f26a7d58955252eb",
+      "name": "project1.jpg",
+      "url": "/uploads/project1_3579b1ddee.jpg"
+    },
+    {
+      "assets": [
+        {
+          "path": "project2_d819db977b.jpg",
+          "sha256": "cba7a83b56bf453104c5f9db82d3d3ca2fdb2c5c40b06763f152bfdfd4276792",
+          "size_bytes": 33699
+        },
+        {
+          "path": "thumbnail_project2_d819db977b.jpg",
+          "sha256": "f9db4c3e0a8a0a779613ef3c97f534afe1474fd73b8a8451e1b70e60b8cc220b",
+          "size_bytes": 5642
+        }
+      ],
+      "id": 5,
+      "metadata_sha256": "25b2b38e8ecd7f2644c4ea42690a4e90d872e09d52c29b1de64d868b22232853",
+      "name": "project2.jpg",
+      "url": "/uploads/project2_d819db977b.jpg"
+    },
+    {
+      "assets": [
+        {
+          "path": "nonna_news_492401ec86.jpg",
+          "sha256": "ba0ca51ef608a61e96afba762466a1e2e27a8bef7d54243f7d2d94e3b098cc52",
+          "size_bytes": 67138
+        },
+        {
+          "path": "small_nonna_news_492401ec86.jpg",
+          "sha256": "64d602e8f8f252756861f7e58828aeaaa2181043f1c0537e05edf24f31e6bd4d",
+          "size_bytes": 39318
+        },
+        {
+          "path": "thumbnail_nonna_news_492401ec86.jpg",
+          "sha256": "f91c1882c6348c6aace92466dbf98f25172f2d735c8c815a8f7c700b2627fc0b",
+          "size_bytes": 5920
+        }
+      ],
+      "id": 6,
+      "metadata_sha256": "619817b48fc71225087ed495366c198e00b5ee1656b4403598518540b5fba25b",
+      "name": "nonna_news.jpg",
+      "url": "/uploads/nonna_news_492401ec86.jpg"
+    },
+    {
+      "assets": [
+        {
+          "path": "frame_3_77819cc655.png",
+          "sha256": "1d32a529deea5fc0070c37c857e2aba97575bb7568bb272f14f4bbbdec5cafe8",
+          "size_bytes": 50449
+        },
+        {
+          "path": "small_frame_3_77819cc655.png",
+          "sha256": "94ff303500bb6fffb29d3c67ba2b82e99f25b2c547688bd9ef73d138fd0e7dcb",
+          "size_bytes": 164728
+        },
+        {
+          "path": "thumbnail_frame_3_77819cc655.png",
+          "sha256": "f5d8e78324a4a041ba8322783157534a6f10c85c40a3a2db944108bc18a441cb",
+          "size_bytes": 48499
+        }
+      ],
+      "id": 7,
+      "metadata_sha256": "735c8b30c01b2e33d8d11119289d24bffb225291a5324bfa51e6057f10b33cbe",
+      "name": "frame_3.png",
+      "url": "/uploads/frame_3_77819cc655.png"
+    },
+    {
+      "assets": [
+        {
+          "path": "marzipan_700x700_4_ddec981e7d.png",
+          "sha256": "e562f9350b9061609509bc057415ba8863010aca860695f887fe0b5832663b56",
+          "size_bytes": 100405
+        },
+        {
+          "path": "thumbnail_marzipan_700x700_4_ddec981e7d.png",
+          "sha256": "0cc177167b8d3da15ccd9c01ee9eeb3e044d77e96c5b544512ab3a590a5695df",
+          "size_bytes": 40330
+        }
+      ],
+      "id": 8,
+      "metadata_sha256": "926d8e1fc78e8f027a2cb83903b3d4ee40ab132a4c79aa654f79123bde2ef1d5",
+      "name": "marzipan-700x700 4.png",
+      "url": "/uploads/marzipan_700x700_4_ddec981e7d.png"
+    },
+    {
+      "assets": [
+        {
+          "path": "marzipan_700x700_5_6c729121ae.png",
+          "sha256": "e41f34c2538bebb1a9888f053376a61462cfed5e1cd3b7baede51c7ac0fd767f",
+          "size_bytes": 119266
+        },
+        {
+          "path": "thumbnail_marzipan_700x700_5_6c729121ae.png",
+          "sha256": "06f0e4e8afcc051454e91fb02d2c4c37e89a377bc596c5980e7faae260f9c02e",
+          "size_bytes": 45493
+        }
+      ],
+      "id": 9,
+      "metadata_sha256": "23236564cd6dca8364a8159a25ca638d33808d08757b3443993e3f701c88ea2d",
+      "name": "marzipan-700x700 5.png",
+      "url": "/uploads/marzipan_700x700_5_6c729121ae.png"
+    },
+    {
+      "assets": [
+        {
+          "path": "Frame_3_50fcc45972.png",
+          "sha256": "be034a64996548eeea53942cdca8af22ec9b8d675d978f209996741430399f66",
+          "size_bytes": 885805
+        },
+        {
+          "path": "large_Frame_3_50fcc45972.png",
+          "sha256": "7f82c58cf306f6243a361440895abf6a5ffc32e1d66332f1520a46f61b824115",
+          "size_bytes": 1036165
+        },
+        {
+          "path": "medium_Frame_3_50fcc45972.png",
+          "sha256": "3f1ccf9368ae8452bbca2e811f1d0e67a3b7b224bda1a7eb984b5036b4129418",
+          "size_bytes": 602548
+        },
+        {
+          "path": "small_Frame_3_50fcc45972.png",
+          "sha256": "0e1f187bcde0f08ae31407db755c7d27a0abb0531807d01c632f03f427d39779",
+          "size_bytes": 282357
+        },
+        {
+          "path": "thumbnail_Frame_3_50fcc45972.png",
+          "sha256": "a764fb8f1e503d25001c72e47186dae941a9a5db50afa1fae7428cf9ad096279",
+          "size_bytes": 75023
+        }
+      ],
+      "id": 10,
+      "metadata_sha256": "d221c462494f3bd5f4f8488af2a2d28cd65e9e165e17c01501a970e08cee9d5f",
+      "name": "Frame 3.png",
+      "url": "/uploads/Frame_3_50fcc45972.png"
+    },
+    {
+      "assets": [
+        {
+          "path": "large_photo_2024_08_30_20_48_31_22c39658e5.jpeg",
+          "sha256": "788c8ce6fe91a36330e40bb27fc9024477dc38f3651716d7bd75ac2588f43cbb",
+          "size_bytes": 86581
+        },
+        {
+          "path": "medium_photo_2024_08_30_20_48_31_22c39658e5.jpeg",
+          "sha256": "def5b03d4356dbb8f639cd8eb12f4d280ff889a52dae8590032cdb17cc4b453b",
+          "size_bytes": 50999
+        },
+        {
+          "path": "photo_2024_08_30_20_48_31_22c39658e5.jpeg",
+          "sha256": "e5d138008a29d703ffd1192952dd75a369f4a91c17cb42bf8531b269c2e3cf14",
+          "size_bytes": 143522
+        },
+        {
+          "path": "small_photo_2024_08_30_20_48_31_22c39658e5.jpeg",
+          "sha256": "0c05059adfe89726efdd75d6d52af1a626290b4eda9e7d535cdaa6c055851247",
+          "size_bytes": 25640
+        },
+        {
+          "path": "thumbnail_photo_2024_08_30_20_48_31_22c39658e5.jpeg",
+          "sha256": "78973f355bd035955e92e0e89ca95b0ac580ab66fc6931848c1b0e469f669287",
+          "size_bytes": 7702
+        }
+      ],
+      "id": 11,
+      "metadata_sha256": "5ee7a00e7598ad0b4793d0f2771930fe6cd64dda8964f27f1ce98be2e62d2971",
+      "name": "photo_2024-08-30 20.48.31.jpeg",
+      "url": "/uploads/photo_2024_08_30_20_48_31_22c39658e5.jpeg"
+    },
+    {
+      "assets": [
+        {
+          "path": "large_photo_2024_08_30_20_48_29_1_04bc616d44.jpeg",
+          "sha256": "991988cffa76a6ca1798b86dfbfed57802af9367028de430e08ecd3f5e01aab5",
+          "size_bytes": 105806
+        },
+        {
+          "path": "medium_photo_2024_08_30_20_48_29_1_04bc616d44.jpeg",
+          "sha256": "cae0f82ed1816290976bd4726c07fab486147336475a0ae59963f7599bf73f96",
+          "size_bytes": 61334
+        },
+        {
+          "path": "photo_2024_08_30_20_48_29_1_04bc616d44.jpeg",
+          "sha256": "387e0f93106f23cc2f248ae71035cf069077aa3a0c5210eff7e875402b552bc3",
+          "size_bytes": 155917
+        },
+        {
+          "path": "small_photo_2024_08_30_20_48_29_1_04bc616d44.jpeg",
+          "sha256": "43fda1d8eab2722714dfebe70ba396a27c60e42d10483f556fb6bdea5185bdbe",
+          "size_bytes": 30666
+        },
+        {
+          "path": "thumbnail_photo_2024_08_30_20_48_29_1_04bc616d44.jpeg",
+          "sha256": "5b15256a25f7f0fd369efd574fdd070f3d22fb96ef0beebd826b757cab78d91b",
+          "size_bytes": 4788
+        }
+      ],
+      "id": 12,
+      "metadata_sha256": "f07bf1a5c928a25299055b8650fae6291a8873d5b4dee155ef45ce84beea948e",
+      "name": "photo_2024-08-30 20.48.29 (1).jpeg",
+      "url": "/uploads/photo_2024_08_30_20_48_29_1_04bc616d44.jpeg"
+    },
+    {
+      "assets": [
+        {
+          "path": "large_photo_2024_08_30_20_48_29_f86f1821bb.jpeg",
+          "sha256": "1b77e017ccbdccecf87f19baefacc62af2fd7764f77b64996cf219288cbc0803",
+          "size_bytes": 119130
+        },
+        {
+          "path": "medium_photo_2024_08_30_20_48_29_f86f1821bb.jpeg",
+          "sha256": "40247bf7abe1bf420963e099125936c13d74986a53cc4ac276abf51787ca28dc",
+          "size_bytes": 66388
+        },
+        {
+          "path": "photo_2024_08_30_20_48_29_f86f1821bb.jpeg",
+          "sha256": "3ec7c74d5004991e8ff269876763b8835b63e74c8b9bf17129b503a97bee0f46",
+          "size_bytes": 177565
+        },
+        {
+          "path": "small_photo_2024_08_30_20_48_29_f86f1821bb.jpeg",
+          "sha256": "70e24ab3dd10ef3c9376a842162aea40839b46a5dded69be54ee80bf9d0f71bb",
+          "size_bytes": 30820
+        },
+        {
+          "path": "thumbnail_photo_2024_08_30_20_48_29_f86f1821bb.jpeg",
+          "sha256": "43d0b07c4512fb80be86ef67d3c6e79521f1a28c4a349ef09e56b7c876b3e193",
+          "size_bytes": 4149
+        }
+      ],
+      "id": 13,
+      "metadata_sha256": "6735f85204bbc79ee650bf30e8a7476b45cfca100adbb2493118fc8ea52258ea",
+      "name": "photo_2024-08-30 20.48.29.jpeg",
+      "url": "/uploads/photo_2024_08_30_20_48_29_f86f1821bb.jpeg"
+    },
+    {
+      "assets": [
+        {
+          "path": "large_photo_2024_08_30_20_48_28_766ebf7afb.jpeg",
+          "sha256": "d82b937016cef99e70d49e9be3f3c7b6586c37c0466ae7d43d27afdd3055c52e",
+          "size_bytes": 100611
+        },
+        {
+          "path": "medium_photo_2024_08_30_20_48_28_766ebf7afb.jpeg",
+          "sha256": "8a6fd9388c9d39075055afae8dd1f259dec4e18581623b75d936b57c5529171d",
+          "size_bytes": 60964
+        },
+        {
+          "path": "photo_2024_08_30_20_48_28_766ebf7afb.jpeg",
+          "sha256": "f840d224fb5b60380e3479e635d72d335ca0a8d2972dc6001529f00d15616835",
+          "size_bytes": 143535
+        },
+        {
+          "path": "small_photo_2024_08_30_20_48_28_766ebf7afb.jpeg",
+          "sha256": "a56286a752f3bc8b5a2295fc8d8eaea53080c65a2ebcb20714fff8dc979e9fc4",
+          "size_bytes": 30942
+        },
+        {
+          "path": "thumbnail_photo_2024_08_30_20_48_28_766ebf7afb.jpeg",
+          "sha256": "d718e3b1cad8420dc226b6409e2efa34cdca0b9cd1f774632714ab3144457186",
+          "size_bytes": 4445
+        }
+      ],
+      "id": 14,
+      "metadata_sha256": "bf68773d0ac86079488df4c6bf1bfc9a11858eb7dc58f18105676f2494179c88",
+      "name": "photo_2024-08-30 20.48.28.jpeg",
+      "url": "/uploads/photo_2024_08_30_20_48_28_766ebf7afb.jpeg"
+    },
+    {
+      "assets": [
+        {
+          "path": "large_photo_2024_08_30_20_48_27_1_1a84b5e5ab.jpeg",
+          "sha256": "2c93b93d361763b935594ad649be624cf4b48674e23511bcae5083c83a1af055",
+          "size_bytes": 136553
+        },
+        {
+          "path": "medium_photo_2024_08_30_20_48_27_1_1a84b5e5ab.jpeg",
+          "sha256": "7ead9fbd157e407cb0121f73c8a477b9242092915f471b2218bd75af853ae5b3",
+          "size_bytes": 77633
+        },
+        {
+          "path": "photo_2024_08_30_20_48_27_1_1a84b5e5ab.jpeg",
+          "sha256": "2d51bb7a58a1d81add990d6bf3ea3c7751bca94d353123f8ed9e1f957d6056de",
+          "size_bytes": 201345
+        },
+        {
+          "path": "small_photo_2024_08_30_20_48_27_1_1a84b5e5ab.jpeg",
+          "sha256": "532a7175e9a7dc53b486c3794ef94c92ab672e8cc740a1e66fe199b77faf6a9f",
+          "size_bytes": 37056
+        },
+        {
+          "path": "thumbnail_photo_2024_08_30_20_48_27_1_1a84b5e5ab.jpeg",
+          "sha256": "cc88a7a4c06a1ce95a3677439d64915829c969c9a3470914b5cec0af64642551",
+          "size_bytes": 4990
+        }
+      ],
+      "id": 15,
+      "metadata_sha256": "56ac773717ded0b4276310220723ac117e169797cdc3aa93941b7d2e23e59af4",
+      "name": "photo_2024-08-30 20.48.27 (1).jpeg",
+      "url": "/uploads/photo_2024_08_30_20_48_27_1_1a84b5e5ab.jpeg"
+    },
+    {
+      "assets": [
+        {
+          "path": "large_photo_2024_08_30_20_48_27_751d5454e6.jpeg",
+          "sha256": "5efff3c87b4e8a9248e98348a526e3ce61415668884f5e8153d5b1321c2087c9",
+          "size_bytes": 101151
+        },
+        {
+          "path": "medium_photo_2024_08_30_20_48_27_751d5454e6.jpeg",
+          "sha256": "88fcfe74bf7f259e7b384b472d6a95d70228712bf04befec670c70b7f63088ad",
+          "size_bytes": 56191
+        },
+        {
+          "path": "photo_2024_08_30_20_48_27_751d5454e6.jpeg",
+          "sha256": "2dfc83db82e01158e527eda79b762fc027a8f7b969cb38a8e94653ed4d8bb4c6",
+          "size_bytes": 151151
+        },
+        {
+          "path": "small_photo_2024_08_30_20_48_27_751d5454e6.jpeg",
+          "sha256": "b7dc7257e7aabf840847f4af5953e93b9a144d6301492f82d14ee2f058c031d0",
+          "size_bytes": 26397
+        },
+        {
+          "path": "thumbnail_photo_2024_08_30_20_48_27_751d5454e6.jpeg",
+          "sha256": "63e4ed1e3e546cb3906eee07cd692f83af6e8d99d5f67a0612d5c9c9dbffe7ab",
+          "size_bytes": 3884
+        }
+      ],
+      "id": 16,
+      "metadata_sha256": "0b4737f09965fdd2bc692745d6cdfd6659eb9f629174601158bbfca47eea47c8",
+      "name": "photo_2024-08-30 20.48.27.jpeg",
+      "url": "/uploads/photo_2024_08_30_20_48_27_751d5454e6.jpeg"
+    },
+    {
+      "assets": [
+        {
+          "path": "large_photo_2024_08_30_20_48_22_630c64693a.jpeg",
+          "sha256": "0de2c739846ad7d4cc487fa754309b4773f89696c48dd1d2b358c86e74eff85d",
+          "size_bytes": 70180
+        },
+        {
+          "path": "medium_photo_2024_08_30_20_48_22_630c64693a.jpeg",
+          "sha256": "1e415434ed3d0ec44387064d4f1b543b20885af8874597a57e5b377d8fdc1109",
+          "size_bytes": 40029
+        },
+        {
+          "path": "photo_2024_08_30_20_48_22_630c64693a.jpeg",
+          "sha256": "04b515503598279695c7129a3dfb2a9e7dcd77daab5c88eb4f1194d1b6a478d4",
+          "size_bytes": 105014
+        },
+        {
+          "path": "small_photo_2024_08_30_20_48_22_630c64693a.jpeg",
+          "sha256": "99c3ae6752babc4c3292fa59df53cabda057aafbb008fd4c09e88558bfa85090",
+          "size_bytes": 19262
+        },
+        {
+          "path": "thumbnail_photo_2024_08_30_20_48_22_630c64693a.jpeg",
+          "sha256": "3f51936a9e0335ade079b918da0aee8ad360088aaeda832bd387c2143b7ca167",
+          "size_bytes": 3113
+        }
+      ],
+      "id": 17,
+      "metadata_sha256": "e3d23520f6d1426ac602269d9d01c1ffa93dd6837b628fc3206adf44ab1daed8",
+      "name": "photo_2024-08-30 20.48.22.jpeg",
+      "url": "/uploads/photo_2024_08_30_20_48_22_630c64693a.jpeg"
+    },
+    {
+      "assets": [
+        {
+          "path": "large_photo_2024_08_30_20_48_26_00cb62924c.jpeg",
+          "sha256": "7086a2c5ac54de43986b3a978fb71424b14d26d17de3af3436b0a754817c5fbe",
+          "size_bytes": 73771
+        },
+        {
+          "path": "medium_photo_2024_08_30_20_48_26_00cb62924c.jpeg",
+          "sha256": "5932cede5529e2972ff0ed5251f3aac7e8ea485ced173341005ae76a8385ded8",
+          "size_bytes": 40929
+        },
+        {
+          "path": "photo_2024_08_30_20_48_26_00cb62924c.jpeg",
+          "sha256": "18211f7efb880db3d11473932f3175a929f6d0a3c30cfc08f0834c5bf8a82bb9",
+          "size_bytes": 110632
+        },
+        {
+          "path": "small_photo_2024_08_30_20_48_26_00cb62924c.jpeg",
+          "sha256": "d28e93aa38d116670d2f1fccf6cfc852b91e4fa2d9456a702d037a4ff4885639",
+          "size_bytes": 20221
+        },
+        {
+          "path": "thumbnail_photo_2024_08_30_20_48_26_00cb62924c.jpeg",
+          "sha256": "dc2e68bc6a883947f39fd0e30141f77c134c19f4ca288b0d84ec30ec8ab37247",
+          "size_bytes": 3418
+        }
+      ],
+      "id": 18,
+      "metadata_sha256": "3636583d65aee40dc2262798f796150574edcd8655b1e883bd5dd6af754a8903",
+      "name": "photo_2024-08-30 20.48.26.jpeg",
+      "url": "/uploads/photo_2024_08_30_20_48_26_00cb62924c.jpeg"
+    }
+  ],
+  "relations": [
+    {
+      "table": "coatings_localizations_links",
+      "values": {
+        "coating_id": 1,
+        "coating_order": 1.0,
+        "inv_coating_id": 2
+      }
+    },
+    {
+      "table": "coatings_localizations_links",
+      "values": {
+        "coating_id": 2,
+        "coating_order": 1.0,
+        "inv_coating_id": 1
+      }
+    },
+    {
+      "table": "colors_localizations_links",
+      "values": {
+        "color_id": 1,
+        "color_order": 1.0,
+        "inv_color_id": 2
+      }
+    },
+    {
+      "table": "colors_localizations_links",
+      "values": {
+        "color_id": 2,
+        "color_order": 1.0,
+        "inv_color_id": 1
+      }
+    },
+    {
+      "table": "countries_localizations_links",
+      "values": {
+        "country_id": 1,
+        "country_order": 1.0,
+        "inv_country_id": 2
+      }
+    },
+    {
+      "table": "countries_localizations_links",
+      "values": {
+        "country_id": 2,
+        "country_order": 1.0,
+        "inv_country_id": 1
+      }
+    },
+    {
+      "table": "decors_localizations_links",
+      "values": {
+        "decor_id": 1,
+        "decor_order": 1.0,
+        "inv_decor_id": 2
+      }
+    },
+    {
+      "table": "decors_localizations_links",
+      "values": {
+        "decor_id": 2,
+        "decor_order": 1.0,
+        "inv_decor_id": 1
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "image",
+        "file_id": 17,
+        "order": 1.0,
+        "related_id": 1,
+        "related_type": "api::project.project"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "image",
+        "file_id": 2,
+        "order": 1.0,
+        "related_id": 6,
+        "related_type": "api::parquet.parquet"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "image",
+        "file_id": 2,
+        "order": 1.0,
+        "related_id": 7,
+        "related_type": "api::parquet.parquet"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "image",
+        "file_id": 3,
+        "order": 1.0,
+        "related_id": 1,
+        "related_type": "api::site-news.site-news"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "image",
+        "file_id": 3,
+        "order": 1.0,
+        "related_id": 2,
+        "related_type": "api::site-news.site-news"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "image",
+        "file_id": 5,
+        "order": 1.0,
+        "related_id": 2,
+        "related_type": "api::project.project"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "image",
+        "file_id": 8,
+        "order": 1.0,
+        "related_id": 1,
+        "related_type": "api::parquet.parquet"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "image",
+        "file_id": 8,
+        "order": 1.0,
+        "related_id": 4,
+        "related_type": "api::parquet.parquet"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "image",
+        "file_id": 9,
+        "order": 1.0,
+        "related_id": 2,
+        "related_type": "api::parquet.parquet"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "image",
+        "file_id": 9,
+        "order": 1.0,
+        "related_id": 5,
+        "related_type": "api::parquet.parquet"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "images",
+        "file_id": 10,
+        "order": 3.0,
+        "related_id": 2,
+        "related_type": "api::parquet.parquet"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "images",
+        "file_id": 11,
+        "order": 2.0,
+        "related_id": 2,
+        "related_type": "api::parquet.parquet"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "images",
+        "file_id": 12,
+        "order": 1.0,
+        "related_id": 2,
+        "related_type": "api::parquet.parquet"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "media",
+        "file_id": 11,
+        "order": 4.0,
+        "related_id": 1,
+        "related_type": "api::project.project"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "media",
+        "file_id": 12,
+        "order": 5.0,
+        "related_id": 1,
+        "related_type": "api::project.project"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "media",
+        "file_id": 13,
+        "order": 6.0,
+        "related_id": 1,
+        "related_type": "api::project.project"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "media",
+        "file_id": 14,
+        "order": 7.0,
+        "related_id": 1,
+        "related_type": "api::project.project"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "media",
+        "file_id": 15,
+        "order": 3.0,
+        "related_id": 1,
+        "related_type": "api::project.project"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "media",
+        "file_id": 16,
+        "order": 2.0,
+        "related_id": 1,
+        "related_type": "api::project.project"
+      }
+    },
+    {
+      "table": "files_related_morphs",
+      "values": {
+        "field": "media",
+        "file_id": 18,
+        "order": 1.0,
+        "related_id": 1,
+        "related_type": "api::project.project"
+      }
+    },
+    {
+      "table": "parquets_coating_links",
+      "values": {
+        "coating_id": 1,
+        "parquet_id": 4
+      }
+    },
+    {
+      "table": "parquets_coating_links",
+      "values": {
+        "coating_id": 1,
+        "parquet_id": 5
+      }
+    },
+    {
+      "table": "parquets_coating_links",
+      "values": {
+        "coating_id": 1,
+        "parquet_id": 7
+      }
+    },
+    {
+      "table": "parquets_coating_links",
+      "values": {
+        "coating_id": 2,
+        "parquet_id": 1
+      }
+    },
+    {
+      "table": "parquets_coating_links",
+      "values": {
+        "coating_id": 2,
+        "parquet_id": 6
+      }
+    },
+    {
+      "table": "parquets_color_links",
+      "values": {
+        "color_id": 1,
+        "parquet_id": 1
+      }
+    },
+    {
+      "table": "parquets_color_links",
+      "values": {
+        "color_id": 1,
+        "parquet_id": 4
+      }
+    },
+    {
+      "table": "parquets_color_links",
+      "values": {
+        "color_id": 1,
+        "parquet_id": 5
+      }
+    },
+    {
+      "table": "parquets_color_links",
+      "values": {
+        "color_id": 1,
+        "parquet_id": 7
+      }
+    },
+    {
+      "table": "parquets_color_links",
+      "values": {
+        "color_id": 2,
+        "parquet_id": 6
+      }
+    },
+    {
+      "table": "parquets_country_links",
+      "values": {
+        "country_id": 1,
+        "parquet_id": 1
+      }
+    },
+    {
+      "table": "parquets_country_links",
+      "values": {
+        "country_id": 1,
+        "parquet_id": 2
+      }
+    },
+    {
+      "table": "parquets_country_links",
+      "values": {
+        "country_id": 1,
+        "parquet_id": 6
+      }
+    },
+    {
+      "table": "parquets_country_links",
+      "values": {
+        "country_id": 2,
+        "parquet_id": 4
+      }
+    },
+    {
+      "table": "parquets_country_links",
+      "values": {
+        "country_id": 2,
+        "parquet_id": 5
+      }
+    },
+    {
+      "table": "parquets_country_links",
+      "values": {
+        "country_id": 2,
+        "parquet_id": 7
+      }
+    },
+    {
+      "table": "parquets_decor_links",
+      "values": {
+        "decor_id": 1,
+        "parquet_id": 4
+      }
+    },
+    {
+      "table": "parquets_decor_links",
+      "values": {
+        "decor_id": 1,
+        "parquet_id": 5
+      }
+    },
+    {
+      "table": "parquets_decor_links",
+      "values": {
+        "decor_id": 1,
+        "parquet_id": 7
+      }
+    },
+    {
+      "table": "parquets_decor_links",
+      "values": {
+        "decor_id": 2,
+        "parquet_id": 1
+      }
+    },
+    {
+      "table": "parquets_decor_links",
+      "values": {
+        "decor_id": 2,
+        "parquet_id": 6
+      }
+    },
+    {
+      "table": "parquets_localizations_links",
+      "values": {
+        "inv_parquet_id": 1,
+        "parquet_id": 4,
+        "parquet_order": 1.0
+      }
+    },
+    {
+      "table": "parquets_localizations_links",
+      "values": {
+        "inv_parquet_id": 2,
+        "parquet_id": 5,
+        "parquet_order": 1.0
+      }
+    },
+    {
+      "table": "parquets_localizations_links",
+      "values": {
+        "inv_parquet_id": 4,
+        "parquet_id": 1,
+        "parquet_order": 1.0
+      }
+    },
+    {
+      "table": "parquets_localizations_links",
+      "values": {
+        "inv_parquet_id": 5,
+        "parquet_id": 2,
+        "parquet_order": 1.0
+      }
+    },
+    {
+      "table": "parquets_localizations_links",
+      "values": {
+        "inv_parquet_id": 6,
+        "parquet_id": 7,
+        "parquet_order": 1.0
+      }
+    },
+    {
+      "table": "parquets_localizations_links",
+      "values": {
+        "inv_parquet_id": 7,
+        "parquet_id": 6,
+        "parquet_order": 1.0
+      }
+    },
+    {
+      "table": "parquets_type_of_picture_links",
+      "values": {
+        "parquet_id": 1,
+        "type_of_picture_id": 1
+      }
+    },
+    {
+      "table": "parquets_type_of_picture_links",
+      "values": {
+        "parquet_id": 2,
+        "type_of_picture_id": 1
+      }
+    },
+    {
+      "table": "parquets_type_of_picture_links",
+      "values": {
+        "parquet_id": 4,
+        "type_of_picture_id": 2
+      }
+    },
+    {
+      "table": "parquets_type_of_picture_links",
+      "values": {
+        "parquet_id": 5,
+        "type_of_picture_id": 2
+      }
+    },
+    {
+      "table": "parquets_type_of_picture_links",
+      "values": {
+        "parquet_id": 6,
+        "type_of_picture_id": 1
+      }
+    },
+    {
+      "table": "parquets_type_of_picture_links",
+      "values": {
+        "parquet_id": 7,
+        "type_of_picture_id": 2
+      }
+    },
+    {
+      "table": "parquets_wood_links",
+      "values": {
+        "parquet_id": 1,
+        "wood_id": 2
+      }
+    },
+    {
+      "table": "parquets_wood_links",
+      "values": {
+        "parquet_id": 2,
+        "wood_id": 3
+      }
+    },
+    {
+      "table": "parquets_wood_links",
+      "values": {
+        "parquet_id": 4,
+        "wood_id": 6
+      }
+    },
+    {
+      "table": "parquets_wood_links",
+      "values": {
+        "parquet_id": 5,
+        "wood_id": 6
+      }
+    },
+    {
+      "table": "parquets_wood_links",
+      "values": {
+        "parquet_id": 6,
+        "wood_id": 5
+      }
+    },
+    {
+      "table": "parquets_wood_links",
+      "values": {
+        "parquet_id": 7,
+        "wood_id": 6
+      }
+    },
+    {
+      "table": "projects_country_links",
+      "values": {
+        "country_id": 1,
+        "project_id": 1
+      }
+    },
+    {
+      "table": "projects_country_links",
+      "values": {
+        "country_id": 1,
+        "project_id": 2
+      }
+    },
+    {
+      "table": "projects_parquet_links",
+      "values": {
+        "parquet_id": 1,
+        "project_id": 2
+      }
+    },
+    {
+      "table": "projects_parquet_links",
+      "values": {
+        "parquet_id": 2,
+        "project_id": 1
+      }
+    },
+    {
+      "table": "projects_type_of_property_links",
+      "values": {
+        "project_id": 1,
+        "type_of_property_id": 3
+      }
+    },
+    {
+      "table": "projects_type_of_property_links",
+      "values": {
+        "project_id": 2,
+        "type_of_property_id": 3
+      }
+    },
+    {
+      "table": "type_of_pictures_localizations_links",
+      "values": {
+        "inv_type_of_picture_id": 1,
+        "type_of_picture_id": 2,
+        "type_of_picture_order": 1.0
+      }
+    },
+    {
+      "table": "type_of_pictures_localizations_links",
+      "values": {
+        "inv_type_of_picture_id": 2,
+        "type_of_picture_id": 1,
+        "type_of_picture_order": 1.0
+      }
+    },
+    {
+      "table": "woods_localizations_links",
+      "values": {
+        "inv_wood_id": 2,
+        "wood_id": 6,
+        "wood_order": 1.0
+      }
+    },
+    {
+      "table": "woods_localizations_links",
+      "values": {
+        "inv_wood_id": 6,
+        "wood_id": 2,
+        "wood_order": 1.0
+      }
+    }
+  ],
+  "release": {
+    "frontend_commit_sha": "972802f2cabb5e2713f2b0489cbae08e4d2ca6a7",
+    "frontend_submodule_path": "nonna.ru",
+    "root_commit_sha": "50f9f49723688f36a40d55cfb8333241ef8ccc97"
+  },
+  "schema_version": 1,
+  "summary": {
+    "collection_count": 11,
+    "entry_count": 31,
+    "media_row_count": 18,
+    "missing_referenced_upload_count": 0,
+    "orphan_upload_count": 0,
+    "physical_upload_count": 70,
+    "published_entry_count": 31,
+    "referenced_upload_count": 70,
+    "relation_count": 77
+  },
+  "uploads": {
+    "orphan_files": [],
+    "physical_files": [
+      {
+        "path": "Frame_3_50fcc45972.png",
+        "sha256": "be034a64996548eeea53942cdca8af22ec9b8d675d978f209996741430399f66",
+        "size_bytes": 885805
+      },
+      {
+        "path": "d4e5f503_d5e7_4766_a06b_438c4f5ee374_386430a27d.JPG",
+        "sha256": "d2383a7cacf126607e76aa0c58c609f99276847dfe8449989796a0cacccc10b8",
+        "size_bytes": 90419
+      },
+      {
+        "path": "frame_06_1fd0c2f3ce.png",
+        "sha256": "af9d0981355b2d65e1e931e039b9df1743bb1f14e1f3d282b05fa5122bd42709",
+        "size_bytes": 13221
+      },
+      {
+        "path": "frame_3_77819cc655.png",
+        "sha256": "1d32a529deea5fc0070c37c857e2aba97575bb7568bb272f14f4bbbdec5cafe8",
+        "size_bytes": 50449
+      },
+      {
+        "path": "large_Frame_3_50fcc45972.png",
+        "sha256": "7f82c58cf306f6243a361440895abf6a5ffc32e1d66332f1520a46f61b824115",
+        "size_bytes": 1036165
+      },
+      {
+        "path": "large_d4e5f503_d5e7_4766_a06b_438c4f5ee374_386430a27d.JPG",
+        "sha256": "154592531f2925a549d2131c8d298401be607f080d4922fbe8b3fdbcc608356b",
+        "size_bytes": 92109
+      },
+      {
+        "path": "large_photo_2024_08_30_20_48_22_630c64693a.jpeg",
+        "sha256": "0de2c739846ad7d4cc487fa754309b4773f89696c48dd1d2b358c86e74eff85d",
+        "size_bytes": 70180
+      },
+      {
+        "path": "large_photo_2024_08_30_20_48_26_00cb62924c.jpeg",
+        "sha256": "7086a2c5ac54de43986b3a978fb71424b14d26d17de3af3436b0a754817c5fbe",
+        "size_bytes": 73771
+      },
+      {
+        "path": "large_photo_2024_08_30_20_48_27_1_1a84b5e5ab.jpeg",
+        "sha256": "2c93b93d361763b935594ad649be624cf4b48674e23511bcae5083c83a1af055",
+        "size_bytes": 136553
+      },
+      {
+        "path": "large_photo_2024_08_30_20_48_27_751d5454e6.jpeg",
+        "sha256": "5efff3c87b4e8a9248e98348a526e3ce61415668884f5e8153d5b1321c2087c9",
+        "size_bytes": 101151
+      },
+      {
+        "path": "large_photo_2024_08_30_20_48_28_766ebf7afb.jpeg",
+        "sha256": "d82b937016cef99e70d49e9be3f3c7b6586c37c0466ae7d43d27afdd3055c52e",
+        "size_bytes": 100611
+      },
+      {
+        "path": "large_photo_2024_08_30_20_48_29_1_04bc616d44.jpeg",
+        "sha256": "991988cffa76a6ca1798b86dfbfed57802af9367028de430e08ecd3f5e01aab5",
+        "size_bytes": 105806
+      },
+      {
+        "path": "large_photo_2024_08_30_20_48_29_f86f1821bb.jpeg",
+        "sha256": "1b77e017ccbdccecf87f19baefacc62af2fd7764f77b64996cf219288cbc0803",
+        "size_bytes": 119130
+      },
+      {
+        "path": "large_photo_2024_08_30_20_48_31_22c39658e5.jpeg",
+        "sha256": "788c8ce6fe91a36330e40bb27fc9024477dc38f3651716d7bd75ac2588f43cbb",
+        "size_bytes": 86581
+      },
+      {
+        "path": "marzipan_700x700_4_ddec981e7d.png",
+        "sha256": "e562f9350b9061609509bc057415ba8863010aca860695f887fe0b5832663b56",
+        "size_bytes": 100405
+      },
+      {
+        "path": "marzipan_700x700_5_6c729121ae.png",
+        "sha256": "e41f34c2538bebb1a9888f053376a61462cfed5e1cd3b7baede51c7ac0fd767f",
+        "size_bytes": 119266
+      },
+      {
+        "path": "medium_Frame_3_50fcc45972.png",
+        "sha256": "3f1ccf9368ae8452bbca2e811f1d0e67a3b7b224bda1a7eb984b5036b4129418",
+        "size_bytes": 602548
+      },
+      {
+        "path": "medium_d4e5f503_d5e7_4766_a06b_438c4f5ee374_386430a27d.JPG",
+        "sha256": "04c2567b9de4d927e1fbba6ce59fc94449178290c6304e6060deca517d05d321",
+        "size_bytes": 60146
+      },
+      {
+        "path": "medium_photo_2024_08_30_20_48_22_630c64693a.jpeg",
+        "sha256": "1e415434ed3d0ec44387064d4f1b543b20885af8874597a57e5b377d8fdc1109",
+        "size_bytes": 40029
+      },
+      {
+        "path": "medium_photo_2024_08_30_20_48_26_00cb62924c.jpeg",
+        "sha256": "5932cede5529e2972ff0ed5251f3aac7e8ea485ced173341005ae76a8385ded8",
+        "size_bytes": 40929
+      },
+      {
+        "path": "medium_photo_2024_08_30_20_48_27_1_1a84b5e5ab.jpeg",
+        "sha256": "7ead9fbd157e407cb0121f73c8a477b9242092915f471b2218bd75af853ae5b3",
+        "size_bytes": 77633
+      },
+      {
+        "path": "medium_photo_2024_08_30_20_48_27_751d5454e6.jpeg",
+        "sha256": "88fcfe74bf7f259e7b384b472d6a95d70228712bf04befec670c70b7f63088ad",
+        "size_bytes": 56191
+      },
+      {
+        "path": "medium_photo_2024_08_30_20_48_28_766ebf7afb.jpeg",
+        "sha256": "8a6fd9388c9d39075055afae8dd1f259dec4e18581623b75d936b57c5529171d",
+        "size_bytes": 60964
+      },
+      {
+        "path": "medium_photo_2024_08_30_20_48_29_1_04bc616d44.jpeg",
+        "sha256": "cae0f82ed1816290976bd4726c07fab486147336475a0ae59963f7599bf73f96",
+        "size_bytes": 61334
+      },
+      {
+        "path": "medium_photo_2024_08_30_20_48_29_f86f1821bb.jpeg",
+        "sha256": "40247bf7abe1bf420963e099125936c13d74986a53cc4ac276abf51787ca28dc",
+        "size_bytes": 66388
+      },
+      {
+        "path": "medium_photo_2024_08_30_20_48_31_22c39658e5.jpeg",
+        "sha256": "def5b03d4356dbb8f639cd8eb12f4d280ff889a52dae8590032cdb17cc4b453b",
+        "size_bytes": 50999
+      },
+      {
+        "path": "nonna_news_492401ec86.jpg",
+        "sha256": "ba0ca51ef608a61e96afba762466a1e2e27a8bef7d54243f7d2d94e3b098cc52",
+        "size_bytes": 67138
+      },
+      {
+        "path": "nonna_news_d0fd37850f.jpg",
+        "sha256": "ba0ca51ef608a61e96afba762466a1e2e27a8bef7d54243f7d2d94e3b098cc52",
+        "size_bytes": 67138
+      },
+      {
+        "path": "photo_2024_08_30_20_48_22_630c64693a.jpeg",
+        "sha256": "04b515503598279695c7129a3dfb2a9e7dcd77daab5c88eb4f1194d1b6a478d4",
+        "size_bytes": 105014
+      },
+      {
+        "path": "photo_2024_08_30_20_48_26_00cb62924c.jpeg",
+        "sha256": "18211f7efb880db3d11473932f3175a929f6d0a3c30cfc08f0834c5bf8a82bb9",
+        "size_bytes": 110632
+      },
+      {
+        "path": "photo_2024_08_30_20_48_27_1_1a84b5e5ab.jpeg",
+        "sha256": "2d51bb7a58a1d81add990d6bf3ea3c7751bca94d353123f8ed9e1f957d6056de",
+        "size_bytes": 201345
+      },
+      {
+        "path": "photo_2024_08_30_20_48_27_751d5454e6.jpeg",
+        "sha256": "2dfc83db82e01158e527eda79b762fc027a8f7b969cb38a8e94653ed4d8bb4c6",
+        "size_bytes": 151151
+      },
+      {
+        "path": "photo_2024_08_30_20_48_28_766ebf7afb.jpeg",
+        "sha256": "f840d224fb5b60380e3479e635d72d335ca0a8d2972dc6001529f00d15616835",
+        "size_bytes": 143535
+      },
+      {
+        "path": "photo_2024_08_30_20_48_29_1_04bc616d44.jpeg",
+        "sha256": "387e0f93106f23cc2f248ae71035cf069077aa3a0c5210eff7e875402b552bc3",
+        "size_bytes": 155917
+      },
+      {
+        "path": "photo_2024_08_30_20_48_29_f86f1821bb.jpeg",
+        "sha256": "3ec7c74d5004991e8ff269876763b8835b63e74c8b9bf17129b503a97bee0f46",
+        "size_bytes": 177565
+      },
+      {
+        "path": "photo_2024_08_30_20_48_31_22c39658e5.jpeg",
+        "sha256": "e5d138008a29d703ffd1192952dd75a369f4a91c17cb42bf8531b269c2e3cf14",
+        "size_bytes": 143522
+      },
+      {
+        "path": "project1_3579b1ddee.jpg",
+        "sha256": "060a9237d353f5fdb07557917446f6ccb81ad497d64f22a08f40b0a27e5583bc",
+        "size_bytes": 32907
+      },
+      {
+        "path": "project2_d819db977b.jpg",
+        "sha256": "cba7a83b56bf453104c5f9db82d3d3ca2fdb2c5c40b06763f152bfdfd4276792",
+        "size_bytes": 33699
+      },
+      {
+        "path": "small_Frame_3_50fcc45972.png",
+        "sha256": "0e1f187bcde0f08ae31407db755c7d27a0abb0531807d01c632f03f427d39779",
+        "size_bytes": 282357
+      },
+      {
+        "path": "small_d4e5f503_d5e7_4766_a06b_438c4f5ee374_386430a27d.JPG",
+        "sha256": "0146d8e1b359b2c4eabf71b9c283220c949bc4d32017b059652734d6edee2894",
+        "size_bytes": 31348
+      },
+      {
+        "path": "small_frame_06_1fd0c2f3ce.png",
+        "sha256": "9b375ccbaef2d6e1b3c4c34aeb69958e54ed68433300863c5d8b9e645577183f",
+        "size_bytes": 60906
+      },
+      {
+        "path": "small_frame_3_77819cc655.png",
+        "sha256": "94ff303500bb6fffb29d3c67ba2b82e99f25b2c547688bd9ef73d138fd0e7dcb",
+        "size_bytes": 164728
+      },
+      {
+        "path": "small_nonna_news_492401ec86.jpg",
+        "sha256": "64d602e8f8f252756861f7e58828aeaaa2181043f1c0537e05edf24f31e6bd4d",
+        "size_bytes": 39318
+      },
+      {
+        "path": "small_nonna_news_d0fd37850f.jpg",
+        "sha256": "64d602e8f8f252756861f7e58828aeaaa2181043f1c0537e05edf24f31e6bd4d",
+        "size_bytes": 39318
+      },
+      {
+        "path": "small_photo_2024_08_30_20_48_22_630c64693a.jpeg",
+        "sha256": "99c3ae6752babc4c3292fa59df53cabda057aafbb008fd4c09e88558bfa85090",
+        "size_bytes": 19262
+      },
+      {
+        "path": "small_photo_2024_08_30_20_48_26_00cb62924c.jpeg",
+        "sha256": "d28e93aa38d116670d2f1fccf6cfc852b91e4fa2d9456a702d037a4ff4885639",
+        "size_bytes": 20221
+      },
+      {
+        "path": "small_photo_2024_08_30_20_48_27_1_1a84b5e5ab.jpeg",
+        "sha256": "532a7175e9a7dc53b486c3794ef94c92ab672e8cc740a1e66fe199b77faf6a9f",
+        "size_bytes": 37056
+      },
+      {
+        "path": "small_photo_2024_08_30_20_48_27_751d5454e6.jpeg",
+        "sha256": "b7dc7257e7aabf840847f4af5953e93b9a144d6301492f82d14ee2f058c031d0",
+        "size_bytes": 26397
+      },
+      {
+        "path": "small_photo_2024_08_30_20_48_28_766ebf7afb.jpeg",
+        "sha256": "a56286a752f3bc8b5a2295fc8d8eaea53080c65a2ebcb20714fff8dc979e9fc4",
+        "size_bytes": 30942
+      },
+      {
+        "path": "small_photo_2024_08_30_20_48_29_1_04bc616d44.jpeg",
+        "sha256": "43fda1d8eab2722714dfebe70ba396a27c60e42d10483f556fb6bdea5185bdbe",
+        "size_bytes": 30666
+      },
+      {
+        "path": "small_photo_2024_08_30_20_48_29_f86f1821bb.jpeg",
+        "sha256": "70e24ab3dd10ef3c9376a842162aea40839b46a5dded69be54ee80bf9d0f71bb",
+        "size_bytes": 30820
+      },
+      {
+        "path": "small_photo_2024_08_30_20_48_31_22c39658e5.jpeg",
+        "sha256": "0c05059adfe89726efdd75d6d52af1a626290b4eda9e7d535cdaa6c055851247",
+        "size_bytes": 25640
+      },
+      {
+        "path": "thumbnail_Frame_3_50fcc45972.png",
+        "sha256": "a764fb8f1e503d25001c72e47186dae941a9a5db50afa1fae7428cf9ad096279",
+        "size_bytes": 75023
+      },
+      {
+        "path": "thumbnail_d4e5f503_d5e7_4766_a06b_438c4f5ee374_386430a27d.JPG",
+        "sha256": "dbe83a21c0d68d6d2d433dd49caf94a2b340439f8124e3c6deaba32cacf6dee5",
+        "size_bytes": 4731
+      },
+      {
+        "path": "thumbnail_frame_06_1fd0c2f3ce.png",
+        "sha256": "efe9c842fd74ba7746a52b494da33ba6ad6d206294969bfdf4e5ed74233c1e72",
+        "size_bytes": 15779
+      },
+      {
+        "path": "thumbnail_frame_3_77819cc655.png",
+        "sha256": "f5d8e78324a4a041ba8322783157534a6f10c85c40a3a2db944108bc18a441cb",
+        "size_bytes": 48499
+      },
+      {
+        "path": "thumbnail_marzipan_700x700_4_ddec981e7d.png",
+        "sha256": "0cc177167b8d3da15ccd9c01ee9eeb3e044d77e96c5b544512ab3a590a5695df",
+        "size_bytes": 40330
+      },
+      {
+        "path": "thumbnail_marzipan_700x700_5_6c729121ae.png",
+        "sha256": "06f0e4e8afcc051454e91fb02d2c4c37e89a377bc596c5980e7faae260f9c02e",
+        "size_bytes": 45493
+      },
+      {
+        "path": "thumbnail_nonna_news_492401ec86.jpg",
+        "sha256": "f91c1882c6348c6aace92466dbf98f25172f2d735c8c815a8f7c700b2627fc0b",
+        "size_bytes": 5920
+      },
+      {
+        "path": "thumbnail_nonna_news_d0fd37850f.jpg",
+        "sha256": "f91c1882c6348c6aace92466dbf98f25172f2d735c8c815a8f7c700b2627fc0b",
+        "size_bytes": 5920
+      },
+      {
+        "path": "thumbnail_photo_2024_08_30_20_48_22_630c64693a.jpeg",
+        "sha256": "3f51936a9e0335ade079b918da0aee8ad360088aaeda832bd387c2143b7ca167",
+        "size_bytes": 3113
+      },
+      {
+        "path": "thumbnail_photo_2024_08_30_20_48_26_00cb62924c.jpeg",
+        "sha256": "dc2e68bc6a883947f39fd0e30141f77c134c19f4ca288b0d84ec30ec8ab37247",
+        "size_bytes": 3418
+      },
+      {
+        "path": "thumbnail_photo_2024_08_30_20_48_27_1_1a84b5e5ab.jpeg",
+        "sha256": "cc88a7a4c06a1ce95a3677439d64915829c969c9a3470914b5cec0af64642551",
+        "size_bytes": 4990
+      },
+      {
+        "path": "thumbnail_photo_2024_08_30_20_48_27_751d5454e6.jpeg",
+        "sha256": "63e4ed1e3e546cb3906eee07cd692f83af6e8d99d5f67a0612d5c9c9dbffe7ab",
+        "size_bytes": 3884
+      },
+      {
+        "path": "thumbnail_photo_2024_08_30_20_48_28_766ebf7afb.jpeg",
+        "sha256": "d718e3b1cad8420dc226b6409e2efa34cdca0b9cd1f774632714ab3144457186",
+        "size_bytes": 4445
+      },
+      {
+        "path": "thumbnail_photo_2024_08_30_20_48_29_1_04bc616d44.jpeg",
+        "sha256": "5b15256a25f7f0fd369efd574fdd070f3d22fb96ef0beebd826b757cab78d91b",
+        "size_bytes": 4788
+      },
+      {
+        "path": "thumbnail_photo_2024_08_30_20_48_29_f86f1821bb.jpeg",
+        "sha256": "43d0b07c4512fb80be86ef67d3c6e79521f1a28c4a349ef09e56b7c876b3e193",
+        "size_bytes": 4149
+      },
+      {
+        "path": "thumbnail_photo_2024_08_30_20_48_31_22c39658e5.jpeg",
+        "sha256": "78973f355bd035955e92e0e89ca95b0ac580ab66fc6931848c1b0e469f669287",
+        "size_bytes": 7702
+      },
+      {
+        "path": "thumbnail_project1_3579b1ddee.jpg",
+        "sha256": "67cf24f59a45272a7f6a4a08af8bd05c0488037ff616b5f67f28c2768962a9b7",
+        "size_bytes": 5821
+      },
+      {
+        "path": "thumbnail_project2_d819db977b.jpg",
+        "sha256": "f9db4c3e0a8a0a779613ef3c97f534afe1474fd73b8a8451e1b70e60b8cc220b",
+        "size_bytes": 5642
+      }
+    ]
+  }
+}
