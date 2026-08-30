@@ -16,6 +16,15 @@ require_pattern() {
   grep -E "$pattern" "$file" >/dev/null || fail "$file is missing required pattern: $pattern"
 }
 
+require_pattern_count() {
+  expected=$1
+  pattern=$2
+  file=$3
+  actual=$(grep -Ec "$pattern" "$file" || true)
+  [ "$actual" -eq "$expected" ] || \
+    fail "$file contains $actual matches for $pattern, expected $expected"
+}
+
 reject_pattern() {
   pattern=$1
   file=$2
@@ -34,8 +43,6 @@ run_configuration() {
   for secret in app-keys api-token-salt admin-jwt transfer-token jwt api-token; do
     printf 'configuration-test-%s\n' "$secret" > "$test_root/$secret"
   done
-  printf 'configuration-test-admin-client-ca\n' > "$test_root/admin-client-ca.crt"
-
   env_file=$test_root/production.env
   {
     printf 'COMPOSE_PROJECT_NAME=nonna-configuration-test\n'
@@ -44,7 +51,6 @@ run_configuration() {
     printf 'PUBLIC_BIND_ADDRESS=127.0.0.1\n'
     printf 'CERTBOT_STATE_DIR=%s/certbot\n' "$test_root"
     printf 'CERTBOT_WEBROOT_DIR=%s/certbot-webroot\n' "$test_root"
-    printf 'ADMIN_CLIENT_CA_FILE=%s/admin-client-ca.crt\n' "$test_root"
     printf 'APP_KEYS_FILE=%s/app-keys\n' "$test_root"
     printf 'API_TOKEN_SALT_FILE=%s/api-token-salt\n' "$test_root"
     printf 'ADMIN_JWT_SECRET_FILE=%s/admin-jwt\n' "$test_root"
@@ -55,12 +61,6 @@ run_configuration() {
 
   resolved=$test_root/compose.json
   docker compose --env-file "$env_file" -f "$compose_file" config --format json > "$resolved"
-  if ADMIN_CLIENT_CA_FILE= docker compose --env-file "$env_file" -f "$compose_file" \
-    config >/dev/null 2>"$test_root/missing-admin-client-ca.err"; then
-    fail "production Compose accepted an empty ADMIN_CLIENT_CA_FILE"
-  fi
-  require_pattern 'ADMIN_CLIENT_CA_FILE' "$test_root/missing-admin-client-ca.err"
-
   python3 - "$resolved" <<'PY'
 import json
 import sys
@@ -83,8 +83,8 @@ assert services["nginx"]["image"] == "nginx:1.27-alpine"
 nginx_command = " ".join(services["nginx"].get("command", []))
 assert "/docker-entrypoint.sh nginx -t" in nginx_command, nginx_command
 nginx_secrets = services["nginx"].get("secrets", [])
-assert any(secret["source"] == "admin_client_ca" for secret in nginx_secrets), nginx_secrets
-assert config["secrets"]["admin_client_ca"]["file"].endswith("/admin-client-ca.crt")
+assert not any(secret["source"] == "admin_client_ca" for secret in nginx_secrets), nginx_secrets
+assert "admin_client_ca" not in config.get("secrets", {})
 assert "admin_htpasswd" not in config.get("secrets", {})
 nginx_volumes = services["nginx"].get("volumes", [])
 assert not any("admin-allowlist" in volume.get("source", "") for volume in nginx_volumes)
@@ -122,11 +122,11 @@ PY
   require_pattern 'limit_conn public_api_connections 20' "$nginx_config"
   require_pattern 'limit_(req|conn)_status 429' "$nginx_config"
   require_pattern 'proxy_read_timeout 15s' "$nginx_config"
-  require_pattern 'ssl_client_certificate /run/secrets/admin_client_ca' "$nginx_config"
-  require_pattern 'ssl_verify_client on' "$nginx_config"
-  require_pattern 'ssl_verify_depth 1' "$nginx_config"
+  reject_pattern 'ssl_client_certificate|ssl_verify_client|ssl_verify_depth' "$nginx_config"
   reject_pattern 'auth_basic|admin_htpasswd' "$nginx_config"
   reject_pattern 'admin-allowlist' "$nginx_config"
+  reject_pattern 'ADMIN_CLIENT_CA|admin_client_ca' "$compose_file"
+  reject_pattern 'ADMIN_CLIENT_CA|admin_client_ca' "$repo_root/.env.production.example"
   reject_pattern 'ADMIN_ALLOWLIST|admin-allowlist' "$compose_file"
   reject_pattern 'ADMIN_ALLOWLIST|admin-allowlist' "$repo_root/.env.production.example"
   reject_pattern 'RECOVERY_GENERATION_ID|CMS_SEED_DATABASE|CMS_SEED_UPLOADS' "$compose_file"
@@ -135,10 +135,17 @@ PY
   require_pattern 'proxy_set_header Authorization \$http_authorization' "$nginx_config"
   require_pattern 'maxFileSize: 15 \* 1024 \* 1024' "$repo_root/cms/config/middlewares.js"
   require_pattern 'location \^~ /uploads/' "$nginx_config"
+  require_pattern_count 2 '^    location = /api \{' "$nginx_config"
+  require_pattern_count 2 '^    location \^~ /api/ \{' "$nginx_config"
   require_pattern 'content-manager\|content-type-builder\|upload\|users-permissions' "$nginx_config"
   require_pattern 'return 308 https://\$host\$request_uri' "$nginx_config"
-  require_pattern '^FROM alpine:3\.20$' "$repo_root/prod-config/mtls/Dockerfile"
-  require_pattern '^\*\.key$' "$repo_root/prod-config/mtls/.dockerignore"
+  for removed_path in \
+    "$repo_root/prod-config/mtls/Dockerfile" \
+    "$repo_root/prod-config/mtls/generate.sh" \
+    "$repo_root/prod-config/mtls/issue.sh" \
+    "$repo_root/scripts/test-mtls-certificates.sh"; do
+    [ ! -e "$removed_path" ] || fail "obsolete mTLS tooling remains: $removed_path"
+  done
 
   node --test "$repo_root/nonna.ru/server/utils/api-contract.test.mjs"
   node --test "$repo_root/nonna.ru/utils/sanitize-cms-html.test.mjs"
@@ -147,10 +154,6 @@ PY
     "$repo_root/cms/src/security/assert-public-role-empty.test.js"
   sh -n "$repo_root/prod-config/certbot/bootstrap.sh"
   sh -n "$repo_root/prod-config/certbot/renew.sh"
-  sh -n "$repo_root/prod-config/mtls/generate.sh"
-  sh -n "$repo_root/prod-config/mtls/issue.sh"
-  sh -n "$repo_root/scripts/test-mtls-certificates.sh"
-
   echo "Production configuration smoke passed"
 }
 
@@ -158,7 +161,7 @@ status_for() {
   method=$1
   url=$2
   shift 2
-  curl --silent --show-error --output /dev/null --write-out '%{http_code}' \
+  curl --disable --silent --show-error --output /dev/null --write-out '%{http_code}' \
     --connect-timeout "$smoke_connect_timeout" --max-time "$smoke_max_time" \
     --request "$method" "$@" "$url" || true
 }
@@ -174,7 +177,7 @@ expect_status() {
 
 expect_empty_collection() {
   url=$1
-  body=$(curl --silent --show-error --fail \
+  body=$(curl --disable --silent --show-error --fail \
     --connect-timeout "$smoke_connect_timeout" --max-time "$smoke_max_time" \
     "$url") || fail "GET $url did not return a successful response"
   printf '%s' "$body" | grep -Eq \
@@ -186,10 +189,6 @@ run_runtime() {
   command -v curl >/dev/null || fail "curl is required for runtime smoke checks"
   base_url=${SMOKE_BASE_URL:?Set SMOKE_BASE_URL to the public HTTPS origin}
   admin_url=${SMOKE_ADMIN_URL:?Set SMOKE_ADMIN_URL to the administrative HTTPS origin}
-  admin_client_cert=${SMOKE_ADMIN_CLIENT_CERT:?Set SMOKE_ADMIN_CLIENT_CERT to the operator mTLS certificate}
-  admin_client_key=${SMOKE_ADMIN_CLIENT_KEY:?Set SMOKE_ADMIN_CLIENT_KEY to the operator mTLS private key}
-  [ -r "$admin_client_cert" ] || fail "SMOKE_ADMIN_CLIENT_CERT is not readable: $admin_client_cert"
-  [ -r "$admin_client_key" ] || fail "SMOKE_ADMIN_CLIENT_KEY is not readable: $admin_client_key"
   smoke_connect_timeout=${SMOKE_CONNECT_TIMEOUT_SECONDS:-5}
   smoke_max_time=${SMOKE_MAX_TIME_SECONDS:-20}
   parquet_id=${SMOKE_PARQUET_ID:-1}
@@ -224,22 +223,20 @@ run_runtime() {
   expect_status 404 GET "$base_url/upload"
   expect_status 400 GET "$base_url/api/projects/%2e%2e/admin"
 
-  admin_status=$(status_for GET "$admin_url/admin")
-  case "$admin_status" in
-    000|400) ;;
-    *) fail "admin request without a client certificate returned $admin_status, expected mTLS denial" ;;
-  esac
-
-  expect_status 200 GET "$admin_url/admin" \
-    --cert "$admin_client_cert" \
-    --key "$admin_client_key"
+  expect_status 200 GET "$admin_url/admin"
+  expect_status 404 POST "$admin_url/api/auth/local/register"
+  admin_init_body=$(curl --disable --silent --show-error --fail \
+    --connect-timeout "$smoke_connect_timeout" --max-time "$smoke_max_time" \
+    "$admin_url/admin/init") || fail "GET $admin_url/admin/init did not return a successful response"
+  printf '%s' "$admin_init_body" | grep -Eq '"hasAdmin"[[:space:]]*:[[:space:]]*true' || \
+    fail "GET $admin_url/admin/init did not confirm an existing administrator"
 
   if [ -n "${SMOKE_UPLOAD_PATH:-}" ]; then
     expect_status 200 GET "$base_url$SMOKE_UPLOAD_PATH"
   fi
 
   if [ -n "${SMOKE_EDGE_IP:-}" ]; then
-    unknown_status=$(curl --insecure --silent --output /dev/null --write-out '%{http_code}' \
+    unknown_status=$(curl --disable --insecure --silent --output /dev/null --write-out '%{http_code}' \
       --connect-timeout "$smoke_connect_timeout" --max-time "$smoke_max_time" \
       --resolve "unknown.example:443:$SMOKE_EDGE_IP" https://unknown.example/)
     [ "$unknown_status" = 000 ] || [ "$unknown_status" = 444 ] || \

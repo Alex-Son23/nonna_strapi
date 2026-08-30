@@ -108,8 +108,6 @@ services:
     ports:
       - ${PUBLIC_BIND_ADDRESS:-0.0.0.0}:80:80
       - ${PUBLIC_BIND_ADDRESS:-0.0.0.0}:443:443
-    secrets:
-      - admin_client_ca
     volumes:
       - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
       - ${CERTBOT_STATE_DIR:?Set CERTBOT_STATE_DIR}:/etc/letsencrypt:ro
@@ -190,5 +188,3 @@ secrets:
     file: ${JWT_SECRET_FILE:?Set JWT_SECRET_FILE}
   api_bearer_token:
     file: ${API_BEARER_TOKEN_FILE:?Set API_BEARER_TOKEN_FILE}
-  admin_client_ca:
-    file: ${ADMIN_CLIENT_CA_FILE:?Set ADMIN_CLIENT_CA_FILE}
