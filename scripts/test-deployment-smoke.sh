@@ -32,8 +32,6 @@ run_configuration() {
   trap 'rm -rf "$test_root"' EXIT HUP INT TERM
   mkdir -p "$test_root/uploads" "$test_root/certbot/active" "$test_root/certbot-webroot"
   printf 'sqlite-placeholder\n' > "$test_root/data.db"
-  printf 'allow 127.0.0.1;\nallow ::1;\ndeny all;\n' > "$test_root/admin-allowlist.conf"
-
   for secret in app-keys api-token-salt admin-jwt transfer-token jwt api-token; do
     printf 'configuration-test-%s\n' "$secret" > "$test_root/$secret"
   done
@@ -50,7 +48,6 @@ run_configuration() {
     printf 'CMS_SEED_UPLOADS=%s/uploads\n' "$test_root"
     printf 'CERTBOT_STATE_DIR=%s/certbot\n' "$test_root"
     printf 'CERTBOT_WEBROOT_DIR=%s/certbot-webroot\n' "$test_root"
-    printf 'ADMIN_ALLOWLIST_FILE=%s/admin-allowlist.conf\n' "$test_root"
     printf 'ADMIN_CLIENT_CA_FILE=%s/admin-client-ca.crt\n' "$test_root"
     printf 'APP_KEYS_FILE=%s/app-keys\n' "$test_root"
     printf 'API_TOKEN_SALT_FILE=%s/api-token-salt\n' "$test_root"
@@ -96,6 +93,8 @@ nginx_secrets = services["nginx"].get("secrets", [])
 assert any(secret["source"] == "admin_client_ca" for secret in nginx_secrets), nginx_secrets
 assert config["secrets"]["admin_client_ca"]["file"].endswith("/admin-client-ca.crt")
 assert "admin_htpasswd" not in config.get("secrets", {})
+nginx_volumes = services["nginx"].get("volumes", [])
+assert not any("admin-allowlist" in volume.get("source", "") for volume in nginx_volumes)
 
 for name in expected:
     assert services[name].get("read_only") is True, f"{name} rootfs is writable"
@@ -129,15 +128,19 @@ PY
   require_pattern 'proxy_read_timeout 15s' "$nginx_config"
   require_pattern 'ssl_client_certificate /run/secrets/admin_client_ca' "$nginx_config"
   require_pattern 'ssl_verify_client on' "$nginx_config"
-  require_pattern 'ssl_verify_depth 2' "$nginx_config"
+  require_pattern 'ssl_verify_depth 1' "$nginx_config"
   reject_pattern 'auth_basic|admin_htpasswd' "$nginx_config"
-  require_pattern 'include /etc/nginx/admin-allowlist.conf' "$nginx_config"
+  reject_pattern 'admin-allowlist' "$nginx_config"
+  reject_pattern 'ADMIN_ALLOWLIST|admin-allowlist' "$compose_file"
+  reject_pattern 'ADMIN_ALLOWLIST|admin-allowlist' "$repo_root/.env.production.example"
   require_pattern 'client_max_body_size 16m' "$nginx_config"
   require_pattern 'proxy_set_header Authorization \$http_authorization' "$nginx_config"
   require_pattern 'maxFileSize: 15 \* 1024 \* 1024' "$repo_root/cms/config/middlewares.js"
   require_pattern 'location \^~ /uploads/' "$nginx_config"
   require_pattern 'content-manager\|content-type-builder\|upload\|users-permissions' "$nginx_config"
   require_pattern 'return 308 https://\$host\$request_uri' "$nginx_config"
+  require_pattern '^FROM alpine:3\.20$' "$repo_root/prod-config/mtls/Dockerfile"
+  require_pattern '^\*\.key$' "$repo_root/prod-config/mtls/.dockerignore"
 
   node --test "$repo_root/nonna.ru/server/utils/api-contract.test.mjs"
   node --test "$repo_root/nonna.ru/utils/sanitize-cms-html.test.mjs"
@@ -146,6 +149,9 @@ PY
     "$repo_root/cms/src/security/assert-public-role-empty.test.js"
   sh -n "$repo_root/prod-config/certbot/bootstrap.sh"
   sh -n "$repo_root/prod-config/certbot/renew.sh"
+  sh -n "$repo_root/prod-config/mtls/generate.sh"
+  sh -n "$repo_root/prod-config/mtls/issue.sh"
+  sh -n "$repo_root/scripts/test-mtls-certificates.sh"
 
   echo "Production configuration smoke passed"
 }

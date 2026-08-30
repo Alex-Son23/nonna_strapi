@@ -5,8 +5,7 @@ nonna.design.key
 prod-config/certbot/state/
 prod-config/certbot/webroot/
 prod-config/secrets/
-prod-config/admin-allowlist.conf
-prod-config/admin-client-ca.crt
+prod-config/mtls/generated/
 .DS_Store
 /.idea/
 /.strapi/

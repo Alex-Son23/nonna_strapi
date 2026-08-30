@@ -84,9 +84,10 @@ docker compose down
 Production использует отдельный файл `prod-config/docker-compose.yml` и не
 публикует порты Strapi/Nuxt. Снаружи доступны только nginx `80/tcp` и `443/tcp`:
 основной hostname отдаёт Nuxt, read-only `/uploads` и положительно разрешённый
-`/api`, а отдельный административный hostname требует одновременно клиентский
-mTLS-сертификат и попадание адреса в IP/VPN allowlist. mTLS не использует
-`Authorization`, поэтому Bearer-сессия Strapi передаётся без конфликта.
+`/api`, а отдельный административный hostname требует клиентский mTLS-сертификат.
+Фильтрации по IP нет: администратор может подключаться с любого адреса при наличии
+действующего сертификата и закрытого ключа. mTLS не использует `Authorization`,
+поэтому Bearer-сессия Strapi передаётся без конфликта.
 
 Текущие Strapi 4.25.1, Nuxt 3, Node 18 и nginx 1.27 сохранены намеренно. Их EOL и
 известный остаточный риск приняты ради быстрого восстановления; обновление —
@@ -108,16 +109,27 @@ mTLS-сертификат и попадание адреса в IP/VPN allowlist
    `findOne` для parquets/projects/news. Запись, upload, auth/admin и plugin API
    токену не выдаются. Plain token хранится только в `API_BEARER_TOKEN_FILE` и
    монтируется в server-only Nuxt runtime.
-4. Создайте отдельный CA для доступа операторов, выпустите им клиентские
-   сертификаты с закрытыми ключами и укажите PEM-сертификат этого CA в
-   `ADMIN_CLIENT_CA_FILE`. Закрытый ключ CA на VPS не храните. Создайте allowlist
-   из `prod-config/admin-allowlist.conf.example`; последней строкой всегда
-   оставляйте `deny all;`.
+4. Выпустите собственный CA и сертификат оператора через Docker:
+
+   ```bash
+   MTLS_OPERATOR_NAME=operator ./prod-config/mtls/generate.sh
+   ```
+
+   Команду выполняйте на доверенном компьютере, не на VPS. По умолчанию файлы
+   появятся в игнорируемом `prod-config/mtls/generated/`. При первом запуске
+   скрипт создаёт самоподписанный внутренний CA и подписывает им клиентский
+   сертификат. Для следующего оператора запустите команду с другим
+   `MTLS_OPERATOR_NAME`: существующий CA будет использован повторно. Скопируйте
+   только `admin-client-ca.crt` на VPS и укажите его в `ADMIN_CLIENT_CA_FILE`.
+   `admin-client-ca.key` сохраните в отдельной зашифрованной резервной копии;
+   сертификат и закрытый ключ оператора передайте ему по защищённому каналу.
+   Клиентский сертификат действует 365 дней по умолчанию. Существующие ключи
+   скрипт не перезаписывает.
 5. Перед включением `ENFORCE_EMPTY_PUBLIC_ROLE=true` удалите все permissions у
    Strapi Public role. В восстановленном снимке также проверьте и отзовите
    неподтверждённых admin users/sessions, API и transfer tokens, auth providers и
    webhooks. Для первичного закрытого входа можно один раз запустить CMS с
-   `ENFORCE_EMPTY_PUBLIC_ROLE=false` только за admin IP/mTLS boundary;
+   `ENFORCE_EMPTY_PUBLIC_ROLE=false` только за mTLS boundary;
    после очистки верните `true` и пересоздайте CMS. При непустой Public role
    production CMS затем fail-closed не запускается.
 
@@ -128,8 +140,14 @@ mTLS-сертификат и попадание адреса в IP/VPN allowlist
 ```
 
 Этот режим разрешает Compose, проверяет, что только nginx публикует 80/443,
-проверяет rate/connection limits, TLS/admin boundary и запускает focused tests
-API contract, HTML sanitizer, Public role и upload validation.
+проверяет rate/connection limits, TLS/admin boundary, отсутствие IP-фильтра и
+запускает focused tests API contract, HTML sanitizer, Public role и upload
+validation. Сам выпуск внутреннего CA и двух клиентских сертификатов проверяется
+отдельно:
+
+```bash
+./scripts/test-mtls-certificates.sh
+```
 
 При первом production-запуске CMS принимает только одновременно пустые volumes
 базы и uploads, копирует в них один проверенный снимок и лишь после успешного
@@ -184,7 +202,7 @@ Runtime smoke обязательно проверяет все шесть раз
 
 Для режимов `staging` и `production` клиентский сертификат и ключ обязательны.
 Smoke сначала доказывает отказ без клиентского сертификата, затем требует `200`
-с сертификатом оператора и тем самым одновременно проверяет mTLS и allowlist.
+с сертификатом оператора и тем самым проверяет mTLS независимо от IP-адреса.
 
 Strapi сохраняет лимит одного файла 15 MiB. nginx разрешает multipart-запрос до
 16 MiB, чтобы служебные поля и границы multipart не отклоняли допустимый файл,
@@ -193,3 +211,8 @@ Strapi сохраняет лимит одного файла 15 MiB. nginx ра�
 После DNS cutover используйте тот же вызов с режимом `production`. Реальные
 domain/TLS проверки требуют VPS и выпущенного сертификата; локально обязательным
 является режим `configuration`.
+
+Самоподписанный CA используется только для клиентской mTLS-аутентификации
+админки. Публичные серверные сертификаты основного и административного доменов
+по-прежнему выпускает Let's Encrypt, поэтому браузерам не требуется вручную
+доверять внутреннему CA.
