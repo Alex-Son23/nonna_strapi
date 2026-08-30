@@ -137,6 +137,7 @@ PY
   require_pattern 'location \^~ /uploads/' "$nginx_config"
   require_pattern_count 2 '^    location = /api \{' "$nginx_config"
   require_pattern_count 2 '^    location \^~ /api/ \{' "$nginx_config"
+  require_pattern_count 1 '^        return 302 /admin;$' "$nginx_config"
   require_pattern 'content-manager\|content-type-builder\|upload\|users-permissions' "$nginx_config"
   require_pattern 'return 308 https://\$host\$request_uri' "$nginx_config"
   for removed_path in \
@@ -223,6 +224,7 @@ run_runtime() {
   expect_status 404 GET "$base_url/upload"
   expect_status 400 GET "$base_url/api/projects/%2e%2e/admin"
 
+  expect_status 302 GET "$admin_url/"
   expect_status 200 GET "$admin_url/admin"
   expect_status 404 POST "$admin_url/api/auth/local/register"
   admin_init_body=$(curl --disable --silent --show-error --fail \
