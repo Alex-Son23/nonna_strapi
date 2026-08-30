@@ -96,20 +96,16 @@ Production использует отдельный файл `prod-config/docker-
 ### Подготовка production-параметров
 
 1. Скопируйте `.env.production.example` в игнорируемый `.env.production` и
-   замените домены и абсолютные пути. Базу и uploads берите только из проверенной
-   копии U1; не размещайте единственную копию на VPS. Задайте для этой пары
-   уникальный `RECOVERY_GENERATION_ID` (буквы, цифры, `.`, `_`, `-`) и не
-   используйте его для другого снимка.
+   замените домены и абсолютные пути. Файлы локальной SQLite-базы и uploads на
+   VPS не копируются. Оставьте `ENFORCE_EMPTY_PUBLIC_ROLE=false` только на время
+   первого закрытого входа в новую админку.
 2. Создайте каждый secret-файл из примера с новым случайным значением. Старые
    `APP_KEYS`, salt/JWT secrets, API/transfer tokens и пароли не переносите как
    production-доступы. Файлы должны читаться только root/operator и не лежать в
-   репозитории.
-3. Создайте read-only Strapi API token только с `find` для `contacts`,
-   `site-news-many`, `parquets`, `woods`, `projects`, `type-of-properties` и
-   `findOne` для parquets/projects/news. Запись, upload, auth/admin и plugin API
-   токену не выдаются. Plain token хранится только в `API_BEARER_TOKEN_FILE` и
-   монтируется в server-only Nuxt runtime.
-4. Выпустите собственный CA и сертификат оператора через Docker:
+   репозитории. До создания настоящего API token запишите в
+   `API_BEARER_TOKEN_FILE` любое новое случайное непустое значение: оно нужно
+   только для первого запуска frontend и не даст доступ к Strapi.
+3. Выпустите собственный CA и сертификат оператора через Docker:
 
    ```bash
    MTLS_OPERATOR_NAME=operator ./prod-config/mtls/generate.sh
@@ -125,13 +121,19 @@ Production использует отдельный файл `prod-config/docker-
    сертификат и закрытый ключ оператора передайте ему по защищённому каналу.
    Клиентский сертификат действует 365 дней по умолчанию. Существующие ключи
    скрипт не перезаписывает.
-5. Перед включением `ENFORCE_EMPTY_PUBLIC_ROLE=true` удалите все permissions у
-   Strapi Public role. В восстановленном снимке также проверьте и отзовите
-   неподтверждённых admin users/sessions, API и transfer tokens, auth providers и
-   webhooks. Для первичного закрытого входа можно один раз запустить CMS с
-   `ENFORCE_EMPTY_PUBLIC_ROLE=false` только за mTLS boundary;
-   после очистки верните `true` и пересоздайте CMS. При непустой Public role
-   production CMS затем fail-closed не запускается.
+4. Запустите контур. Strapi сам создаст таблицы из схем в `cms/src/api` в новом
+   именованном volume `strapi_database`. Второй новый volume `strapi_uploads`
+   останется пустым. Локальные записи, изображения, пользователи админки и токены
+   при этом не переносятся.
+5. Зайдите на административный домен с клиентским сертификатом и создайте нового
+   администратора. Удалите все permissions у Strapi Public role, затем создайте
+   новый API token только с `find` для `contacts`, `site-news-many`, `parquets`,
+   `woods`, `projects`, `type-of-properties` и `findOne` для
+   parquets/projects/news. Запись, upload, auth/admin и plugin API токену не
+   выдаются. Замените временное значение в `API_BEARER_TOKEN_FILE` настоящим
+   plain token.
+6. Установите `ENFORCE_EMPTY_PUBLIC_ROLE=true` и пересоздайте контейнеры. При
+   непустой Public role production CMS теперь fail-closed не запускается.
 
 Проверка разрешённой конфигурации без production-секретов и сертификатов:
 
@@ -149,13 +151,12 @@ validation. Сам выпуск внутреннего CA и двух клиен
 ./scripts/test-mtls-certificates.sh
 ```
 
-При первом production-запуске CMS принимает только одновременно пустые volumes
-базы и uploads, копирует в них один проверенный снимок и лишь после успешного
-копирования записывает одинаковый marker поколения в оба volume. Повторный запуск
-разрешён только при совпадении обоих marker с `RECOVERY_GENERATION_ID`. Непустые
-volumes без marker, отсутствующий marker или смешанные поколения останавливают
-CMS без перезаписи данных; такие volumes нужно сохранить для разбора, а не
-очищать автоматически.
+Production Compose не монтирует seed-базу и seed-uploads. На новой VPS он создаёт
+два пустых именованных volume; при первом запуске Strapi создаёт в SQLite только
+актуальную структуру и необходимые системные записи. После этого контент и файлы
+добавляются заново через админку. Если на VPS уже существуют volumes с такими же
+именами, сначала разберитесь, кому принадлежат данные: Compose намеренно не
+очищает и не перезаписывает их автоматически.
 
 ### Выпуск и продление TLS
 
@@ -190,15 +191,19 @@ SMOKE_BASE_URL=https://example.com \
 SMOKE_ADMIN_URL=https://admin.example.com \
 SMOKE_ADMIN_CLIENT_CERT=/etc/nonna/operator/client.crt \
 SMOKE_ADMIN_CLIENT_KEY=/etc/nonna/operator/client.key \
+SMOKE_EXPECT_EMPTY_CMS=true \
 ./scripts/test-deployment-smoke.sh staging
 ```
 
 Runtime smoke обязательно проверяет все шесть разрешённых коллекций и карточки
-паркета, проекта и новости. По умолчанию для карточек используются ID `1` из
-проверенного baseline; если на стенде другие опубликованные записи, задайте
-`SMOKE_PARQUET_ID`, `SMOKE_PROJECT_ID` и `SMOKE_SITE_NEWS_ID`. Таймауты можно
-переопределить через `SMOKE_CONNECT_TIMEOUT_SECONDS` (по умолчанию 5 секунд) и
-`SMOKE_MAX_TIME_SECONDS` (по умолчанию 20 секунд).
+паркета, проекта и новости. При `SMOKE_EXPECT_EMPTY_CMS=true` каждая коллекция
+должна вернуть пустой массив для локалей `ru` и `en`, а карточки — `404`;
+так проверяется отсутствие перенесённого контента. После наполнения базы уберите
+этот параметр: коллекции и карточки должны вернуть `200`. Если у новых
+опубликованных записей другие ID,
+задайте `SMOKE_PARQUET_ID`, `SMOKE_PROJECT_ID` и `SMOKE_SITE_NEWS_ID`. Таймауты
+можно переопределить через `SMOKE_CONNECT_TIMEOUT_SECONDS` (по умолчанию 5
+секунд) и `SMOKE_MAX_TIME_SECONDS` (по умолчанию 20 секунд).
 
 Для режимов `staging` и `production` клиентский сертификат и ключ обязательны.
 Smoke сначала доказывает отказ без клиентского сертификата, затем требует `200`
