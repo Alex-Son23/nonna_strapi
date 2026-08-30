@@ -14,12 +14,13 @@ ENV NODE_ENV=production \
     HOST=0.0.0.0 \
     PORT=3000
 
+RUN apk add --no-cache su-exec
+
 WORKDIR /opt/app
 
 COPY --from=build --chown=node:node /opt/app/.output ./.output
 COPY --chown=root:root --chmod=755 docker-entrypoint.sh /usr/local/bin/frontend-entrypoint.sh
 
-USER node
 EXPOSE 3000
 
 ENTRYPOINT ["frontend-entrypoint.sh"]

@@ -80,6 +80,9 @@ services:
       - /tmp:rw,noexec,nosuid,nodev,size=32m
     cap_drop:
       - ALL
+    cap_add:
+      - SETGID
+      - SETUID
     security_opt:
       - no-new-privileges:true
     healthcheck:
