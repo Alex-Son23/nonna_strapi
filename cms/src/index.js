@@ -1,5 +1,7 @@
 'use strict';
 
+const { assertPublicRoleEmpty } = require('./security/assert-public-role-empty');
+
 module.exports = {
   /**
    * An asynchronous register function that runs before
@@ -16,5 +18,9 @@ module.exports = {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/*{ strapi }*/) {},
+  async bootstrap({ strapi }) {
+    if (process.env.ENFORCE_EMPTY_PUBLIC_ROLE === 'true') {
+      await assertPublicRoleEmpty(strapi);
+    }
+  },
 };

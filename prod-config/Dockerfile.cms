@@ -10,6 +10,8 @@ RUN npm config set fetch-retry-maxtimeout 600000 -g \
     && npm ci --omit=dev
 
 COPY . .
+ARG STRAPI_PUBLIC_URL
+ENV STRAPI_PUBLIC_URL=$STRAPI_PUBLIC_URL
 RUN npm run build
 
 FROM node:18.20.2-alpine AS runtime

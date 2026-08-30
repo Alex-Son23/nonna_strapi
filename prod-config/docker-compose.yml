@@ -1,6 +1,200 @@
-# Compatibility entry point. TLS and public-domain settings belong in a
-# deployment-specific override; the shared stack remains runnable as-is.
-name: nonna
+name: ${COMPOSE_PROJECT_NAME:-nonna-production}
 
-include:
-  - ../docker-compose.yml
+services:
+  cms:
+    build:
+      context: ../cms
+      dockerfile: ../prod-config/Dockerfile.cms
+      args:
+        STRAPI_PUBLIC_URL: https://${ADMIN_DOMAIN:?Set ADMIN_DOMAIN}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 1337
+      DATABASE_CLIENT: sqlite
+      DATABASE_FILENAME: .tmp/data.db
+      STRAPI_PUBLIC_URL: https://${ADMIN_DOMAIN}
+      STRAPI_PROXY: "true"
+      CORS_ORIGINS: https://${ADMIN_DOMAIN}
+      ENFORCE_EMPTY_PUBLIC_ROLE: ${ENFORCE_EMPTY_PUBLIC_ROLE:-true}
+      APP_KEYS_FILE: /run/secrets/app_keys
+      API_TOKEN_SALT_FILE: /run/secrets/api_token_salt
+      ADMIN_JWT_SECRET_FILE: /run/secrets/admin_jwt_secret
+      TRANSFER_TOKEN_SALT_FILE: /run/secrets/transfer_token_salt
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
+    secrets:
+      - app_keys
+      - api_token_salt
+      - admin_jwt_secret
+      - transfer_token_salt
+      - jwt_secret
+    volumes:
+      - strapi_database:/opt/app/.tmp
+      - strapi_uploads:/opt/app/public/uploads
+      - type: bind
+        source: ${CMS_SEED_DATABASE:?Set CMS_SEED_DATABASE}
+        target: /opt/app/seed/data.db
+        read_only: true
+      - type: bind
+        source: ${CMS_SEED_UPLOADS:?Set CMS_SEED_UPLOADS}
+        target: /opt/app/seed/uploads
+        read_only: true
+    networks:
+      - backend
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1:1337/_health"]
+      interval: 10s
+      timeout: 5s
+      retries: 18
+      start_period: 30s
+
+  frontend:
+    build:
+      context: ../nonna.ru
+      dockerfile: ../prod-config/Dockerfile.frontend
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      NODE_ENV: production
+      NUXT_PUBLIC_API_BASE: /api
+      NUXT_PUBLIC_API_BASE_FILES: ""
+      NUXT_PUBLIC_URL: https://${DOMAIN:?Set DOMAIN}
+      NUXT_API_PROXY_TARGET: http://cms:1337
+      API_BEARER_TOKEN_FILE: /run/secrets/api_bearer_token
+    secrets:
+      - api_bearer_token
+    depends_on:
+      cms:
+        condition: service_healthy
+    networks:
+      - backend
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=32m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1:3000/"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN}
+      ADMIN_DOMAIN: ${ADMIN_DOMAIN}
+      NGINX_ENVSUBST_FILTER: ^(DOMAIN|ADMIN_DOMAIN)$$
+      NGINX_ENTRYPOINT_QUIET_LOGS: "1"
+      NGINX_CERT_RELOAD_INTERVAL: ${NGINX_CERT_RELOAD_INTERVAL:-3600}
+    command:
+      - /bin/sh
+      - -c
+      - (while sleep "$${NGINX_CERT_RELOAD_INTERVAL}"; do nginx -s reload; done) & exec nginx -g 'daemon off;'
+    ports:
+      - ${PUBLIC_BIND_ADDRESS:-0.0.0.0}:80:80
+      - ${PUBLIC_BIND_ADDRESS:-0.0.0.0}:443:443
+    secrets:
+      - admin_htpasswd
+    volumes:
+      - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
+      - ${ADMIN_ALLOWLIST_FILE:?Set ADMIN_ALLOWLIST_FILE}:/etc/nginx/admin-allowlist.conf:ro
+      - ${CERTBOT_STATE_DIR:?Set CERTBOT_STATE_DIR}:/etc/letsencrypt:ro
+      - ${CERTBOT_WEBROOT_DIR:?Set CERTBOT_WEBROOT_DIR}:/var/www/certbot:ro
+    depends_on:
+      cms:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy
+    networks:
+      - backend
+      - edge
+    read_only: true
+    tmpfs:
+      - /etc/nginx/conf.d:rw,nosuid,nodev,size=1m
+      - /var/cache/nginx:rw,nosuid,nodev,size=16m
+      - /var/run:rw,nosuid,nodev,size=1m
+      - /tmp:rw,noexec,nosuid,nodev,size=16m
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - NET_BIND_SERVICE
+      - SETGID
+      - SETUID
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  certbot:
+    image: certbot/certbot:v5.7.0
+    restart: unless-stopped
+    entrypoint: ["/bin/sh", "/opt/nonna/renew.sh"]
+    environment:
+      CERTBOT_RENEW_INTERVAL: ${CERTBOT_RENEW_INTERVAL:-43200}
+    volumes:
+      - ./certbot/renew.sh:/opt/nonna/renew.sh:ro
+      - ${CERTBOT_STATE_DIR}:/etc/letsencrypt
+      - ${CERTBOT_WEBROOT_DIR}:/var/www/certbot
+    depends_on:
+      nginx:
+        condition: service_healthy
+    networks:
+      - edge
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=32m
+      - /var/lib/letsencrypt:rw,nosuid,nodev,size=32m
+      - /var/log/letsencrypt:rw,nosuid,nodev,size=32m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  backend:
+    internal: true
+  edge:
+
+volumes:
+  strapi_database:
+  strapi_uploads:
+
+secrets:
+  app_keys:
+    file: ${APP_KEYS_FILE:?Set APP_KEYS_FILE}
+  api_token_salt:
+    file: ${API_TOKEN_SALT_FILE:?Set API_TOKEN_SALT_FILE}
+  admin_jwt_secret:
+    file: ${ADMIN_JWT_SECRET_FILE:?Set ADMIN_JWT_SECRET_FILE}
+  transfer_token_salt:
+    file: ${TRANSFER_TOKEN_SALT_FILE:?Set TRANSFER_TOKEN_SALT_FILE}
+  jwt_secret:
+    file: ${JWT_SECRET_FILE:?Set JWT_SECRET_FILE}
+  api_bearer_token:
+    file: ${API_BEARER_TOKEN_FILE:?Set API_BEARER_TOKEN_FILE}
+  admin_htpasswd:
+    file: ${ADMIN_HTPASSWD_FILE:?Set ADMIN_HTPASSWD_FILE}

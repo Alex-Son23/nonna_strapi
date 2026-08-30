@@ -1,6 +1,12 @@
 .env
+.env.production
 nonna.design.crt
 nonna.design.key
+prod-config/certbot/state/
+prod-config/certbot/webroot/
+prod-config/secrets/
+prod-config/admin-allowlist.conf
+prod-config/admin.htpasswd
 .DS_Store
 /.idea/
 /.strapi/

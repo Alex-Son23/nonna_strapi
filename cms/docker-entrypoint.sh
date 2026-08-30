@@ -4,6 +4,28 @@ set -eu
 app_dir=/opt/app
 database_filename="${DATABASE_FILENAME:-.tmp/data.db}"
 
+load_secret() {
+  secret_name=$1
+  secret_file=$2
+  [ -n "$secret_file" ] || return 0
+  [ -r "$secret_file" ] || {
+    echo "Required secret file is not readable: $secret_file" >&2
+    exit 1
+  }
+  secret_value=$(cat "$secret_file")
+  [ -n "$secret_value" ] || {
+    echo "Required secret file is empty: $secret_file" >&2
+    exit 1
+  }
+  export "$secret_name=$secret_value"
+}
+
+load_secret APP_KEYS "${APP_KEYS_FILE:-}"
+load_secret API_TOKEN_SALT "${API_TOKEN_SALT_FILE:-}"
+load_secret ADMIN_JWT_SECRET "${ADMIN_JWT_SECRET_FILE:-}"
+load_secret TRANSFER_TOKEN_SALT "${TRANSFER_TOKEN_SALT_FILE:-}"
+load_secret JWT_SECRET "${JWT_SECRET_FILE:-}"
+
 case "$database_filename" in
   /*) database_path="$database_filename" ;;
   *) database_path="$app_dir/$database_filename" ;;
