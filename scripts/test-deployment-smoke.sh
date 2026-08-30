@@ -140,6 +140,13 @@ PY
   require_pattern_count 1 '^        return 302 /admin;$' "$nginx_config"
   require_pattern 'content-manager\|content-type-builder\|upload\|users-permissions' "$nginx_config"
   require_pattern 'return 308 https://\$host\$request_uri' "$nginx_config"
+  for required_frontend_file in \
+    "$repo_root/nonna.ru/pages/why-nonna.vue" \
+    "$repo_root/nonna.ru/pages/privacy-policy.vue"; do
+    [ -f "$required_frontend_file" ] || \
+      fail "required current frontend page is missing: $required_frontend_file"
+  done
+  require_pattern '"href": "/why-nonna"' "$repo_root/nonna.ru/data/menu.json"
   for removed_path in \
     "$repo_root/prod-config/mtls/Dockerfile" \
     "$repo_root/prod-config/mtls/generate.sh" \
@@ -149,7 +156,9 @@ PY
   done
 
   node --test "$repo_root/nonna.ru/server/utils/api-contract.test.mjs"
-  node --test "$repo_root/nonna.ru/utils/sanitize-cms-html.test.mjs"
+  node --test \
+    "$repo_root/nonna.ru/utils/sanitize-cms-html.test.mjs" \
+    "$repo_root/nonna.ru/utils/sanitize-map-url.test.mjs"
   node --test \
     "$repo_root/cms/src/middlewares/validate-upload.test.js" \
     "$repo_root/cms/src/security/assert-public-role-empty.test.js"
@@ -203,6 +212,10 @@ run_runtime() {
   esac
 
   expect_status 200 GET "$base_url/"
+  expect_status 200 GET "$base_url/why-nonna"
+  expect_status 200 GET "$base_url/privacy-policy"
+  expect_status 200 GET "$base_url/en/why-nonna"
+  expect_status 200 GET "$base_url/en/privacy-policy"
   for collection in contacts site-news-many parquets woods projects type-of-properties; do
     if [ "$expect_empty_cms" = true ]; then
       for locale in ru en; do
