@@ -6,5 +6,6 @@ build
 .env.*
 .tmp
 public/uploads
+seed
 npm-debug.log*
 yarn-error.log*

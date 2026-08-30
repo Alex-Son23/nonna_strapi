@@ -18,7 +18,6 @@ services:
       STRAPI_PROXY: "true"
       CORS_ORIGINS: https://${ADMIN_DOMAIN}
       ENFORCE_EMPTY_PUBLIC_ROLE: ${ENFORCE_EMPTY_PUBLIC_ROLE:-true}
-      RECOVERY_GENERATION_ID: ${RECOVERY_GENERATION_ID:?Set RECOVERY_GENERATION_ID}
       APP_KEYS_FILE: /run/secrets/app_keys
       API_TOKEN_SALT_FILE: /run/secrets/api_token_salt
       ADMIN_JWT_SECRET_FILE: /run/secrets/admin_jwt_secret
@@ -33,14 +32,6 @@ services:
     volumes:
       - strapi_database:/opt/app/.tmp
       - strapi_uploads:/opt/app/public/uploads
-      - type: bind
-        source: ${CMS_SEED_DATABASE:?Set CMS_SEED_DATABASE}
-        target: /opt/app/seed/data.db
-        read_only: true
-      - type: bind
-        source: ${CMS_SEED_UPLOADS:?Set CMS_SEED_UPLOADS}
-        target: /opt/app/seed/uploads
-        read_only: true
     networks:
       - backend
     read_only: true

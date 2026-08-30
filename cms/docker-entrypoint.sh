@@ -75,6 +75,14 @@ seed_upload_files() {
   done
 }
 
+install_seed_database() {
+  database_temp="${database_path}.seed.tmp"
+  rm -f "$database_temp"
+  cp "$seed_database" "$database_temp"
+  chown node:node "$database_temp"
+  mv -f "$database_temp" "$database_path"
+}
+
 initialize_generation() {
   directory_is_empty "$database_dir" || \
     fail "database volume is nonempty and has no recognized generation marker"
@@ -84,11 +92,7 @@ initialize_generation() {
   [ -d "$seed_uploads" ] || fail "recovery uploads seed directory is missing: $seed_uploads"
 
   echo "Initializing recovery generation $recovery_generation_id"
-  database_temp="${database_path}.seed.tmp"
-  rm -f "$database_temp"
-  cp "$seed_database" "$database_temp"
-  chown node:node "$database_temp"
-  mv -f "$database_temp" "$database_path"
+  install_seed_database
   seed_upload_files
   chown -R node:node "$database_dir" "$uploads_dir"
 
@@ -131,17 +135,13 @@ if [ -e "$database_generation_marker" ] || [ -e "$uploads_generation_marker" ]; 
 fi
 
 if [ ! -s "$database_path" ]; then
-  if [ ! -s "$seed_database" ]; then
-    echo "Recovery database seed is missing or empty: $seed_database" >&2
-    exit 1
+  if [ -e "$seed_database" ]; then
+    [ -s "$seed_database" ] || fail "recovery database seed is empty: $seed_database"
+    echo "Initializing SQLite database from the optional recovery seed"
+    install_seed_database
+  else
+    echo "Starting with an empty SQLite database; Strapi will create the schema"
   fi
-
-  echo "Initializing SQLite database from the recovery seed"
-  database_temp="${database_path}.seed.tmp"
-  rm -f "$database_temp"
-  cp "$seed_database" "$database_temp"
-  chown node:node "$database_temp"
-  mv -f "$database_temp" "$database_path"
 fi
 
 if [ -d "$seed_uploads" ]; then
