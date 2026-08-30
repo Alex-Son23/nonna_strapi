@@ -118,7 +118,6 @@ services:
       - admin_client_ca
     volumes:
       - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
-      - ${ADMIN_ALLOWLIST_FILE:?Set ADMIN_ALLOWLIST_FILE}:/etc/nginx/admin-allowlist.conf:ro
       - ${CERTBOT_STATE_DIR:?Set CERTBOT_STATE_DIR}:/etc/letsencrypt:ro
       - ${CERTBOT_WEBROOT_DIR:?Set CERTBOT_WEBROOT_DIR}:/var/www/certbot:ro
     depends_on:

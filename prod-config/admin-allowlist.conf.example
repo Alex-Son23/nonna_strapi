@@ -1,4 +1,0 @@
-# Replace this file with operator-approved public IP addresses or VPN CIDRs.
-allow 127.0.0.1;
-allow ::1;
-deny all;
