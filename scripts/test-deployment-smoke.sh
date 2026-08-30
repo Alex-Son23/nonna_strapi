@@ -80,6 +80,8 @@ assert sorted(port["target"] for port in ports) == [80, 443], ports
 assert config["networks"]["backend"].get("internal") is True
 assert services["certbot"]["image"] == "certbot/certbot:v5.7.0"
 assert services["nginx"]["image"] == "nginx:1.27-alpine"
+nginx_command = " ".join(services["nginx"].get("command", []))
+assert "/docker-entrypoint.sh nginx -t" in nginx_command, nginx_command
 nginx_secrets = services["nginx"].get("secrets", [])
 assert any(secret["source"] == "admin_client_ca" for secret in nginx_secrets), nginx_secrets
 assert config["secrets"]["admin_client_ca"]["file"].endswith("/admin-client-ca.crt")
