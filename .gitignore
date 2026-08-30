@@ -6,7 +6,7 @@ prod-config/certbot/state/
 prod-config/certbot/webroot/
 prod-config/secrets/
 prod-config/admin-allowlist.conf
-prod-config/admin.htpasswd
+prod-config/admin-client-ca.crt
 .DS_Store
 /.idea/
 /.strapi/

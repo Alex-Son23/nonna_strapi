@@ -61,5 +61,3 @@ module.exports = (_config, _context) => async (ctx, next) => {
 
   return next();
 };
-
-module.exports.validateUploadFile = validateUploadFile;

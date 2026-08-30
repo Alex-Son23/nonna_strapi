@@ -43,6 +43,33 @@ run_entrypoint() {
     "$cms_image" /bin/true
 }
 
+run_generation_entrypoint() {
+  generation_root=$1
+  generation_id=$2
+  docker run --rm \
+    --env "RECOVERY_GENERATION_ID=$generation_id" \
+    --mount "type=bind,source=$generation_root/database,target=/opt/app/.tmp" \
+    --mount "type=bind,source=$generation_root/uploads,target=/opt/app/public/uploads" \
+    --mount "type=bind,source=$test_root/seed/data.db,target=/opt/app/seed/data.db,readonly" \
+    --mount "type=bind,source=$test_root/seed/uploads,target=/opt/app/seed/uploads,readonly" \
+    "$cms_image" /bin/true
+}
+
+expect_generation_failure() {
+  error_file=$1
+  shift
+  if "$@" >"$error_file" 2>&1; then
+    echo "Generation-managed entrypoint unexpectedly succeeded" >&2
+    exit 1
+  fi
+}
+
+make_generation_target() {
+  generation_root="$test_root/$1"
+  mkdir -p "$generation_root/database" "$generation_root/uploads"
+  printf '%s\n' "$generation_root"
+}
+
 json_value() {
   "$python_bin" - "$1" "$2" <<'PY'
 import json
@@ -123,6 +150,64 @@ run_entrypoint_tests() {
     echo "Entrypoint unexpectedly accepted an empty recovery seed" >&2
     exit 1
   fi
+
+  printf 'SQLite format 3\000generation-seed\n' > "$test_root/seed/data.db"
+
+  fresh_generation=$(make_generation_target generation-fresh)
+  run_generation_entrypoint "$fresh_generation" recovery-v1
+  cmp "$test_root/seed/data.db" "$fresh_generation/database/data.db"
+  cmp "$test_root/seed/uploads/a.jpg" "$fresh_generation/uploads/a.jpg"
+  grep -qx 'recovery-v1' "$fresh_generation/database/.nonna-recovery-generation"
+  grep -qx 'recovery-v1' "$fresh_generation/uploads/.nonna-recovery-generation"
+
+  printf 'live-generation-database\n' > "$fresh_generation/database/data.db"
+  printf 'live-generation-upload\n' > "$fresh_generation/uploads/a.jpg"
+  run_generation_entrypoint "$fresh_generation" recovery-v1
+  grep -qx 'live-generation-database' "$fresh_generation/database/data.db"
+  grep -qx 'live-generation-upload' "$fresh_generation/uploads/a.jpg"
+
+  mismatched_generation=$(make_generation_target generation-mismatch)
+  cp "$test_root/seed/data.db" "$mismatched_generation/database/data.db"
+  cp "$test_root/seed/uploads/a.jpg" "$mismatched_generation/uploads/a.jpg"
+  printf 'recovery-v1\n' > "$mismatched_generation/database/.nonna-recovery-generation"
+  printf 'recovery-v2\n' > "$mismatched_generation/uploads/.nonna-recovery-generation"
+  expect_generation_failure "$test_root/generation-mismatch.err" \
+    run_generation_entrypoint "$mismatched_generation" recovery-v1
+  grep -F 'uploads volume generation marker is missing, malformed, or does not match' \
+    "$test_root/generation-mismatch.err" >/dev/null
+  cmp "$test_root/seed/data.db" "$mismatched_generation/database/data.db"
+  grep -qx 'recovery-v1' "$mismatched_generation/database/.nonna-recovery-generation"
+  grep -qx 'recovery-v2' "$mismatched_generation/uploads/.nonna-recovery-generation"
+
+  missing_marker_generation=$(make_generation_target generation-missing-marker)
+  cp "$test_root/seed/data.db" "$missing_marker_generation/database/data.db"
+  cp "$test_root/seed/uploads/a.jpg" "$missing_marker_generation/uploads/a.jpg"
+  printf 'recovery-v1\n' > "$missing_marker_generation/database/.nonna-recovery-generation"
+  expect_generation_failure "$test_root/generation-missing-marker.err" \
+    run_generation_entrypoint "$missing_marker_generation" recovery-v1
+  grep -F 'uploads volume generation marker is missing, malformed, or does not match' \
+    "$test_root/generation-missing-marker.err" >/dev/null
+  cmp "$test_root/seed/data.db" "$missing_marker_generation/database/data.db"
+  test ! -e "$missing_marker_generation/uploads/.nonna-recovery-generation"
+
+  unmarked_generation=$(make_generation_target generation-unmarked)
+  cp "$test_root/seed/data.db" "$unmarked_generation/database/data.db"
+  cp "$test_root/seed/uploads/a.jpg" "$unmarked_generation/uploads/a.jpg"
+  expect_generation_failure "$test_root/generation-unmarked.err" \
+    run_generation_entrypoint "$unmarked_generation" recovery-v1
+  grep -F 'database volume is nonempty and has no recognized generation marker' \
+    "$test_root/generation-unmarked.err" >/dev/null
+  cmp "$test_root/seed/data.db" "$unmarked_generation/database/data.db"
+  cmp "$test_root/seed/uploads/a.jpg" "$unmarked_generation/uploads/a.jpg"
+  test ! -e "$unmarked_generation/database/.nonna-recovery-generation"
+  test ! -e "$unmarked_generation/uploads/.nonna-recovery-generation"
+
+  failed_initialization=$(make_generation_target generation-failed-initialization)
+  : > "$test_root/seed/data.db"
+  expect_generation_failure "$test_root/generation-failed-initialization.err" \
+    run_generation_entrypoint "$failed_initialization" recovery-v1
+  test ! -e "$failed_initialization/database/.nonna-recovery-generation"
+  test ! -e "$failed_initialization/uploads/.nonna-recovery-generation"
 
   echo "Docker recovery entrypoint test passed"
 }
