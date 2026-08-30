@@ -43,6 +43,17 @@ run_entrypoint() {
     "$cms_image" /bin/true
 }
 
+run_empty_entrypoint() {
+  empty_root=$test_root/empty-start
+  mkdir -p "$empty_root/database" "$empty_root/uploads"
+  docker run --rm \
+    --mount "type=bind,source=$empty_root/database,target=/opt/app/.tmp" \
+    --mount "type=bind,source=$empty_root/uploads,target=/opt/app/public/uploads" \
+    "$cms_image" /bin/true
+  test ! -e "$empty_root/database/data.db"
+  test -z "$(find "$empty_root/uploads" -mindepth 1 -maxdepth 1 -print -quit)"
+}
+
 run_generation_entrypoint() {
   generation_root=$1
   generation_id=$2
@@ -124,6 +135,11 @@ run_entrypoint_tests() {
     echo "CMS image not found: $cms_image. Run: docker compose build cms" >&2
     exit 1
   }
+
+  docker run --rm --entrypoint /bin/sh "$cms_image" -c \
+    'test ! -e /opt/app/seed/data.db && test ! -e /opt/app/seed/uploads'
+
+  run_empty_entrypoint
 
   run_entrypoint
   cmp "$test_root/seed/data.db" "$test_root/database/data.db"

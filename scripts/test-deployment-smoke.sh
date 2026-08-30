@@ -30,8 +30,7 @@ run_configuration() {
 
   test_root=$(mktemp -d "${TMPDIR:-/tmp}/nonna-deployment-smoke.XXXXXX")
   trap 'rm -rf "$test_root"' EXIT HUP INT TERM
-  mkdir -p "$test_root/uploads" "$test_root/certbot/active" "$test_root/certbot-webroot"
-  printf 'sqlite-placeholder\n' > "$test_root/data.db"
+  mkdir -p "$test_root/certbot/active" "$test_root/certbot-webroot"
   for secret in app-keys api-token-salt admin-jwt transfer-token jwt api-token; do
     printf 'configuration-test-%s\n' "$secret" > "$test_root/$secret"
   done
@@ -43,9 +42,6 @@ run_configuration() {
     printf 'DOMAIN=example.test\n'
     printf 'ADMIN_DOMAIN=admin.example.test\n'
     printf 'PUBLIC_BIND_ADDRESS=127.0.0.1\n'
-    printf 'RECOVERY_GENERATION_ID=configuration-test-generation\n'
-    printf 'CMS_SEED_DATABASE=%s/data.db\n' "$test_root"
-    printf 'CMS_SEED_UPLOADS=%s/uploads\n' "$test_root"
     printf 'CERTBOT_STATE_DIR=%s/certbot\n' "$test_root"
     printf 'CERTBOT_WEBROOT_DIR=%s/certbot-webroot\n' "$test_root"
     printf 'ADMIN_CLIENT_CA_FILE=%s/admin-client-ca.crt\n' "$test_root"
@@ -59,11 +55,6 @@ run_configuration() {
 
   resolved=$test_root/compose.json
   docker compose --env-file "$env_file" -f "$compose_file" config --format json > "$resolved"
-  if RECOVERY_GENERATION_ID= docker compose --env-file "$env_file" -f "$compose_file" \
-    config >/dev/null 2>"$test_root/missing-generation.err"; then
-    fail "production Compose accepted an empty RECOVERY_GENERATION_ID"
-  fi
-  require_pattern 'RECOVERY_GENERATION_ID' "$test_root/missing-generation.err"
   if ADMIN_CLIENT_CA_FILE= docker compose --env-file "$env_file" -f "$compose_file" \
     config >/dev/null 2>"$test_root/missing-admin-client-ca.err"; then
     fail "production Compose accepted an empty ADMIN_CLIENT_CA_FILE"
@@ -102,7 +93,10 @@ for name in expected:
 
 frontend_environment = services["frontend"]["environment"]
 cms_environment = services["cms"]["environment"]
-assert cms_environment["RECOVERY_GENERATION_ID"] == "configuration-test-generation"
+assert "RECOVERY_GENERATION_ID" not in cms_environment
+cms_volume_targets = {volume["target"] for volume in services["cms"].get("volumes", [])}
+assert cms_volume_targets == {"/opt/app/.tmp", "/opt/app/public/uploads"}, cms_volume_targets
+assert all(volume["type"] == "volume" for volume in services["cms"]["volumes"])
 assert "API_BEARER_TOKEN" not in frontend_environment
 assert frontend_environment["API_BEARER_TOKEN_FILE"] == "/run/secrets/api_bearer_token"
 assert frontend_environment["NUXT_API_PROXY_TARGET"] == "http://cms:1337"
@@ -133,6 +127,8 @@ PY
   reject_pattern 'admin-allowlist' "$nginx_config"
   reject_pattern 'ADMIN_ALLOWLIST|admin-allowlist' "$compose_file"
   reject_pattern 'ADMIN_ALLOWLIST|admin-allowlist' "$repo_root/.env.production.example"
+  reject_pattern 'RECOVERY_GENERATION_ID|CMS_SEED_DATABASE|CMS_SEED_UPLOADS' "$compose_file"
+  reject_pattern 'RECOVERY_GENERATION_ID|CMS_SEED_DATABASE|CMS_SEED_UPLOADS' "$repo_root/.env.production.example"
   require_pattern 'client_max_body_size 16m' "$nginx_config"
   require_pattern 'proxy_set_header Authorization \$http_authorization' "$nginx_config"
   require_pattern 'maxFileSize: 15 \* 1024 \* 1024' "$repo_root/cms/config/middlewares.js"
@@ -174,6 +170,16 @@ expect_status() {
   [ "$actual" = "$expected" ] || fail "$method $url returned $actual, expected $expected"
 }
 
+expect_empty_collection() {
+  url=$1
+  body=$(curl --silent --show-error --fail \
+    --connect-timeout "$smoke_connect_timeout" --max-time "$smoke_max_time" \
+    "$url") || fail "GET $url did not return a successful response"
+  printf '%s' "$body" | grep -Eq \
+    '^[[:space:]]*\{[[:space:]]*"data"[[:space:]]*:[[:space:]]*\[[[:space:]]*\]' || \
+    fail "GET $url returned a non-empty collection"
+}
+
 run_runtime() {
   command -v curl >/dev/null || fail "curl is required for runtime smoke checks"
   base_url=${SMOKE_BASE_URL:?Set SMOKE_BASE_URL to the public HTTPS origin}
@@ -187,17 +193,26 @@ run_runtime() {
   parquet_id=${SMOKE_PARQUET_ID:-1}
   project_id=${SMOKE_PROJECT_ID:-1}
   news_id=${SMOKE_SITE_NEWS_ID:-1}
+  expect_empty_cms=${SMOKE_EXPECT_EMPTY_CMS:-false}
+  case "$expect_empty_cms" in
+    true) detail_status=404 ;;
+    false) detail_status=200 ;;
+    *) fail "SMOKE_EXPECT_EMPTY_CMS must be true or false" ;;
+  esac
 
   expect_status 200 GET "$base_url/"
-  expect_status 200 GET "$base_url/api/contacts?locale=ru&populate=*"
-  expect_status 200 GET "$base_url/api/site-news-many?locale=ru&populate=*"
-  expect_status 200 GET "$base_url/api/parquets?locale=ru&populate=*"
-  expect_status 200 GET "$base_url/api/woods?locale=ru&populate=*"
-  expect_status 200 GET "$base_url/api/projects?locale=ru&populate=*"
-  expect_status 200 GET "$base_url/api/type-of-properties?locale=ru&populate=*"
-  expect_status 200 GET "$base_url/api/parquets/$parquet_id?locale=ru&populate=*"
-  expect_status 200 GET "$base_url/api/projects/$project_id?locale=ru&populate=*"
-  expect_status 200 GET "$base_url/api/site-news-many/$news_id?locale=ru&populate=*"
+  for collection in contacts site-news-many parquets woods projects type-of-properties; do
+    if [ "$expect_empty_cms" = true ]; then
+      for locale in ru en; do
+        expect_empty_collection "$base_url/api/$collection?locale=$locale&populate=*"
+      done
+    else
+      expect_status 200 GET "$base_url/api/$collection?locale=ru&populate=*"
+    fi
+  done
+  expect_status "$detail_status" GET "$base_url/api/parquets/$parquet_id?locale=ru&populate=*"
+  expect_status "$detail_status" GET "$base_url/api/projects/$project_id?locale=ru&populate=*"
+  expect_status "$detail_status" GET "$base_url/api/site-news-many/$news_id?locale=ru&populate=*"
   expect_status 404 GET "$base_url/api/unknown"
   expect_status 400 GET "$base_url/api/projects?filters%5Bname%5D%5B%24eq%5D=secret"
   expect_status 400 GET "$base_url/api/projects?pagination%5BpageSize%5D=1"
