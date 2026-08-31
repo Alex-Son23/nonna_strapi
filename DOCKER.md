@@ -138,12 +138,25 @@ Strapi. Фильтрации по IP, клиентских сертификат�
    иначе свежая Strapi откроет в интернете форму создания первого администратора.
 5. После успешной проверки выпустите TLS и запустите публичный контур по
    инструкции ниже. Войдите на административном домене под созданным логином и
-   паролем. Удалите все permissions у Strapi Public role, затем создайте новый
-   API token только с `find` для `contacts`, `site-news-many`, `parquets`,
-   `woods`, `projects`, `type-of-properties` и `findOne` для
-   parquets/projects/news. Запись, upload, auth/admin и plugin API токену не
-   выдаются. Замените временное значение в `API_BEARER_TOKEN_FILE` настоящим
-   plain token.
+   паролем. Удалите все permissions у Strapi Public role, затем создайте Custom
+   API token `frontend-readonly` без срока действия. Выдайте ему только `find`
+   для `contacts`, `site-news-many`, `parquets`, `woods`, `projects`,
+   `type-of-properties` и `findOne` для parquets/projects/news. Запись, upload,
+   auth/admin и plugin API токену не выдаются. Strapi показывает plain token
+   только один раз: замените им временное значение в `API_BEARER_TOKEN_FILE`,
+   установите secret-файлу права `600` и пересоздайте только frontend:
+
+   ```bash
+   docker compose --env-file .env.production -f prod-config/docker-compose.yml \
+     up -d --force-recreate --no-deps frontend
+   docker compose --env-file .env.production -f prod-config/docker-compose.yml \
+     up -d --wait --no-deps frontend
+   curl -i 'https://example.com/api/contacts?locale=ru&populate=*'
+   ```
+
+   Ответ `401 Missing or invalid credentials` означает, что настоящий токен не
+   создан, не записан в secret-файл или frontend не был пересоздан после его
+   замены. Опубликованная запись при такой ошибке также не появится на сайте.
 6. Установите `ENFORCE_EMPTY_PUBLIC_ROLE=true` и пересоздайте контейнеры. При
    непустой Public role production CMS теперь fail-closed не запускается.
 
