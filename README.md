@@ -211,6 +211,59 @@ docker compose --env-file .env.production \
 Поля CKEditor сохраняют разрешённый HTML, включая абзацы и переносы строк.
 Frontend очищает опасные теги и атрибуты перед выводом.
 
+### Автоматическое восстановление каталога паркета
+
+Исходные данные 33 позиций и их переводы хранятся в
+`cms/scripts/content/parquets.json`. Для каждой позиции создаются связанные
+русская и английская записи. Фотографии скачиваются из указанной в каталоге
+папки Яндекс Диска, приводятся к JPEG размером не более 2400 px и загружаются в
+медиатеку Strapi.
+
+Подготовьте фотографии в отдельном локальном каталоге, чтобы они сохранились
+после завершения одноразового контейнера:
+
+```bash
+mkdir -p /tmp/nonna-parquet-media
+docker compose run --rm --no-deps \
+  -v /tmp/nonna-parquet-media:/opt/import-media \
+  cms node scripts/import-parquets.js \
+  --prepare-media --media-dir /opt/import-media
+```
+
+Перед импортом с `--replace` обязательно сделайте резервную копию базы и
+`uploads` по инструкции ниже и остановите основной контейнер CMS. Затем
+импортируйте обе локали и опубликуйте записи:
+
+```bash
+docker compose stop cms
+docker compose run --rm --no-deps \
+  -v /tmp/nonna-parquet-media:/opt/import-media:ro \
+  cms node scripts/import-parquets.js \
+  --import --replace --publish --media-dir /opt/import-media
+docker compose up -d cms frontend nginx
+```
+
+Флаг `--replace` удаляет только лишние русские и английские записи паркета.
+Общие справочники (`country`, `wood`, `color`, `coating`) и другие типы контента
+он не удаляет. Без `--publish` новые записи остаются черновиками. Повторный
+запуск обновляет существующие позиции и не создаёт копии.
+
+Проверка результата:
+
+```bash
+curl -fsS 'http://localhost:8080/api/parquets?locale=ru&populate=*'
+curl -fsS 'http://localhost:8080/api/parquets?locale=en&populate=*'
+```
+
+В каждой локали должно быть 33 опубликованные записи, у каждой — основное фото
+и два дополнительных. В разделе «Все» сайт показывает 31 уникальный дизайн:
+две позиции входят сразу в две коллекции и поэтому представлены в CMS дважды.
+
+На VPS используются те же команды с production compose-файлом и
+`--env-file .env.production`. После успешного импорта сразу сделайте новую
+внешнюю резервную копию базы и `uploads`: ссылка Яндекс Диска не является
+долговременным резервным хранилищем.
+
 ## Видео страницы «О фабрике»
 
 Файлы находятся в сабмодуле:

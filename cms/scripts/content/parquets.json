@@ -1,0 +1,367 @@
+{
+  "version": 1,
+  "source": {
+    "workbook": "408532_Нонна Дизайн.xlsx",
+    "sheet": "Лист1",
+    "range": "A1:E34",
+    "yandexPublicKey": "https://disk.yandex.ru/d/09ksz5A_B0S5yg"
+  },
+  "dictionaries": {
+    "countries": [
+      { "key": "russia", "ru": "Россия", "en": "Russia" }
+    ],
+    "woods": [
+      { "key": "oak", "ru": "Дуб", "en": "Oak" },
+      { "key": "ash", "ru": "Ясень", "en": "Ash" },
+      { "key": "thermo-oak", "ru": "Дуб термо", "en": "Thermo Oak" },
+      { "key": "hand-finished", "ru": "Ручная обработка", "en": "Hand-Finished" }
+    ],
+    "colors": [
+      { "key": "light-beige", "ru": "Светло-бежевый", "en": "Light Beige" },
+      { "key": "beige", "ru": "Бежевый", "en": "Beige" },
+      { "key": "gray-beige", "ru": "Серо-бежевый", "en": "Gray Beige" },
+      { "key": "brown", "ru": "Коричневый", "en": "Brown" },
+      { "key": "dark-brown", "ru": "Темно-коричневый", "en": "Dark Brown" },
+      { "key": "gray-blue", "ru": "Серо-голубой", "en": "Gray Blue" },
+      { "key": "light-brown", "ru": "Светло-коричневый", "en": "Light Brown" },
+      { "key": "burgundy", "ru": "Бордовый", "en": "Burgundy" },
+      { "key": "purple", "ru": "Фиолетовый", "en": "Purple" }
+    ],
+    "coatings": [
+      { "key": "lacquer", "ru": "Лак", "en": "Lacquer" },
+      { "key": "oil", "ru": "Масло", "en": "Oil" }
+    ]
+  },
+  "products": [
+    {
+      "key": "iceberg-oak--oak",
+      "mediaKey": "iceberg-oak",
+      "sourceFolder": "Дуб Айсберг",
+      "name": { "ru": "Дуб Айсберг", "en": "Iceberg Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "light-beige",
+      "coating": "lacquer"
+    },
+    {
+      "key": "natural-oak-natur--oak",
+      "mediaKey": "natural-oak-natur",
+      "sourceFolder": "Дуб Натуральный (натур)",
+      "name": { "ru": "Дуб Натуральный (натур)", "en": "Natural Oak (Natur)" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "beige",
+      "coating": "lacquer"
+    },
+    {
+      "key": "chameleon-oak--oak",
+      "mediaKey": "chameleon-oak",
+      "sourceFolder": "Дуб Хамелеон",
+      "name": { "ru": "Дуб Хамелеон", "en": "Chameleon Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "beige",
+      "coating": "lacquer"
+    },
+    {
+      "key": "natural-oak-rustic--oak",
+      "mediaKey": "natural-oak-rustic",
+      "sourceFolder": "Дуб Натуральный (рустик)",
+      "name": { "ru": "Дуб Натуральный (рустик)", "en": "Natural Oak (Rustic)" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "beige",
+      "coating": "lacquer"
+    },
+    {
+      "key": "natural-oak-extra-rustic--oak",
+      "mediaKey": "natural-oak-extra-rustic",
+      "sourceFolder": "Дуб Натуральный (экстра-рустик)",
+      "name": { "ru": "Дуб Натуральный (экстра-рустик)", "en": "Natural Oak (Extra Rustic)" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "beige",
+      "coating": "lacquer"
+    },
+    {
+      "key": "smoke-oak--oak",
+      "mediaKey": "smoke-oak",
+      "sourceFolder": "Дуб Смок",
+      "name": { "ru": "Дуб Смок", "en": "Smoke Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "beige",
+      "coating": "oil"
+    },
+    {
+      "key": "light-jenny-oak--oak",
+      "mediaKey": "light-jenny-oak",
+      "sourceFolder": "Дуб Jenny светлый",
+      "name": { "ru": "Дуб Jenny светлый", "en": "Light Jenny Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "gray-beige",
+      "coating": "lacquer"
+    },
+    {
+      "key": "planed-thermo-oak--thermo-oak",
+      "mediaKey": "planed-thermo-oak",
+      "sourceFolder": "Дуб термо рубанок",
+      "name": { "ru": "Дуб термо рубанок", "en": "Planed Thermo Oak" },
+      "country": "russia",
+      "wood": "thermo-oak",
+      "color": "brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "planed-thermo-oak--hand-finished",
+      "mediaKey": "planed-thermo-oak",
+      "sourceFolder": "Дуб термо рубанок",
+      "name": { "ru": "Дуб термо рубанок", "en": "Planed Thermo Oak" },
+      "country": "russia",
+      "wood": "hand-finished",
+      "color": "brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "distressed-bevel-thermo-oak--thermo-oak",
+      "mediaKey": "distressed-bevel-thermo-oak",
+      "sourceFolder": "Дуб термо с эффектом \"сбитой\" фаски",
+      "name": { "ru": "Дуб термо с эффектом \"сбитой\" фаски", "en": "Thermo Oak with Distressed Bevel" },
+      "country": "russia",
+      "wood": "thermo-oak",
+      "color": "brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "distressed-bevel-thermo-oak--hand-finished",
+      "mediaKey": "distressed-bevel-thermo-oak",
+      "sourceFolder": "Дуб термо с эффектом \"сбитой\" фаски",
+      "name": { "ru": "Дуб термо с эффектом \"сбитой\" фаски", "en": "Thermo Oak with Distressed Bevel" },
+      "country": "russia",
+      "wood": "hand-finished",
+      "color": "brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "white-oil-thermo-oak--thermo-oak",
+      "mediaKey": "white-oil-thermo-oak",
+      "sourceFolder": "Дуб термо Белое масло",
+      "name": { "ru": "Дуб термо Белое масло", "en": "Thermo Oak White Oil" },
+      "country": "russia",
+      "wood": "thermo-oak",
+      "color": "brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "classic-herringbone-thermo-oak--thermo-oak",
+      "mediaKey": "classic-herringbone-thermo-oak",
+      "sourceFolder": "Дуб термо елка классическая",
+      "name": { "ru": "Дуб термо елка классическая", "en": "Classic Herringbone Thermo Oak" },
+      "country": "russia",
+      "wood": "thermo-oak",
+      "color": "brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "nordic-oak--oak",
+      "mediaKey": "nordic-oak",
+      "sourceFolder": "Дуб Нордик",
+      "name": { "ru": "Дуб Нордик", "en": "Nordic Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "light-beige",
+      "coating": "lacquer"
+    },
+    {
+      "key": "naturel-thermo-oak--thermo-oak",
+      "mediaKey": "naturel-thermo-oak",
+      "sourceFolder": "Дуб термо Натурель",
+      "name": { "ru": "Дуб термо Натурель", "en": "Naturel Thermo Oak" },
+      "country": "russia",
+      "wood": "thermo-oak",
+      "color": "brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "thermo-oak-extra-rustic--thermo-oak",
+      "mediaKey": "thermo-oak-extra-rustic",
+      "sourceFolder": "Дуб термо (экстра-рустик)",
+      "name": { "ru": "Дуб термо (экстра-рустик)", "en": "Thermo Oak (Extra Rustic)" },
+      "country": "russia",
+      "wood": "thermo-oak",
+      "color": "brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "antique-oak--oak",
+      "mediaKey": "antique-oak",
+      "sourceFolder": "Дуб Антик",
+      "name": { "ru": "Дуб Антик", "en": "Antique Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "dark-brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "bluemarine-oak--oak",
+      "mediaKey": "bluemarine-oak",
+      "sourceFolder": "Дуб Блюмарин",
+      "name": { "ru": "Дуб Блюмарин", "en": "Bluemarine Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "gray-blue",
+      "coating": "oil"
+    },
+    {
+      "key": "dusty-bronze-oak--oak",
+      "mediaKey": "dusty-bronze-oak",
+      "sourceFolder": "Дуб Dusty Bronze",
+      "name": { "ru": "Дуб Dusty Bronze", "en": "Dusty Bronze Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "nazca-oak--oak",
+      "mediaKey": "nazca-oak",
+      "sourceFolder": "Дуб Наска",
+      "name": { "ru": "Дуб Наска", "en": "Nazca Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "light-brown",
+      "coating": "oil"
+    },
+    {
+      "key": "natella-oak--oak",
+      "mediaKey": "natella-oak",
+      "sourceFolder": "Дуб Natella",
+      "name": { "ru": "Дуб Natella", "en": "Natella Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "light-brown",
+      "coating": "oil"
+    },
+    {
+      "key": "marble-oak-extra-rustic--oak",
+      "mediaKey": "marble-oak-extra-rustic",
+      "sourceFolder": "Дуб Мрамор (экстра-рустик)",
+      "name": { "ru": "Дуб Мрамор (экстра-рустик)", "en": "Marble Oak (Extra Rustic)" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "light-brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "white-oil-oak--oak",
+      "mediaKey": "white-oil-oak",
+      "sourceFolder": "Дуб Белое масло",
+      "name": { "ru": "Дуб Белое масло", "en": "White Oil Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "light-beige",
+      "coating": "oil"
+    },
+    {
+      "key": "flamenco-ash--ash",
+      "mediaKey": "flamenco-ash",
+      "sourceFolder": "Ясень Фламенко",
+      "name": { "ru": "Ясень Фламенко", "en": "Flamenco Ash" },
+      "country": "russia",
+      "wood": "ash",
+      "color": "burgundy",
+      "coating": "lacquer"
+    },
+    {
+      "key": "wine-barrel-ash--ash",
+      "mediaKey": "wine-barrel-ash",
+      "sourceFolder": "Ясень Винная бочка",
+      "name": { "ru": "Ясень Винная бочка", "en": "Wine Barrel Ash" },
+      "country": "russia",
+      "wood": "ash",
+      "color": "purple",
+      "coating": "lacquer"
+    },
+    {
+      "key": "light-antique-oak--oak",
+      "mediaKey": "light-antique-oak",
+      "sourceFolder": "Дуб Антик лайт",
+      "name": { "ru": "Дуб Антик лайт", "en": "Light Antique Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "light-brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "cognac-oak--oak",
+      "mediaKey": "cognac-oak",
+      "sourceFolder": "Дуб Коньяк",
+      "name": { "ru": "Дуб Коньяк", "en": "Cognac Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "brown",
+      "coating": "lacquer"
+    },
+    {
+      "key": "oak-23-1--oak",
+      "mediaKey": "oak-23-1",
+      "sourceFolder": "Дуб 23-1",
+      "name": { "ru": "Дуб 23/1", "en": "Oak 23/1" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "light-beige",
+      "coating": "lacquer"
+    },
+    {
+      "key": "white-oil-ash--ash",
+      "mediaKey": "white-oil-ash",
+      "sourceFolder": "Ясень белое масло",
+      "name": { "ru": "Ясень белое масло", "en": "White Oil Ash" },
+      "country": "russia",
+      "wood": "ash",
+      "color": "light-beige",
+      "coating": "oil"
+    },
+    {
+      "key": "naturel-oak--oak",
+      "mediaKey": "naturel-oak",
+      "sourceFolder": "Дуб Натурель",
+      "name": { "ru": "Дуб Натурель", "en": "Naturel Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "light-beige",
+      "coating": "lacquer"
+    },
+    {
+      "key": "gaziza-oak--oak",
+      "mediaKey": "gaziza-oak",
+      "sourceFolder": "Дуб Gaziza",
+      "name": { "ru": "Дуб Gaziza", "en": "Gaziza Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "gray-beige",
+      "coating": "lacquer"
+    },
+    {
+      "key": "oak-23-3--oak",
+      "mediaKey": "oak-23-3",
+      "sourceFolder": "Дуб 23-3",
+      "name": { "ru": "Дуб 23/3", "en": "Oak 23/3" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "light-beige",
+      "coating": "lacquer"
+    },
+    {
+      "key": "coral-oak--oak",
+      "mediaKey": "coral-oak",
+      "sourceFolder": "Дуб Коралл",
+      "name": { "ru": "Дуб Коралл", "en": "Coral Oak" },
+      "country": "russia",
+      "wood": "oak",
+      "color": "beige",
+      "coating": "lacquer"
+    }
+  ]
+}
