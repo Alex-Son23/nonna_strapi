@@ -267,6 +267,65 @@ curl -fsS 'http://localhost:8080/api/parquets?locale=en&populate=*'
 внешнюю резервную копию базы и `uploads`: ссылка Яндекс Диска не является
 долговременным резервным хранилищем.
 
+### Автоматическое восстановление проектов
+
+Тексты и переводы 14 проектов хранятся в
+`cms/scripts/content/projects.json`. Фотографии в Git не добавляются из-за их
+размера: перед импортом рядом со скриптом должна быть отдельная папка, внутри
+которой для каждого проекта есть каталог `images`:
+
+```text
+projects-review/
+  Название проекта/
+    images/
+      01_photo.jpg
+      02_photo.jpg
+```
+
+Сначала проверьте каталог и наличие всех файлов без изменения базы:
+
+```bash
+node cms/scripts/import-projects.js --media-dir projects-review
+```
+
+Для текущего набора проверка должна показать 14 проектов и 125 фотографий.
+Файл с `Обложка` в имени используется как главное изображение; если такого
+файла нет, главным становится первое изображение по номеру. Остальные файлы
+попадают в галерею. Только фотографии больше лимита Strapi 15 МиБ автоматически
+пережимаются перед загрузкой.
+
+Перед импортом с `--replace` остановите CMS и сделайте резервную копию базы и
+`uploads`. Для production-сервера, где фотографии находятся в
+`/srv/nonna/import/projects-review`, команда выглядит так:
+
+```bash
+docker compose --env-file .env.production \
+  -f prod-config/docker-compose.yml stop cms
+docker compose --env-file .env.production \
+  -f prod-config/docker-compose.yml run --rm --no-deps \
+  -v /srv/nonna/app/cms/scripts:/opt/app/scripts:ro \
+  -v /srv/nonna/import/projects-review:/opt/project-media:ro \
+  cms node scripts/import-projects.js \
+  --import --replace --publish --media-dir /opt/project-media
+docker compose --env-file .env.production \
+  -f prod-config/docker-compose.yml up -d --wait cms frontend nginx
+```
+
+Импорт создаёт и связывает русскую и английскую локали, типы объектов и страну,
+публикует записи и загружает каждую фотографию один раз для обеих локалей.
+Неизвестные авторы, Instagram и описания оставляются пустыми, а конкретная
+позиция паркета не назначается. Повторный запуск обновляет найденные проекты и
+повторно использует уже загруженные файлы.
+
+Проверка результата:
+
+```bash
+curl -fsS 'https://nonna.design/api/projects?locale=ru&populate=%2A'
+curl -fsS 'https://nonna.design/api/projects?locale=en&populate=%2A'
+```
+
+В каждой локали должно быть 14 опубликованных проектов.
+
 ## Видео страницы «О фабрике»
 
 Файлы находятся в сабмодуле:

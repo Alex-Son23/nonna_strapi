@@ -8,6 +8,7 @@ prod-config/secrets/
 prod-config/mtls/generated/
 .DS_Store
 /.idea/
+/projects-review/
 /.strapi/
 /build
 /public
