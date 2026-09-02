@@ -147,7 +147,10 @@ Settings -> API Tokens -> Create new API Token
   - Contact: `find`;
   - Site news: `find`, `findOne`;
   - Parquet: `find`, `findOne`;
+  - Country: `find`;
   - Wood: `find`;
+  - Color: `find`;
+  - Coating: `find`;
   - Project: `find`, `findOne`;
   - Type of property: `find`.
 
