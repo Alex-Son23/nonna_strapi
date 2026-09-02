@@ -9,6 +9,7 @@ const path = require('node:path');
 const CATALOG_PATH = path.join(__dirname, 'content', 'projects.json');
 const DEFAULT_MEDIA_DIR = '/tmp/nonna-project-media';
 const MAX_UPLOAD_BYTES = 15 * 1024 * 1024;
+const MAX_IMAGE_DIMENSION = 3200;
 const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg']);
 
 const dictionaryModels = {
@@ -148,18 +149,27 @@ async function readProjectImages(mediaDir, folder) {
 }
 
 async function validateMediaTree(catalog, mediaDir) {
+  const sharp = require('sharp');
   let images = 0;
   let oversizedImages = 0;
+  let largeDimensionImages = 0;
   for (const project of catalog) {
     const selection = await readProjectImages(mediaDir, project.folder);
     images += selection.ordered.length;
     for (const file of selection.ordered) {
-      const stat = await fsp.stat(path.join(selection.imagesDir, file));
+      const filePath = path.join(selection.imagesDir, file);
+      const [stat, metadata] = await Promise.all([
+        fsp.stat(filePath),
+        sharp(filePath).metadata(),
+      ]);
       if (stat.size === 0) throw new Error(`${project.folder}/${file} is empty`);
       if (stat.size > MAX_UPLOAD_BYTES) oversizedImages += 1;
+      if (Math.max(metadata.width || 0, metadata.height || 0) > MAX_IMAGE_DIMENSION) {
+        largeDimensionImages += 1;
+      }
     }
   }
-  return { projects: catalog.length, images, oversizedImages };
+  return { projects: catalog.length, images, oversizedImages, largeDimensionImages };
 }
 
 function parseArgs(argv) {
@@ -246,15 +256,26 @@ function projectMediaKey(folder) {
 }
 
 async function prepareUploadSource(sourcePath, outputPath) {
-  const sourceStat = await fsp.stat(sourcePath);
-  if (sourceStat.size <= MAX_UPLOAD_BYTES) return sourcePath;
-
   const sharp = require('sharp');
+  const [sourceStat, metadata] = await Promise.all([
+    fsp.stat(sourcePath),
+    sharp(sourcePath).metadata(),
+  ]);
+  const maxDimension = Math.max(metadata.width || 0, metadata.height || 0);
+  if (sourceStat.size <= MAX_UPLOAD_BYTES && maxDimension <= MAX_IMAGE_DIMENSION) {
+    return sourcePath;
+  }
+
   await fsp.mkdir(path.dirname(outputPath), { recursive: true });
   await sharp(sourcePath)
     .rotate()
     .flatten({ background: '#ffffff' })
-    .resize({ width: 3200, height: 3200, fit: 'inside', withoutEnlargement: true })
+    .resize({
+      width: MAX_IMAGE_DIMENSION,
+      height: MAX_IMAGE_DIMENSION,
+      fit: 'inside',
+      withoutEnlargement: true,
+    })
     .jpeg({ quality: 86, chromaSubsampling: '4:2:0', mozjpeg: true })
     .toFile(outputPath);
 

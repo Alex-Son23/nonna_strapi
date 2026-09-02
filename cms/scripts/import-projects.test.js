@@ -39,6 +39,7 @@ test('review folders contain all approved project images', async () => {
     projects: 14,
     images: 125,
     oversizedImages: 9,
+    largeDimensionImages: 42,
   });
 });
 
@@ -80,24 +81,24 @@ test('optional placeholders are empty and Instagram URLs become handles', () => 
   assert.equal(normalizeInstagram('@kurilovdesign'), 'kurilovdesign');
 });
 
-test('oversized source photos are reduced to a web-safe resolution', async () => {
+test('large source photos are reduced to a web-safe resolution', async () => {
   const temporaryDir = await fsp.mkdtemp(path.join(os.tmpdir(), 'nonna-project-test-'));
   try {
-    const sourcePath = path.join(
-      mediaDir,
-      'Частная квартира в Санкт-Петербурге. ЖК Биография',
-      'images',
-      '01_1.jpg'
-    );
-    const outputPath = path.join(temporaryDir, 'prepared.jpg');
-    await prepareUploadSource(sourcePath, outputPath);
-
-    const [metadata, stat] = await Promise.all([
-      require('sharp')(outputPath).metadata(),
-      fsp.stat(outputPath),
-    ]);
-    assert.ok(Math.max(metadata.width, metadata.height) <= 3200);
-    assert.ok(stat.size <= 15 * 1024 * 1024);
+    const sources = [
+      ['Частная квартира в Санкт-Петербурге. ЖК Биография', '01_1.jpg'],
+      ['Квартира в Санкт-Петербурге, ЖК Маленькая Франция', '02_2.jpg'],
+    ];
+    for (const [index, [folder, file]] of sources.entries()) {
+      const sourcePath = path.join(mediaDir, folder, 'images', file);
+      const outputPath = path.join(temporaryDir, `prepared-${index}.jpg`);
+      const preparedPath = await prepareUploadSource(sourcePath, outputPath);
+      const [metadata, stat] = await Promise.all([
+        require('sharp')(preparedPath).metadata(),
+        fsp.stat(preparedPath),
+      ]);
+      assert.ok(Math.max(metadata.width, metadata.height) <= 3200);
+      assert.ok(stat.size <= 15 * 1024 * 1024);
+    }
   } finally {
     await fsp.rm(temporaryDir, { recursive: true, force: true });
   }
