@@ -254,17 +254,9 @@ async function prepareUploadSource(sourcePath, outputPath) {
   await sharp(sourcePath)
     .rotate()
     .flatten({ background: '#ffffff' })
-    .jpeg({ quality: 90, chromaSubsampling: '4:4:4', mozjpeg: true })
+    .resize({ width: 3200, height: 3200, fit: 'inside', withoutEnlargement: true })
+    .jpeg({ quality: 86, chromaSubsampling: '4:2:0', mozjpeg: true })
     .toFile(outputPath);
-
-  if ((await fsp.stat(outputPath)).size > MAX_UPLOAD_BYTES) {
-    const retryPath = `${outputPath}.retry`;
-    await sharp(outputPath)
-      .resize({ width: 3200, height: 3200, fit: 'inside', withoutEnlargement: true })
-      .jpeg({ quality: 86, chromaSubsampling: '4:2:0', mozjpeg: true })
-      .toFile(retryPath);
-    await fsp.rename(retryPath, outputPath);
-  }
 
   if ((await fsp.stat(outputPath)).size > MAX_UPLOAD_BYTES) {
     throw new Error(`${sourcePath} is still larger than 15 MiB after preparation`);
@@ -496,6 +488,7 @@ module.exports = {
   descriptionToHtml,
   normalizeInstagram,
   normalizeOptional,
+  prepareUploadSource,
   publicationData,
   selectProjectImages,
   validateCatalog,

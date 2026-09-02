@@ -2,6 +2,8 @@
 
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const fsp = require('node:fs/promises');
+const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 
@@ -9,6 +11,7 @@ const {
   descriptionToHtml,
   normalizeInstagram,
   normalizeOptional,
+  prepareUploadSource,
   selectProjectImages,
   validateCatalog,
   validateMediaTree,
@@ -75,4 +78,27 @@ test('optional placeholders are empty and Instagram URLs become handles', () => 
     'zoomroom_design'
   );
   assert.equal(normalizeInstagram('@kurilovdesign'), 'kurilovdesign');
+});
+
+test('oversized source photos are reduced to a web-safe resolution', async () => {
+  const temporaryDir = await fsp.mkdtemp(path.join(os.tmpdir(), 'nonna-project-test-'));
+  try {
+    const sourcePath = path.join(
+      mediaDir,
+      'Частная квартира в Санкт-Петербурге. ЖК Биография',
+      'images',
+      '01_1.jpg'
+    );
+    const outputPath = path.join(temporaryDir, 'prepared.jpg');
+    await prepareUploadSource(sourcePath, outputPath);
+
+    const [metadata, stat] = await Promise.all([
+      require('sharp')(outputPath).metadata(),
+      fsp.stat(outputPath),
+    ]);
+    assert.ok(Math.max(metadata.width, metadata.height) <= 3200);
+    assert.ok(stat.size <= 15 * 1024 * 1024);
+  } finally {
+    await fsp.rm(temporaryDir, { recursive: true, force: true });
+  }
 });
