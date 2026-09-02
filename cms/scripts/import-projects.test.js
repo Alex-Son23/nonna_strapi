@@ -87,6 +87,7 @@ test('large source photos are reduced to a web-safe resolution', async () => {
     const sources = [
       ['Частная квартира в Санкт-Петербурге. ЖК Биография', '01_1.jpg'],
       ['Квартира в Санкт-Петербурге, ЖК Маленькая Франция', '02_2.jpg'],
+      ['Квартира в Санкт-Петербурге, ЖК Богемия — Zoom Room', '01_1.JPG'],
     ];
     for (const [index, [folder, file]] of sources.entries()) {
       const sourcePath = path.join(mediaDir, folder, 'images', file);

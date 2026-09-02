@@ -267,7 +267,7 @@ async function prepareUploadSource(sourcePath, outputPath) {
   }
 
   await fsp.mkdir(path.dirname(outputPath), { recursive: true });
-  await sharp(sourcePath)
+  await sharp(sourcePath, { failOn: 'none' })
     .rotate()
     .flatten({ background: '#ffffff' })
     .resize({
